@@ -518,5 +518,4 @@ avgKoalas = calcAverage(65,54,49);
 // avgKoalas = calcAverage(23,34,27);
 
 
-console.log(checkWinner(avgDolphins,avgKoalas));
-*/
+console.log(checkWinner(avgDolphins,avgKoalas));*/
