@@ -517,5 +517,4 @@ avgKoalas = calcAverage(65,54,49);
 // avgDolphins = calcAverage(85, 54,41);
 // avgKoalas = calcAverage(23,34,27);
 
-
 console.log(checkWinner(avgDolphins,avgKoalas));*/
