@@ -227,48 +227,49 @@ console.log(math(-2, 5));
 
 //** Task 6 ** //
 
+
+// -------- реализация через значения введенные пользователем ------////
 // // let param1 = prompt("Введите число");
 // // let operation = prompt("Введите желаемую операцию");
 // // let param2 = prompt("Введите число");
-// let param1 = 10;
-// let operation = "/";
-// let param2 = 5;
-// function sum(param1,param2) {
-//     return Number(param1) + Number(param2);
-// }
-// console.log(sum());
-//
-// function calc() {
-//
-//     switch (operation) {
-//         case "+":
-//             function sum() {
-//                 return param1 + param2;
-//             }
-//             break;
-//         case "-":
-//
-//         function difference() {
-//             return param1 - param2;
-//         }
-//
-//             break;
-//         case "*":
-//
-//         function multiplication() {
-//             return param1 * param2;
-//         }
-//             break;
-//         case "/":
-//
-//         function division() {
-//             return param1 * param2;
-//         }
-//             break;
-//     }
-// }
+/*
+//-------  реализация через зарание заданные значения --- ///
 
-// console.log(calc());
+let param1 = 10;
+let operation = "*";
+let param2 = 5;
+
+function calc(oper,a1,a2) {
+    let result;
+    switch (oper) {
+        case "+":
+            result = function (num1,num2) {
+                return num1 + num2;
+            }
+            break;
+        case "-":
+            result = function (num1,num2) {
+                return num1 - num2;
+            }
+            break;
+        case "*":
+            result = function (num1,num2) {
+                return num1 * num2;
+            }
+            break;
+        case "/":
+            result = function (num1,num2) {
+                return num1 / num2;
+            }
+            break;
+    }
+    return result(a1,a2);
+
+}
+
+console.log(calc(operation,param1,param2));*/
+
+
 
 //** Task 7 **//
 
@@ -304,7 +305,6 @@ console.log('Result of the second match: ', victory(dolphinsResult[3],dolphinsRe
 console.log('Third match result: ', victory(dolphinsResult[dolphinsResult.length-3],dolphinsResult[dolphinsResult.length-2],dolphinsResult[dolphinsResult.length-1],koalasResult[koalasResult.length-3],koalasResult[koalasResult.length-2],koalasResult[koalasResult.length-1]));
 
 */
-
 
 //* Доп решение с вводом набранных очков по результатам матчей*/
 
@@ -345,7 +345,6 @@ console.log(victory(dolphinsResult[0],dolphinsResult[1],dolphinsResult[2],koalas
 
 
 //*** Task 8  **//
-
 /*
 let check = 275;
 
@@ -360,6 +359,7 @@ let res = check < 0 ? ('Введена некорректная сумма че�
 
 console.log(res);
 */
+
 
 
 //-------------------------------------  HW 4 -----------------------------------------------------------------//
