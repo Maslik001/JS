@@ -90,16 +90,15 @@ console.log(`Количество набранных Вами баллов ${res
 
 // *** Task 4 *** //
 
-/*
+
 let userDay = prompt("Введите день месяца");
 let userMonth = prompt("Введите месяц года");
 let userYear = prompt("Введите год");
 
-/!**
+/*/!**
  * Функция для определения високосного года
  * @param userYearLeap
- * @returns {boolean}
- *!/
+ * @returns {boolean}*/
 let leapYear = function (leapYear) {
 
     leapYear = ((userYear % 400 === 0) || (userYear % 4 === 0 && userYear % 100 !== 0));
@@ -194,7 +193,7 @@ switch (userMonth) {
         else {
             var newUserDay = ++userDay;
         }
-        console.log(`${newUserDay}.${newMonth}.${userYear}`);
+        console.log(`${newUserDay}.${userMonth}.${userYear}`);
         break;
 
     default:
@@ -202,7 +201,7 @@ switch (userMonth) {
 
 }
 
-*/
+
 
 //** Task 5 ** ///
 /*
