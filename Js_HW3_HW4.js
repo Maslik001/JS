@@ -1,8 +1,7 @@
 'use strict';
 
 // *** Task 1 *** //
-/*
-let userNumber = +prompt("Введите год");
+/*let userNumber = +prompt("Введите год");
 
 if (userNumber % 400 === 0 || userNumber % 4 === 0 && userNumber % 100 !== 0) {
 
@@ -12,8 +11,7 @@ if (userNumber % 400 === 0 || userNumber % 4 === 0 && userNumber % 100 !== 0) {
 else
 {
     console.log("год не високоcный")
-}
-*/
+}*/
 
 
 // *** Task 2 *** //
@@ -521,55 +519,4 @@ console.log(checkWinner(avgDolphins,avgKoalas));*/
 
 
 
-
-//*********************************  HW-5 *********************************/////
-
-
-//*****  Task 1
-/*
-let neighbours = ['Russia', 'Poland', 'Ukraine', 'Lithuania'];
-console.log(neighbours);
-
-neighbours.push('Utopia');
-console.log(neighbours);
-
-neighbours.pop();
-console.log(neighbours);*/
-
-/*if (neighbours.indexOf('Germany')){
-    console.log('Вероятно, это не центральноевропейская страна');
-}
-if (neighbours.indexOf('Russia')) {
-    console.log(neighbours.splice(0,1, 'Russian Federation')); //--- ??????
-
-}
-
-
-
-if (neighbours.indexOf('dfsfsdf')){
-    console.log('Вероятно, это не центральноевропейская страна Germany');  //--- ??????
-}
-*/
-
-//******* Task 2
-
-let myCountry = {
-    country: "Беларусь",
-    capital: "Минск",
-    language: "Беларусский",
-    population: 9,
-    neighbours: ['Россия', 'Польша', 'Украина', 'Литва']
-}
-
-
-//********** Task 3
-
-console.log(`В Республике ${myCountry.country} проживает: ${myCountry.population} миллионов человек.
-Государственный язык: "${myCountry.language}". 
-С ней граничат: ${myCountry.neighbours[0]}, ${myCountry.neighbours[2]}, ${myCountry.neighbours[1]}
-Столица: ${myCountry.capital}.`)
-/*let popuUP = myCountry.population+2;
-let popuDown = myCountry.population-2;*/
-console.log(myCountry.population+2);
-console.log(myCountry['population']-2);
 
