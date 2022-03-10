@@ -47,7 +47,7 @@ console.log(myCountry['population']-2);*/
 
 /// ********** Task 4
 
-let myCountry = {
+const myCountry = {
     country: "Республика Беларусь",
     capital: "Минск",
     language: "Беларусский",
@@ -65,11 +65,13 @@ myCountry.describe = function () {
 console.log(myCountry);
 */
 
+
+
 myCountry.heckIsland = function (){
 
-    this.heckIsland.push('Island');
-   return  myCountry.heckIsland.length()? 'соседей нет' : 'соседи есть';
+    this.heckIsland = "island";
+   return  myCountry.heckIsland.length === 1 ? true : false;
 
 
 }
-console.log(myCountry.heckIsland());
+console.log(myCountry);
