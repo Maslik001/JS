@@ -52,21 +52,25 @@ const myCountry = {
     capital: "Минск",
     language: "Беларусский",
     population: 9,
-    neighbours: ['Россия', 'Польша', 'Украина', 'Литва']
-}
-
-/*
-myCountry.describe = function () {
-    return `В ${this.country} проживает: ${this.population} миллионов человек.
+    neighbours: ['Россия', 'Польша', 'Украина', 'Литва'],
+    describe: function () {
+        return `В ${this.country} проживает: ${this.population} миллионов человек.
 Государственный язык: ${this.language}. 
 С ней граничат: ${this.neighbours}.
 Столица: ${this.capital}`;
+    },
+    heckIsland: function (){
+      return this.isIsland = this.neighbours.length < 0 ;
+    }
 }
+myCountry.heckIsland();
+// console.log(myCountry.describe());
 console.log(myCountry);
-*/
+console.log(myCountry.isIsland) /// вопрос почему не видит переменную через log ????? 
 
 
 
+/*
 myCountry.heckIsland = function (){
 
     this.heckIsland = "island";
@@ -74,4 +78,4 @@ myCountry.heckIsland = function (){
 
 
 }
-console.log(myCountry);
+console.log(myCountry);*/
