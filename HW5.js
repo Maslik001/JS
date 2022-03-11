@@ -47,7 +47,7 @@ console.log(myCountry['population']-2);*/
 
 /// ********** Task 4
 
-const myCountry = {
+/*const myCountry = {
     country: "Республика Беларусь",
     capital: "Минск",
     language: "Беларусский",
@@ -66,6 +66,6 @@ const myCountry = {
 myCountry.heckIsland();
 // console.log(myCountry.describe()); // раскоментить для первой части задания
 console.log(myCountry);
-console.log(myCountry.isIsland) /// вопрос почему не видит переменную через log ????? 
+console.log(myCountry.isIsland) /// вопрос почему не видит переменную через log ????? */
 
 

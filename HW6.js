@@ -1,26 +1,25 @@
 //****** Task 1
-
-/*for (let i = 0; i <= 10; i++){
-    if (i%2 === 0){
+/*
+for (let i = 0; i <= 10; i++){
+    if (i === 0){
+        console.log(`${i} - это ноль`);
+    }
+    else if (i%2 === 0){
         console.log(`${i} - четное число`);
     }
-    if (i%2 !== 0){
+    else {
         console.log(`${i} - не четное число`);
     }
-
 }
 console.log()*/
 
 //**** Task 2
-/*
 
-let b = " ";
-let c = "#"
-for (let i = 0; i < 20; i++){
-    b += c;
+/*let b = '';
+for (let i = 0; i <= 20; i++){
+    b += '#';
     console.log(b);
-}
-*/
+}*/
 
 
 ///****** Task 3
@@ -58,12 +57,11 @@ console.log(post.comments[1].userId+ " " + post.comments[1].text);*/
 
 // ****** Task 4
 
-let res = 2;
+/*
 
 for (let i = 2; i <= 9; i++) {
-    b = i * 2;
-    c = i ** 2;
-    console.log(i +"*2" + " = "+ b );
-    console.log(i +"*" + i + " = "+ c );
-
+  for (let j = 1; j <= 10; j++){
+      console.log(`${i} X ${j} = ${i*j}`)
+  }
 }
+*/
