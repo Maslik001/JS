@@ -64,18 +64,8 @@ const myCountry = {
     }
 }
 myCountry.heckIsland();
-// console.log(myCountry.describe());
+// console.log(myCountry.describe()); // раскоментить для первой части задания
 console.log(myCountry);
 console.log(myCountry.isIsland) /// вопрос почему не видит переменную через log ????? 
 
 
-
-/*
-myCountry.heckIsland = function (){
-
-    this.heckIsland = "island";
-   return  myCountry.heckIsland.length === 1 ? true : false;
-
-
-}
-console.log(myCountry);*/
