@@ -46,6 +46,7 @@ console.log(myCountry['population']-2);*/
 
 
 /// ********** Task 4
+/*
 
 const myCountry = {
     country: "Республика Беларусь",
@@ -62,10 +63,17 @@ myCountry.describe = function () {
 С ней граничат: ${this.neighbours}.
 Столица: ${this.capital}`;
 }
+<<<<<<< Updated upstream
+=======
+myCountry.heckIsland();
+// console.log(myCountry.describe());  // раскоментить для первой части задания
+>>>>>>> Stashed changes
 console.log(myCountry);
 */
 
+*/
 
+<<<<<<< Updated upstream
 
 myCountry.heckIsland = function (){
 
@@ -75,3 +83,5 @@ myCountry.heckIsland = function (){
 
 }
 console.log(myCountry);
+=======
+>>>>>>> Stashed changes
