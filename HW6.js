@@ -65,3 +65,31 @@ for (let i = 2; i <= 9; i++) {
   }
 }
 */
+
+
+//**** Task 5
+
+
+const time = {
+    hour: 20,
+    minutes: 30,
+    seconds: 45,
+    myTime: function () {
+        console.log(this.hour + ":" + this.minutes + ":" + this.seconds);
+    },
+    myOclock: function (s){
+        for (let j = 0; j < 1; j++) ;
+        let res = this.seconds + Number(s);
+        if (res <= 60) {
+            console.log(this.hour + ":" + this.minutes + ":" + res)
+        } else if (res > 60) {
+            console.log(this.hour + ":" + (this.minutes + 1) + ":" + res - 60);
+        } else {
+
+        }
+    }
+}
+
+
+time.myTime();
+time.myOclock(30);
