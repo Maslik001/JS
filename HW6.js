@@ -77,19 +77,18 @@ const time = {
     myTime: function () {
         console.log(this.hour + ":" + this.minutes + ":" + this.seconds);
     },
-    myOclock: function (s){
-        for (let j = 0; j < 1; j++) ;
+    myOclock: function (s) {
         let res = this.seconds + Number(s);
         if (res <= 60) {
-            console.log(this.hour + ":" + this.minutes + ":" + res)
+            this.seconds = res;
+            return (this.hour + ":" + this.minutes + ":" + res);
         } else if (res > 60) {
-            console.log(this.hour + ":" + (this.minutes + 1) + ":" + res - 60);
+            let m1 = Math.round(res /60);
+            this.seconds = res % 60;
+            return (`${this.hour}:${this.minutes+m1}:${res % 60}`);
         } else {
-
         }
     }
 }
-
-
 time.myTime();
-time.myOclock(30);
+console.log(time.myOclock(180));
