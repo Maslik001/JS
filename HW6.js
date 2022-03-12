@@ -76,28 +76,22 @@ const time = {
     seconds: 45,
 }
 
-
-function displayTime(h,m,s){
-    console.log(timeHour(h) + ":" + timeMinutes(m) + ":" + timeSeconds(s));
-}
-
 function timeSeconds(s) {
     let resSec = time.seconds + Number(s);
     if (resSec <= 59 && resSec > 0) {
         return time.seconds = resSec;
 
     } else if (resSec > 59) {
-        let m1 = Math.round(resSec / 60);
+        let m1 = Math.trunc(resSec / 60);
+        time.minutes = time.minutes + m1;
         if ((time.seconds = resSec % 60) < 10) {
-            if (m1 <= 5) {
-                let nulVar = "0";
-                return (time.seconds = nulVar + (resSec % 60)) + m1;
+            if (m1 <= 9) {
+                let nulVar = '0';
+                return Number(time.seconds = nulVar + (resSec % 60));
             }
         } else {
             return time.seconds = resSec % 60;
         }
-    } else {
-        console.log("Введено отрицательное значение")
     }
 }
 
@@ -105,19 +99,17 @@ function timeMinutes(m) {
     let res = Number(time.minutes) + Number(m);
     if (res <= 59 && res > 0) {
         return Number(time.minutes = res);
-
     } else if (res > 59) {
-        let m1 = Math.round(res / 60);
+        let h1 = Math.trunc(res / 60);
+        time.hour = time.hour + h1;
         if ((time.minutes = res % 60) < 10) {
-            if (m1 <= 5) {
+            if (h1 <= 9) {
                 let nulVar = "0";
                 return Number(time.minutes = nulVar + (res % 60));
             }
         } else {
             return Number(time.minutes = res % 60);
         }
-    } else {
-        console.log("Введено отрицательное значение")
     }
 }
 
@@ -127,18 +119,24 @@ function timeHour(h) {
         return Number(time.hour = resHour);
 
     } else if (resHour > 24) {
-        let m1 = Math.round(resHour / 24);
+        let d1 = Math.trunc(resHour / 24);
+        time.hour = d1;
         if ((time.hour = resHour % 24) < 10) {
-            if (m1 < 10) {
+            if (d1 < 10) {
                 let nulVar = "0";
-                return Number(time.hour = `${nulVar} + ${resHour % 24}`);
+                return Number(time.hour = nulVar + (resHour % 24));
             }
         } else {
             return Number(time.hour = resHour % 24);
         }
-    } else {
-        console.log("Введено отрицательное значение")
     }
 }
+function displayTime(h,m,s){
+    timeSeconds(s);
+    timeMinutes(m);
+    timeHour(h);
+    console.log(time.hour + ":" + time.minutes + ":" + time.seconds);
+}
 
-console.log(displayTime(2,30,60));
+displayTime(0,30,14);
+console.log(time)
