@@ -159,5 +159,5 @@ function displayTime(h, m, s) {
     console.log(time.hour + ":" + time.minutes + ":" + time.seconds);
 }
 
-displayTime(0, 0, -120);
+displayTime(0, 0, 30);
 console.log(time)
