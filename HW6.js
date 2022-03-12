@@ -74,21 +74,71 @@ const time = {
     hour: 20,
     minutes: 30,
     seconds: 45,
-    myTime: function () {
-        console.log(this.hour + ":" + this.minutes + ":" + this.seconds);
-    },
-    myOclock: function (s) {
-        let res = this.seconds + Number(s);
-        if (res <= 60) {
-            this.seconds = res;
-            return (this.hour + ":" + this.minutes + ":" + res);
-        } else if (res > 60) {
-            let m1 = Math.round(res /60);
-            this.seconds = res % 60;
-            return (`${this.hour}:${this.minutes+m1}:${res % 60}`);
+}
+
+
+function displayTime(h,m,s){
+    console.log(timeHour(h) + ":" + timeMinutes(m) + ":" + timeSeconds(s));
+}
+
+function timeSeconds(s) {
+    let resSec = time.seconds + Number(s);
+    if (resSec <= 59 && resSec > 0) {
+        return time.seconds = resSec;
+
+    } else if (resSec > 59) {
+        let m1 = Math.round(resSec / 60);
+        if ((time.seconds = resSec % 60) < 10) {
+            if (m1 <= 5) {
+                let nulVar = "0";
+                return (time.seconds = nulVar + (resSec % 60)) + m1;
+            }
         } else {
+            return time.seconds = resSec % 60;
         }
+    } else {
+        console.log("Введено отрицательное значение")
     }
 }
-time.myTime();
-console.log(time.myOclock(180));
+
+function timeMinutes(m) {
+    let res = Number(time.minutes) + Number(m);
+    if (res <= 59 && res > 0) {
+        return Number(time.minutes = res);
+
+    } else if (res > 59) {
+        let m1 = Math.round(res / 60);
+        if ((time.minutes = res % 60) < 10) {
+            if (m1 <= 5) {
+                let nulVar = "0";
+                return Number(time.minutes = nulVar + (res % 60));
+            }
+        } else {
+            return Number(time.minutes = res % 60);
+        }
+    } else {
+        console.log("Введено отрицательное значение")
+    }
+}
+
+function timeHour(h) {
+    let resHour = Number(time.hour) + Number(h);
+    if (resHour <= 24 && resHour > 0) {
+        return Number(time.hour = resHour);
+
+    } else if (resHour > 24) {
+        let m1 = Math.round(resHour / 24);
+        if ((time.hour = resHour % 24) < 10) {
+            if (m1 < 10) {
+                let nulVar = "0";
+                return Number(time.hour = `${nulVar} + ${resHour % 24}`);
+            }
+        } else {
+            return Number(time.hour = resHour % 24);
+        }
+    } else {
+        console.log("Введено отрицательное значение")
+    }
+}
+
+console.log(displayTime(2,30,60));
