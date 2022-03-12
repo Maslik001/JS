@@ -75,6 +75,7 @@ const time = {
     minutes: 30,
     seconds: 45,
 }
+console.log(time);
 
 function timeSeconds(s) {
     let resSec = time.seconds + Number(s);
@@ -92,23 +93,42 @@ function timeSeconds(s) {
         } else {
             return time.seconds = resSec % 60;
         }
+    } else if (resSec < 0) {
+        time.seconds = Number(s) % 60 + time.seconds;
+        let m1 = Math.trunc(resSec / 60);
+        if (m1 <= 0 && resSec < 120) {
+            time.minutes = (time.minutes + m1) - 1;
+        }
+        if (time.seconds < 10 && time.seconds > 0) {
+            let nulVar = '0';
+            return Number(time.seconds = nulVar + time.seconds);
+        } else {
+            return time.seconds = 60 + resSec % 60;
+        }
     }
 }
 
 function timeMinutes(m) {
-    let res = Number(time.minutes) + Number(m);
-    if (res <= 59 && res > 0) {
-        return Number(time.minutes = res);
-    } else if (res > 59) {
-        let h1 = Math.trunc(res / 60);
+    let resMIn = Number(time.minutes) + Number(m);
+    if (resMIn <= 59 && resMIn > 0) {
+        return Number(time.minutes = resMIn);
+    } else if (resMIn > 59) {
+        let h1 = Math.trunc(resMIn / 60);
         time.hour = time.hour + h1;
-        if ((time.minutes = res % 60) < 10) {
-            if (h1 <= 9) {
-                let nulVar = "0";
-                return Number(time.minutes = nulVar + (res % 60));
+        if ((time.minutes = resMIn % 60) < 10) {
+            let nulVar = "0";
+            return Number(time.minutes = nulVar + (resMIn % 60));
+        } else if (resMIn < 0) {
+            let h1 = Math.trunc(resMIn / 60);
+            time.hour = time.hour + h1;
+            if ((time.minutes = resMIn % 60) < 10) {
+                let nulVar = '0';
+                return Number(time.minutes = nulVar - (resMIn % 60));
+            } else {
+                return time.minutes = resMIn % 60;
             }
         } else {
-            return Number(time.minutes = res % 60);
+            return Number(time.minutes = resMIn % 60);
         }
     }
 }
@@ -122,21 +142,22 @@ function timeHour(h) {
         let d1 = Math.trunc(resHour / 24);
         time.hour = d1;
         if ((time.hour = resHour % 24) < 10) {
-            if (d1 < 10) {
-                let nulVar = "0";
-                return Number(time.hour = nulVar + (resHour % 24));
-            }
+            // if (d1 < 10) {
+            let nulVar = "0";
+            return Number(time.hour = nulVar + (resHour % 24));
+            // }
         } else {
             return Number(time.hour = resHour % 24);
         }
     }
 }
-function displayTime(h,m,s){
+
+function displayTime(h, m, s) {
     timeSeconds(s);
     timeMinutes(m);
     timeHour(h);
     console.log(time.hour + ":" + time.minutes + ":" + time.seconds);
 }
 
-displayTime(0,30,14);
+displayTime(0, 0, -120);
 console.log(time)
