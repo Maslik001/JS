@@ -68,32 +68,30 @@ for (let i = 2; i <= 9; i++) {
 
 
 //**** Task 5
+/*
 
-
+// --- начальная точка отсчёта по времени
 const time = {
     hour: 20,
     minutes: 30,
     seconds: 45,
 }
-console.log(time);
 
+//---- функция для подсчёта секунд
 function timeSeconds(s) {
     let resSec = time.seconds + Number(s);
     if (resSec <= 59 && resSec > 0) {
         return time.seconds = resSec;
-
     } else if (resSec > 59) {
         let m1 = Math.trunc(resSec / 60);
         time.minutes = time.minutes + m1;
         if ((time.seconds = resSec % 60) < 10) {
-            if (m1 <= 9) {
                 let nulVar = '0';
                 return Number(time.seconds = nulVar + (resSec % 60));
-            }
         } else {
             return time.seconds = resSec % 60;
         }
-    } else if (resSec < 0) {
+    } else if (resSec <= 0) {
         time.seconds = Number(s) % 60 + time.seconds;
         let m1 = Math.trunc(resSec / 60);
         if (m1 <= 0 && resSec < 120) {
@@ -105,59 +103,82 @@ function timeSeconds(s) {
         } else {
             return time.seconds = 60 + resSec % 60;
         }
+    } else {
+        return resSec;
     }
 }
-
+//---- функция для подсчёта минут
 function timeMinutes(m) {
     let resMIn = Number(time.minutes) + Number(m);
     if (resMIn <= 59 && resMIn > 0) {
+        if (resMIn < 9){
+            let nulVar = "0";
+            return time.minutes = nulVar + resMIn;
+        } else {
         return Number(time.minutes = resMIn);
+        }
     } else if (resMIn > 59) {
         let h1 = Math.trunc(resMIn / 60);
         time.hour = time.hour + h1;
         if ((time.minutes = resMIn % 60) < 10) {
             let nulVar = "0";
             return Number(time.minutes = nulVar + (resMIn % 60));
-        } else if (resMIn < 0) {
-            let h1 = Math.trunc(resMIn / 60);
-            time.hour = time.hour + h1;
-            if ((time.minutes = resMIn % 60) < 10) {
-                let nulVar = '0';
-                return Number(time.minutes = nulVar - (resMIn % 60));
-            } else {
-                return time.minutes = resMIn % 60;
-            }
         } else {
             return Number(time.minutes = resMIn % 60);
         }
     }
+    else if (resMIn <= 0) {
+        time.minutes = Number(m) % 60 + time.minutes;
+        let h1 = Math.trunc(resMIn / 60);
+        if (h1 <= 0 && resMIn < 120) {
+            time.hour = (time.hour + h1) - 1;
+        }
+        if (time.minutes < 10 && time.minutes >= 0) {
+            let nulVar = '0';
+            return Number(time.minutes = nulVar + time.minutes);
+        } else {
+            return time.minutes = 60 + resMIn % 60;
+        }
+    } else {
+        return resMIn;
+    }
 }
-
+//---- функция для подсчёта часов
 function timeHour(h) {
     let resHour = Number(time.hour) + Number(h);
     if (resHour <= 24 && resHour > 0) {
         return Number(time.hour = resHour);
-
     } else if (resHour > 24) {
         let d1 = Math.trunc(resHour / 24);
         time.hour = d1;
         if ((time.hour = resHour % 24) < 10) {
-            // if (d1 < 10) {
             let nulVar = "0";
             return Number(time.hour = nulVar + (resHour % 24));
-            // }
         } else {
             return Number(time.hour = resHour % 24);
         }
+    } else if (resHour <= 0 ){
+        if (resHour === 0 && resHour <= 9){
+            let nulVar = "0";
+            return Number(time.hour = nulVar + resHour);
+        } else if (resHour < 0){
+        time.hour = 24 + resHour;
+        return time.hour;
+        }
+    } else {
+        return resHour;
+    }
+}
+//---- функция для вывода актуального времени
+function displayTime(h, m, s) {
+    if (timeSeconds(s) >= 0 && timeMinutes(m) >= 0 && timeHour(h) >= 0 ){
+    console.log(time.hour + ":" + time.minutes + ":" + time.seconds);}
+    else {
+        console.log("введены некорректные данные");
     }
 }
 
-function displayTime(h, m, s) {
-    timeSeconds(s);
-    timeMinutes(m);
-    timeHour(h);
-    console.log(time.hour + ":" + time.minutes + ":" + time.seconds);
-}
+// --- ввод данных (работает как с добавлением времени, так и с отниманием --- также предусмотрена защита от ввода некорректных данных)
+displayTime(4, 30, 15);
 
-displayTime(0, 0, 30);
-console.log(time)
+*/
