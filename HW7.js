@@ -48,7 +48,13 @@ const itCompanies2 = ['Facebook', 'Google', 'Microsoft', 'Apple', 'IBM', 'Oracle
 
 // console.log(itCompanies2.join(', ') + " являются крупными ИТ-компаниями");  ///// 12)
 
-let index = itCompanies2.indexOf("ibm") ?  console.log(itCompanies2.index)  : console.log(itCompanies2.indexOf("ibm"));  // 13)
+let index = itCompanies2.indexOf("IBM")
+if (index !== -1) {
+    console.log(`Этот ${index} существует в массиве`)  ///  --- ??? как вывости найденый массив ???? 
+} else {
+    console.log("Этого элемента не существует в массиве");
+}
+
 
 
 
