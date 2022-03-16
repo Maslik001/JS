@@ -50,7 +50,7 @@ const itCompanies2 = ['Facebook', 'Google', 'Microsoft', 'Apple', 'IBM', 'Oracle
 
 let index = itCompanies2.indexOf("IBM")
 if (index !== -1) {
-    console.log(`Этот ${index} существует в массиве`)  ///  --- ??? как вывости найденый массив ???? 
+    console.log(`Этот ${index} существует в массиве`)  ///  --- ??? как вывости найденый массив ????
 } else {
     console.log("Этого элемента не существует в массиве");
 }
