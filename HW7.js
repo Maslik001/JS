@@ -143,6 +143,7 @@ console.log(fullStack);    */                                   //// 6 )
 
 /////   Task 3  /////
 
+/*
 const ages = [19, 22, 19, 24, 20, 25, 26, 24, 25, 24];
 
 ages.sort();
@@ -152,6 +153,7 @@ console.log(`Мин возвратаст: ${minAge}`);
 let maxAge = ages[ages.length-1];
 console.log(`Макс возвратаст: ${maxAge}`);
 
+*/
 
 
 
