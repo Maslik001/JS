@@ -140,11 +140,9 @@ const fullStack = frontEnd.concat(backEnd);
 console.log(fullStack);    */                                   //// 6 )
 
 
-
 /////   Task 3  /////
 
-/*
-const ages = [19, 22, 19, 24, 20, 25, 26, 24, 25, 24];
+/*const ages = [19, 22, 19, 24, 20, 25, 26, 24, 25, 24];
 
 ages.sort();
 console.log(ages)
@@ -153,21 +151,105 @@ console.log(`Мин возвратаст: ${minAge}`);
 let maxAge = ages[ages.length-1];
 console.log(`Макс возвратаст: ${maxAge}`);
 
+let midleAge = Math.round((minAge+maxAge)/ 2) ;
+console.log(`Средний возраст: ${midleAge}`);
+
+let userUp = maxAge- minAge;
+console.log(`Разница в возрасте от меньшего к большему: ${userUp}`);
+
+
+let minMidleAge = Math.abs(minAge - midleAge);
+let midleMaxAge = Math.abs(minAge - midleAge);
+function comparison(a,b){
+ b > a ? console.log("Возраст от среднего к максимальному больше") : console.log("Возраст от минимального к средниму больше");
+}
+comparison(minMidleAge,midleMaxAge);*/
+
+
+//////////////////// ----------------  HM  -- ЦИКЛЫ  --------- //////////////////////////////////////////
+
+//// ------ Task 1 --------
+
+
+const countries = ["Albania", "Bolivia", "Canada", "Denmark", "Ethiopia", "Finland", "Germany", "Hungary", "Ireland", "Japan", "Kenya"];
+const webTechs = ["HTML", "CSS", "JavaScript", "React", "Redux", "Node", "MongoDB"];
+const mernStack = ["MongoDB", "Express", "React", "Node"];
+
+//// ------ 01 -----
+/*
+for (let i = 0; i <= 10; i++){
+    console.log(i);
+}
+
+let i = 0;
+while (i <= 10){
+    console.log(i);
+    i++;
+}
+*/
+/// ------- 02 ---------
+/*
+for (let i = 10; i >= 0; i--){
+    console.log(i);
+}
+
+let i = 10;
+while (i >= 0){
+    console.log(i);
+    i--;
+}
 */
 
 
+///  ------- 03 -------
+
+/*let n = 10;
+for (let i = 0; i <= n; i++){
+    console.log(i);
+}*/
 
 
+/// ----- 04 -----
+/*let a = '';
+for (let i = 0; i <= 7; i++) {
+    a += "#";
+    console.log(a);
+}*/
+
+/// --- 05  ---
+/*
+for (let i = 0; i <= 10; i++) {
+    console.log(`${i} X ${i} = ${i*i}`)
+}
+*/
+
+/// ------ 06  - ------
+
+/*for (let i = 0; i <= 10; i++) {
+    console.log(`${i}   ${i**2}    ${i**3}` )
+}*/
+
+//// ----- 07 -----
+
+/*
+for (let i = 0; i <= 100; i++) {
+    /// Вариант 1
+    /!*if (i % 2 === 0) {
+        console.log(i)
+    }*!/
+    /// Вариант 2
+    //i % 2 === 0 ? console.log(i) : false;
+}
+*/
 
 
+//// ----- 08 -----
+/*for (let i = 0; i <= 100; i++) {
+    i % 2 !== 0 ? console.log(i) : false;
+}*/
 
+//// ----- 09 -----
 
-
-
-
-
-
-
-
-
-
+for (let i = 0; i <= 100; i++) {
+    i > 0 &&  i%i === 0 && i/i !==0 ? console.log(i) : false;
+}
