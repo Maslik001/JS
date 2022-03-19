@@ -170,10 +170,10 @@ comparison(minMidleAge,midleMaxAge);*/
 
 //// ------ Task 1 --------
 
-
+/*
 const countries = ["Albania", "Bolivia", "Canada", "Denmark", "Ethiopia", "Finland", "Germany", "Hungary", "Ireland", "Japan", "Kenya"];
 const webTechs = ["HTML", "CSS", "JavaScript", "React", "Redux", "Node", "MongoDB"];
-const mernStack = ["MongoDB", "Express", "React", "Node"];
+const mernStack = ["MongoDB", "Express", "React", "Node"];*/
 
 //// ------ 01 -----
 /*
@@ -234,11 +234,11 @@ for (let i = 0; i <= 10; i++) {
 /*
 for (let i = 0; i <= 100; i++) {
     /// Вариант 1
-    /!*if (i % 2 === 0) {
+    /!*if (i % 2 === 0 && i > 0) {
         console.log(i)
     }*!/
     /// Вариант 2
-    //i % 2 === 0 ? console.log(i) : false;
+    //(i % 2 === 0 && i > 0) ? console.log(i) : false;
 }
 */
 
@@ -248,8 +248,24 @@ for (let i = 0; i <= 100; i++) {
     i % 2 !== 0 ? console.log(i) : false;
 }*/
 
-//// ----- 09 -----
+//// ----- 09 -----     пока не решена
 
+/*
 for (let i = 0; i <= 100; i++) {
-    i > 0 &&  i%i === 0 && i/i !==0 ? console.log(i) : false;
+
+    // console.log(j)
+    i > 0 && i%i === 0 && i%1 === 0 && i%i++ !== 0 ? console.log(i) : false;
 }
+*/
+
+//// ----- 10 -----
+
+/*
+for (let i = 0; i <= 100; i++) {
+    console.log(i);
+}*/
+
+//// ----- 10 -----
+
+
+
