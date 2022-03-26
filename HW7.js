@@ -250,13 +250,14 @@ for (let i = 0; i <= 100; i++) {
 
 //// ----- 09 -----     пока не решена
 
-/*
-for (let i = 0; i <= 100; i++) {
 
-    // console.log(j)
-    i > 0 && i%i === 0 && i%1 === 0 && i%i++ !== 0 ? console.log(i) : false;
-}
-*/
+// let const1 = [1,2]
+// for (let i = 0; i <= 100; i++) {
+//     if (i%2 === 0){
+//         const1.push(i);
+//     }
+// }
+// console.log(const1)
 
 //// ----- 10 -----
 
