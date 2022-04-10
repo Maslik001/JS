@@ -102,17 +102,52 @@ sum(151654);*/
 
 ////****** Task 5  ***** /////
 
-let text = 'var_text_hello';
+// let text = 'var_text_hello';
+//
+// function funcText() {
+//     let arr = text.split('_')
+//
+//     // for (let i = 0; i < arr.length; i++){
+//     //
+//     // }
+//     arr.forEach((value, index) => {
+//         let b = arr.slice(index,index+1)
+//         console.log(b)
+//     });
+// }
+//
+// funcText()
 
-function funcText() {
-    let arr = text.split('_')
-    for (let i = 0; i < arr.length; i++){
-        let b = arr[0].toUpperCase() + arr.slice(1);
-        console.log(b)
+////****** Task 6  ***** /////
+
+// let a = '123456';
+// function revert(num){
+//     let a = num.split('')
+//
+//     for (let i = 0;i<a.length;i++){
+//         [i] = [i+1]
+//
+//     }
+//     console.log(a)
+// }
+//
+// revert(a)
+
+
+////****** Task 7  ***** /////
+
+/*
+let arr1 = [1, 2, 3];
+let arr2 = [2, 3, 4, 5];
+let res = [];
+function getInt(){
+    for (let i = 0;i < arr1.length;i++){
+        for (let j = 0;j<arr2.length;j++){
+            if (arr1[i]===arr2[j]){
+                res.push(arr2[j])
+            }
+        }
     }
-
-    console.log(arr)
+    console.log(res);
 }
-
-funcText()
-
+getInt();*/
