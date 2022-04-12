@@ -1,8 +1,7 @@
 'use strict';
 
 // *** Task 1 *** //
-/*
-let userNumber = +prompt("Введите год");
+/*let userNumber = +prompt("Введите год");
 
 if (userNumber % 400 === 0 || userNumber % 4 === 0 && userNumber % 100 !== 0) {
 
@@ -12,8 +11,7 @@ if (userNumber % 400 === 0 || userNumber % 4 === 0 && userNumber % 100 !== 0) {
 else
 {
     console.log("год не високоcный")
-}
-*/
+}*/
 
 
 // *** Task 2 *** //
@@ -95,11 +93,10 @@ let userDay = prompt("Введите день месяца");
 let userMonth = prompt("Введите месяц года");
 let userYear = prompt("Введите год");
 
-/!**
+/!*!/!**
  * Функция для определения високосного года
  * @param userYearLeap
- * @returns {boolean}
- *!/
+ * @returns {boolean}*!/
 let leapYear = function (leapYear) {
 
     leapYear = ((userYear % 400 === 0) || (userYear % 4 === 0 && userYear % 100 !== 0));
@@ -194,15 +191,15 @@ switch (userMonth) {
         else {
             var newUserDay = ++userDay;
         }
-        console.log(`${newUserDay}.${newMonth}.${userYear}`);
+        console.log(`${newUserDay}.${userMonth}.${userYear}`);
         break;
 
     default:
         console.log("Нет такого месяца!!!");
 
-}
+}*/
 
-*/
+
 
 //** Task 5 ** ///
 /*
@@ -517,5 +514,9 @@ avgKoalas = calcAverage(65,54,49);
 // avgDolphins = calcAverage(85, 54,41);
 // avgKoalas = calcAverage(23,34,27);
 
-
 console.log(checkWinner(avgDolphins,avgKoalas));*/
+
+
+
+
+
