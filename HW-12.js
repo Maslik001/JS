@@ -1,3 +1,4 @@
+/*
 'use strict';
 
 const game = {
@@ -71,27 +72,41 @@ const events = [...new Set(gameEvents.values())];
 // console.log(events);
 const keys = [...new Set(gameEvents.keys())];
 // console.log(keys)
+const events1 = [...gameEvents.values()];
+// console.log(events1)
 
-function gameProgress(obj) {
+// 3. С помощью цикла на "gameEvents" выведите каждый элемент на консоли, отмечая, относится ли он к первой половине или ко второй половине (после 45 минут) игры
+/!*gameEvents.forEach((value, key, map) => {
+    if (key < '45'){
+        console.log((`[ПЕРВЫЙ ТАЙМ] ${key}: ${value} `));
+    } else {
+        console.log((`[ВТОРОЙ ТАЙМ] ${key}: ${value} `));
+    }
+});*!/
+/// 3. Реализовал предыдущее задание с помощью сетИнтервал и сетТаймаут
+function gameProgress() {
     let i = 0;
     let timerId = setInterval(() => {
         i++;
-            if (gameEvents.keys() < 45) {
-                console.log(`[ПЕРВЫЙ ТАЙМ] ${gameEvents.keys()}: ${gameEvents.values()}`);
-            } /*else if (events[i-1]===undefined){
-                return;
-            }*/
-            else {
-                console.log(`[ВТОРОЙ ТАЙМ] ${gameEvents.keys()[i-1]}: ${gameEvents.values()[i-1]}`);
+        if (keys[i - 1] < 45) {
+            console.log(`[ПЕРВЫЙ ТАЙМ] ${keys[i-1]}: ${events1[i-1]}`);
+        } else {
+            console.log(`[ВТОРОЙ ТАЙМ] ${keys[i-1]}: ${events1[i-1]}`);
+        }
 
-            }
         if (i >= gameEvents.size) {
             console.log('---===Game over===---');
             clearInterval(timerId);
         }
-    }, 600);
+    }, 1500);
     console.log('---===Game start===---');
-
+    gameComments();
 }
+function gameComments (){
+let commentTimer = setTimeout (()=>{
+     console.log(`Break in the game. (for American customers I inform you - this code was written by Maslik 😋 )`);
+},4000);
+}
+gameProgress();
 
-gameProgress(gameEvents);
+*/
