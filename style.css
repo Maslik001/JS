@@ -1,50 +1,60 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-*{
+
+* {
     margin: 0 auto;
     text-decoration: none;
     box-sizing: border-box;
 }
 
-.form{
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+.wrapper {
     margin: 0 auto;
     text-align: center;
-    margin-top: 10%;
+}
+.img-wrapper{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: end;
 
 }
-.text-form, .user-Name-Input{
+.img-wrapper img{
+    max-width: 100%;
+}
+.text-form, .user-Name-Input {
     font-family: 'Montserrat', sans-serif;
-    font-size: 5vw;
+    font-size: 2vw;
     color: darkslateblue;
     text-transform: capitalize;
 }
-.button{
+
+.button-wrapper {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr;
+    grid-gap: 90px;
+    margin-bottom: 10px;
+    margin-left: 35px;
+}
+.button {
     font-family: 'Montserrat', sans-serif;
-    font-size: 2vw;
+    font-size: 25px;
     color: white;
     font-weight: bold;
-}
-.button-wrapper{
-    position: relative;
-    text-align: center;
-    margin: 0 auto;
-    left: -10%;
-}
-.button{
-    min-width: 20vw;
-    min-height: 5vw;
+    min-width: 20px;
+    min-height: 20px;
     border-style: hidden;
-    position: absolute;
     background-color: #5a5a59;
     box-shadow: 3px 5px 15px #483d8b;
     border-radius: 20% 0;
+    margin-top: 315%;
+    transition: width 0.1s;
 }
-.button:active{
-    left: 3px;
-    top: 3px;}
-.user-Name-Input{
-    min-height: 45px;
+.button:active {
+
+    transform: scale(0.8%);
 }
+.button:hover{
+    cursor: pointer;
+}
+
 
