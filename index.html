@@ -3,37 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" src="HW-15.js"></script>
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="HW-15.js" defer></script>
 </head>
 <body>
 
-<button id="open">Пройти опрос</button>
+<button id="newOpros">Пройти опрос</button>
+<div class="wrapper">
 <div id="opros" class="myForm">
                <label>Выбери язык программирования:</label>
             <label class="opros-position">
                 <input class="radio" type="radio" name="languages">
-                JavaScript
+                <span>JavaScript</span>
             </label>
             <label class="opros-position">
                 <input class="radio" type="radio" name="languages">
-                C#
+                <span>C#</span>
             </label>
             <label class="opros-position">
                 <input class="radio" type="radio" name="languages">
-                VisualBasic
+                <span>VisualBasic</span>
             </label>
             <label class="opros-position">
                 <input class="radio" type="radio" name="languages">
-                NodeJs
+                <span>NodeJs</span>
             </label>
             <button id="golos" class="btn">Голосовать</button>
     </div>
-
-
-
+    <button id = "resOpros" class="resOpros">
+Проверить пезульты опроса
+    </button>
 <div id="result" class="res">
 
+</div>
 </div>
 
 </body>
