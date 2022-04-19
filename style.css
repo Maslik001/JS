@@ -1,50 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-*{
-    margin: 0 auto;
-    text-decoration: none;
-    box-sizing: border-box;
-}
-
-.form{
+.myForm{
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    margin: 0 auto;
-    text-align: center;
-    margin-top: 10%;
-
+    border: 1px solid #000;
+    width: 300px;
 }
-.text-form, .user-Name-Input{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 5vw;
-    color: darkslateblue;
-    text-transform: capitalize;
+.opros-position{
+    margin-bottom: 10px;
 }
-.button{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 2vw;
-    color: white;
-    font-weight: bold;
+.btn{
+    margin: 5px;
 }
-.button-wrapper{
-    position: relative;
-    text-align: center;
-    margin: 0 auto;
-    left: -10%;
+.res{
+    font-size: 21px;
+    font-style: italic;
+    text-decoration: underline;
+    font-weight: 800;
+    font-family: "Arial Black";
+    border: 1px solid #000;
+    min-height: 30px;
+    margin: 10px;
 }
-.button{
-    min-width: 20vw;
-    min-height: 5vw;
-    border-style: hidden;
-    position: absolute;
-    background-color: #5a5a59;
-    box-shadow: 3px 5px 15px #483d8b;
-    border-radius: 20% 0;
+.myClass{
+    color: red;
 }
-.button:active{
-    left: 3px;
-    top: 3px;}
-.user-Name-Input{
-    min-height: 45px;
+.myImage{
+    width: 200px;
 }
-
