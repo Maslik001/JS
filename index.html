@@ -3,38 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="HW-15.js" defer></script>
 </head>
 <body>
 
-<button id="newOpros" class="newOpros">Пройти опрос</button>
-<div class="wrapper">
-    <div id="opros" class="myForm">
-        <label>Выбери язык программирования:</label>
-        <label class="opros-position">
-            <input class="radio" type="radio" name="languages">
-            <span>JavaScript</span>
-        </label>
-        <label class="opros-position">
-            <input class="radio" type="radio" name="languages">
-            <span>C#</span>
-        </label>
-        <label class="opros-position">
-            <input class="radio" type="radio" name="languages">
-            <span>VisualBasic</span>
-        </label>
-        <label class="opros-position">
-            <input class="radio" type="radio" name="languages">
-            <span>NodeJs</span>
-        </label>
-        <button id="golos" class="btn">Голосовать</button>
-    </div>
+<button id="newOpros" class="newOpros animate__backInUp">Пройти опрос</button>
+<div class="wrapper animate__backInDown">
     <div id="result" class="res">
-
     </div>
-    <div class="resOpros-wrapper" id="resOpros-wrapper">
-        <button id="more" class="more">
+    <div class="resOpros-wrapper animate__flip" id="resOpros-wrapper">
+        <button id="more" class="more animate__fadeInUpBig">
             Пройти опрос еще раз
         </button>
         <button id="resOpros" class="resOpros">
