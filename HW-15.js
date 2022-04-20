@@ -71,7 +71,7 @@ function initialization() {
                 resultArea.style.display = 'flex';
                 resultArea.classList.add('animate__wobble');
                 resOprosWrapper.style.display = 'flex';
-                let commentTimer = setTimeout(() => {
+                 setTimeout(function () {
                     resOpros.classList.add('animate__heartBeat');
                 }, 2000);
             }
