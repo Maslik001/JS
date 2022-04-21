@@ -15,7 +15,7 @@ const plus = document.getElementById('plus');
  */
 function calc(firstNumber, symbol, secondNumber) {
     let sum;
-    while (symbol!=='='|| symbol!=='C'){
+    if (symbol!=='='|| symbol!=='C'){
     switch (symbol) {
         case '+':
             sum = firstNumber + secondNumber;
@@ -32,9 +32,9 @@ function calc(firstNumber, symbol, secondNumber) {
         case '%':
             sum= (firstNumber/(secondNumber*100)).toFixed(3);
             break;
-    }}
+    }
     console.log(sum)
-}
+}}
 
 calc(100, "/", 3);
 
