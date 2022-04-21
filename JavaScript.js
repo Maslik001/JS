@@ -37,18 +37,13 @@ const calcWrapper = document.getElementById('calc-wrapper')
 calnOn.addEventListener('click',()=>{
     calcWrapper.classList.add('animate__fadeInBottomLeft')
     calcWrapper.style.display = 'flex';
-    setTimeout(function () {
-        calcWrapper.classList.remove('animate__fadeInBottomLeft')
-        calcWrapper.classList.add('animate__fadeOutBottomLeft')
-    },1000)
-
-
+    calcWrapper.classList.remove('animate__fadeInBottomLeft')
 })
 
 closeCalc.addEventListener('click',()=>{
-
+    calcWrapper.classList.add('animate__fadeOutBottomLeft')
     calcWrapper.style.display = 'none';
-    calcWrapper.classList.add('animate__fadeInBottomLeft')
+    calcWrapper.classList.remove('animate__fadeOutBottomLeft')
 })
 
 
