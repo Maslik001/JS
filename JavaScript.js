@@ -7,7 +7,6 @@ const nine = document.getElementById('nine');
 const three = document.getElementById('three');
 const plus = document.getElementById('plus');
 
-
 /**
  * Функция для подсчёта результатов операции
  * @param param1 - первое ввреденное число
