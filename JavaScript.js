@@ -9,7 +9,7 @@ let plus = document.getElementById('plus');
 const trash = document.getElementById('trash');
 const trashCleaner = document.getElementById('trashiconCleaner');
 const cleaner = document.getElementById('cleaner');
-const folder = document.getElementById('folder');
+const folder = document.getElementById('cleanerfolder');
 const delFolder = document.getElementById('delFolder');
 const body = document.getElementById('body');
 /**
@@ -92,6 +92,7 @@ delFolder.addEventListener('click',()=>{
     delFolder.style.display = 'none';
     trash.style.display = 'flex';
     trashCleaner.style.display = 'none';
+    folder.style.display = 'none';
 })
 body.addEventListener('click',()=>{
     delFolder.style.display = 'none';
