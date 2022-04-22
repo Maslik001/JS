@@ -34,16 +34,6 @@ function calc(number, operation) {
     }
 }
 
-// nine.addEventListener('click',()=>{
-//     firstNum.push(9)
-// })
-// three.addEventListener('click',()=>{
-//     secondNum.push(2)
-// })
-// plus.addEventListener('click',()=>{
-//     return plus = "+";
-// })
-
 
 calnOn.addEventListener('click', () => {
     calcWrapper.classList.add('animate__fadeInBottomLeft')
@@ -104,18 +94,20 @@ setTimeout(function () {
     setTimeout(function () {
         effectPromt.classList.remove('animate__zoomInUp');
     }, 2500)
-    setInterval(function () {
+    setTimeout(function () {
         effectPromt.classList.add('animate__flash');
         effectPromt.style.display = 'none';
         effectPromt.style.display = 'flex';
     }, 1000)
-    effectPromt.addEventListener('keydown', (e) => {
-        if (e.key === '122') {
-            effectPromt.style.display = 'none';
-            effectPromt.classList.remove('animate__flash');
-            // setTimeout(function () {
-            //
-            // })
-        }
-    })
+
 }, 1000);
+
+document.addEventListener('keydown', keyCodeF, false);
+
+function keyCodeF(e) {
+    let keyCode = e.key;
+    if (keyCode === 'F11') {
+        effectPromt.classList.remove('animate__flash');
+        effectPromt.style.display = 'none';
+    }
+}

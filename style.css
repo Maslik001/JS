@@ -107,8 +107,10 @@
     cursor: pointer;
 }
 .effect-prompt{
-    width: 200px;
-    height: 50px;
+    max-width: 200px;
+    height: 62px;
+    position: absolute;
+    left: 40%;
     background-color: white;
     border-radius: 10px;
     display: none;
@@ -116,6 +118,7 @@
     justify-content: center;
     text-align: center;
     font-size: 16px;
+    line-height: 24px;
     box-shadow: 1px 4px 21px 5px darkblue;
     text-shadow: 2px 2px 9px darkgrey;
     animation-duration: 2.4s;
@@ -153,7 +156,10 @@
 }
 .footer-inform__img{
     display: flex;
-    max-height: 20px;
+    max-height: 15px;
+}
+.footer-inform__img:last-child{
+    max-height: 25px;
 }
 .calc-wrapper{
     min-width: 330px;
