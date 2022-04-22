@@ -18,6 +18,7 @@
     align-items: center;
     overflow: hidden;
     min-height: 94vmin;
+    position: relative;
 }
 .myComp {
     position: absolute;
@@ -48,26 +49,25 @@
     transition: all 1s;
     cursor: pointer;
     color: #FFFFFF;
-    animation-duration: 1s;
+    animation-duration: 1.5s;
 }
 .folder{
     max-width: 50px;
-    box-shadow: 5px 5px 5px rgb(0 0 0 / 30%);
 }
 .delFolder{
     background-color: #F2F2F4;
-    width: 200px;
-    height: 35px;
+    width: 185px;
+    height: 30px;
     box-shadow: 7px 14px 8px rgb(0 0 0 / 30%);
     display: none;
     align-items: center;
     position: absolute;
-    bottom: 120%;
+    bottom: 100%;
     right: 100%;
     cursor: pointer;
     color: black;
     justify-content: center;
-
+    animation-duration: 1s;
 }
 .delFolder:hover{
     background-color: #d3d3d3;
@@ -83,8 +83,8 @@
 }
 .cleanerTrash{
     background-color: #F2F2F4;
-    width: 200px;
-    height: 35px;
+    width: 185px;
+    height: 30px;
     box-shadow: 7px 14px 8px rgb(0 0 0 / 30%);
     display: none;
     align-items: center;
@@ -92,6 +92,7 @@
     bottom: 20%;
     right: 5%;
     cursor: pointer;
+    animation-duration: 1s;
 }
 .cleanerTrash:hover{
     background-color: #d3d3d3;
@@ -172,7 +173,7 @@
 .res{
     position: absolute;
     right: 40px;
-    top: 50px;
+    top: 70px;
     font-family: 'Oswald';
     font-style: normal;
     font-weight: 500;
@@ -182,8 +183,7 @@
     align-items: center;
     text-align: right;
     color: #F2F2F4;
-    border: 1px solid #000000;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
 }
 .calc {
     max-width: 330px;

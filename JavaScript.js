@@ -27,16 +27,15 @@ function calc(number,operation) {
     }
 }
 
-
-nine.addEventListener('click',()=>{
-    firstNum.push(9)
-})
-three.addEventListener('click',()=>{
-    secondNum.push(2)
-})
-plus.addEventListener('click',()=>{
-    return plus = "+";
-})
+// nine.addEventListener('click',()=>{
+//     firstNum.push(9)
+// })
+// three.addEventListener('click',()=>{
+//     secondNum.push(2)
+// })
+// plus.addEventListener('click',()=>{
+//     return plus = "+";
+// })
 
 
 
@@ -72,11 +71,14 @@ folder.addEventListener('contextmenu',(e)=>{
 })
 
 delFolder.addEventListener('click',()=>{
-    folder.classList.add('animate__fadeOut');
-    delFolder.style.display = 'none';
-    trash.style.display = 'flex';
-    trashCleaner.style.display = 'none';
-    folder.style.display = 'none';
+    folder.classList.add('animate__hinge');
+    setInterval(function (){
+        delFolder.style.display = 'none';
+        trash.style.display = 'flex';
+        trashCleaner.style.display = 'none';
+        folder.style.display = 'none';
+    },1500)
+
 })
 body.addEventListener('click',()=>{
     delFolder.style.display = 'none';
