@@ -11,6 +11,7 @@ const trashCleaner = document.getElementById('trashiconCleaner');
 const cleaner = document.getElementById('cleaner');
 const folder = document.getElementById('folder');
 const delFolder = document.getElementById('delFolder');
+const body = document.getElementById('body');
 /**
  * Функция для подсчёта результатов операции
  * @param param1 - первое ввреденное число
@@ -19,7 +20,7 @@ const delFolder = document.getElementById('delFolder');
  */
 function calc(firstNumber, symbol, secondNumber) {
     let sum;
-    if (symbol!=='='|| symbol!=='C'){
+    // if (symbol!=='='|| symbol!=='C'){
     switch (symbol) {
         case '+':
             sum = firstNumber + secondNumber;
@@ -38,7 +39,8 @@ function calc(firstNumber, symbol, secondNumber) {
             break;
     }
     console.log(sum)
-}}
+// }
+}
 let firstNum = [];
 let secondNum = [];
 calc(...firstNum, plus.innerText, secondNum[0]);
@@ -90,4 +92,8 @@ delFolder.addEventListener('click',()=>{
     delFolder.style.display = 'none';
     trash.style.display = 'flex';
     trashCleaner.style.display = 'none';
+})
+body.addEventListener('click',()=>{
+    delFolder.style.display = 'none';
+    cleaner.style.display = 'none';
 })
