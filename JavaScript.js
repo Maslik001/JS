@@ -89,6 +89,7 @@ folder.addEventListener('contextmenu',(e)=>{
 })
 
 delFolder.addEventListener('click',()=>{
+    folder.classList.add('animate__fadeOut');
     delFolder.style.display = 'none';
     trash.style.display = 'flex';
     trashCleaner.style.display = 'none';
