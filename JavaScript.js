@@ -101,22 +101,21 @@ body.addEventListener('click', () => {
 
 setTimeout(function () {
     effectPromt.style.display = 'flex';
-    setTimeout(function (){
+    setTimeout(function () {
         effectPromt.classList.remove('animate__zoomInUp');
-    },2500)
+    }, 2500)
     setInterval(function () {
         effectPromt.classList.add('animate__flash');
         effectPromt.style.display = 'none';
         effectPromt.style.display = 'flex';
     }, 1000)
-effectPromt.addEventListener('keydown',(e)=>{
-if (e.key === '122'){
-    effectPromt.style.display = 'none';
-    effectPromt.classList.remove('animate__flash');
-    // setTimeout(function () {
-    //
-    // })
-}
-})
-
+    effectPromt.addEventListener('keydown', (e) => {
+        if (e.key === '122') {
+            effectPromt.style.display = 'none';
+            effectPromt.classList.remove('animate__flash');
+            // setTimeout(function () {
+            //
+            // })
+        }
+    })
 }, 1000);
