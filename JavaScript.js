@@ -14,36 +14,19 @@ const delFolder = document.getElementById('delFolder');
 const body = document.getElementById('body');
 /**
  * Функция для подсчёта результатов операции
- * @param param1 - первое ввреденное число
+ * @param param1 - ввреденное число
  * @param simbol - оператор
- * @param param2 - второе введенное число
  */
-function calc(firstNumber, symbol, secondNumber) {
-    let sum;
-    // if (symbol!=='='|| symbol!=='C'){
-    switch (symbol) {
-        case '+':
-            sum = firstNumber + secondNumber;
-            break;
-        case '-':
-            sum = firstNumber - secondNumber;
-            break;
-        case '/':
-            sum = (firstNumber / secondNumber).toFixed(3);
-            break;
-        case '*':
-            sum = firstNumber * secondNumber;
-            break;
-        case '%':
-            sum= (firstNumber/(secondNumber*100)).toFixed(3);
-            break;
+function calc(number,operation) {
+    switch (operation) {
+        case '+': return  result + number;
+        case '-': return  result - number;
+        case '/': return  result / number;
+        case '*': return  result * number;
+        case '%': return  result % number;
     }
-    console.log(sum)
-// }
 }
-let firstNum = [];
-let secondNum = [];
-calc(...firstNum, plus.innerText, secondNum[0]);
+
 
 nine.addEventListener('click',()=>{
     firstNum.push(9)
