@@ -10,10 +10,11 @@ const folder = document.getElementById('cleanerfolder');
 const delFolder = document.getElementById('delFolder');
 const body = document.getElementById('body');
 const effectPromt = document.getElementById('effect-prompt');
-const calc =document.getElementById('calc');
+const calc = document.getElementById('calc');
 const resBlock = document.getElementById('resBlock');
 let isOperation;
-let result = 0;
+let result = '';
+
 /**
  * Функция для подсчёта результатов операции
  * @param param1 - ввреденное число
@@ -23,6 +24,7 @@ function calcOper(number, operation) {
 // if(number.length-1 === 0){
 // number.reverse();
 // }
+
     switch (operation) {
         case '+':
             return Number(result) + number;
@@ -38,37 +40,39 @@ function calcOper(number, operation) {
 
 }
 
+// console.log(number.lastIndexOf('0'),number.length);
+
 calc.addEventListener('click', (e) => {
     let elem = e.target;
-    resBlock.textContent="";
+    resBlock.textContent = "";
     while (!elem.classList.contains('calc-btn')) {
         elem = elem.parentNode;
     }
     const dataNum = elem.dataset.symbol;
-    resBlock.insertAdjacentText('beforeend',`${dataNum}`);
-    if (Number(dataNum)){
-        if(isOperation){
-            result = calcOper(Number(dataNum),isOperation);
-        }
-        else {
+    let result1 = result + dataNum;
+    resBlock.insertAdjacentText('beforeend', `${result1}`);
+    if (Number(dataNum)) {
+
+        if (isOperation) {
+            result = calcOper(Number(dataNum), isOperation);
+        } else {
             result += dataNum;
         }
-    }
-    else if (dataNum === '='){
+    } else if (dataNum === '=') {
         console.log(result);
-        resBlock.textContent="";
-        resBlock.insertAdjacentText('beforeend',`${result}`);
+        resBlock.textContent = "";
+        resBlock.insertAdjacentText('beforeend', `${result}`);
         isOperation = '';
 
-    } else if(dataNum === 'del'){
-        result = 0;
+    } else if (dataNum === 'del') {
+        result = '';
         isOperation = '';
-        resBlock.textContent="";
+        resBlock.textContent = "";
     }
-    // else if(dataNum === '%'){
-    //
-    //     isOperation = '';
-    //     resBlock.textContent="";
+        // else if(dataNum === '%'){
+        //
+        //     isOperation = '';
+        //     resBlock.textContent="";
     // }
     else {
         isOperation = dataNum;
@@ -144,6 +148,7 @@ setTimeout(function () {
 }, 1000);
 
 document.addEventListener('keydown', keyCodeF, false);
+
 function keyCodeF(e) {
     let keyCode = e.key;
     if (keyCode === 'F11') {
