@@ -17,6 +17,7 @@ let isOperation;
 let result = '';
 let num2 = '';
 let memory = '';
+
 /**
  * Функция для подсчёта результатов операции
  * @param param1 - ввреденное число
@@ -24,8 +25,8 @@ let memory = '';
  */
 function calcOper(number, operation) {
     num2 = '';
-    result = result*1;
-    number = number*1;
+    result = result * 1;
+    number = number * 1;
     switch (operation) {
         case '+':
             return result + number;
@@ -39,6 +40,20 @@ function calcOper(number, operation) {
 
 }
 
+function memoryF(){
+
+    if (memory === "") {
+        memory = result;
+
+    } else {
+        num2 = memory
+        calcOper(num2, isOperation);
+        resBlock.textContent = `${memory}`;
+    }
+    memoryBtn.style.backgroundColor = 'aqua'
+}
+
+
 // console.log(number.lastIndexOf('0'),number.length);
 
 calc.addEventListener('click', (e) => {
@@ -51,8 +66,14 @@ calc.addEventListener('click', (e) => {
     // resBlock.textContent = "";
     if (Number(dataNum) || dataNum === '0') {
         if (isOperation) {
-            num2 += dataNum;
-            // calcOper(result, isOperation);
+            if (dataNum === 'M+') {
+                resBlock.textContent = `${memory}`;
+                memoryF();
+
+                // num2 = memory;
+            } else {
+                num2 += dataNum;
+            }
         } else {
             result += dataNum;
         }
@@ -67,18 +88,24 @@ calc.addEventListener('click', (e) => {
         num2 = '';
         isOperation = '';
         resBlock.textContent = "";
-    } else if (dataNum === 'M+'){
-        memory = result;
-        memoryBtn.style.backgroundColor = 'aqua'
-        resBlock.textContent = `${memory}`;
-        result = calcOper(memory,isOperation);
-
-    } else if (dataNum === 'M-') {
+    }
+    // else if (dataNum === 'M+') {
+    //     resBlock.textContent = `${memory}`;
+    //     if (memory === "") {
+    //         memory = result;
+    //         resBlock.textContent = `${memory}`;
+    //     } else {
+    //         result = memory
+    //          calcOper(result, isOperation);
+    //         resBlock.textContent = `${memory}`;
+    //     }
+    //     memoryBtn.style.backgroundColor = 'aqua'
+    // }
+    else if (dataNum === 'M-') {
         memory = '';
         resBlock.textContent = "";
         memoryBtn.style.backgroundColor = 'white';
-    }
-    else {
+    } else {
         isOperation = dataNum;
     }
     console.log(elem.dataset.symbol);
