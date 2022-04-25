@@ -29,25 +29,48 @@ function calcOper(number, operation) {
     number = number * 1;
     switch (operation) {
         case '+':
-            return result + number;
+            return result =  result + number;
         case '-':
-            return result - number;
+            return result = result - number;
         case '/':
-            return result / number;
+            return result = result / number;
         case '*':
-            return result * number;
+            return result = result * number;
     }
 
 }
+// function calcOperMemory(number, operation) {
+//     num2 = '';
+//     result = result * 1;
+//     number = number * 1;
+//     switch (operation) {
+//         case '+':
+//             return result + number;
+//         case '-':
+//             return result - number;
+//         case '/':
+//             return result / number;
+//         case '*':
+//             return result * number;
+//     }
+//
+// }
 
 function memoryF(){
-    if (memory === "") {
-        memory = result;
-      return   resBlock.textContent = `${memory}` + memory;
+    if (memory === '') {
+        memory = result*1;
+      return   resBlock.textContent = `${memory}`;
 
-    } else {
+    } else if(Number(memory) && isOperation){
         num2 = memory
-       return  resBlock.textContent = `${memory}` + calcOper(num2, isOperation);
+        calcOper(num2, isOperation);
+        return  resBlock.textContent = `${memory}`;
+    }
+    else {
+        result = Number(result);
+         result = memory
+        calcOper(result, isOperation)
+       return  resBlock.textContent = `${memory}`;
     }
 
 }
@@ -63,7 +86,7 @@ calc.addEventListener('click', (e) => {
     const dataNum = elem.dataset.symbol;
     resBlock.insertAdjacentText('beforeend', `${dataNum}`);
     if (Number(dataNum) || dataNum === 'M+') {
-        if (isOperation) {
+        if (isOperation || dataNum === 'M+') {
             if (dataNum === 'M+') {
                 memoryF();
                 memoryBtn.style.backgroundColor = 'aqua';
@@ -75,7 +98,7 @@ calc.addEventListener('click', (e) => {
             result += dataNum;
         }
     } else if (dataNum === '=') {
-        result = calcOper(num2, isOperation);
+        calcOper(num2, isOperation);
         resBlock.textContent = "";
         resBlock.insertAdjacentText('beforeend', `${result}`);
         isOperation = '';
