@@ -39,29 +39,13 @@ function calcOper(number, operation) {
     }
 
 }
-// function calcOperMemory(number, operation) {
-//     num2 = '';
-//     result = result * 1;
-//     number = number * 1;
-//     switch (operation) {
-//         case '+':
-//             return result + number;
-//         case '-':
-//             return result - number;
-//         case '/':
-//             return result / number;
-//         case '*':
-//             return result * number;
-//     }
-//
-// }
 
 function memoryF(){
     if (memory === '') {
         memory = result*1;
       return   resBlock.textContent = `${memory}`;
 
-    } else if(Number(memory) && isOperation){
+    } else if(memory !== '' && isOperation){
         num2 = memory
         calcOper(num2, isOperation);
         return  resBlock.textContent = `${memory}`;
@@ -85,7 +69,11 @@ calc.addEventListener('click', (e) => {
     }
     const dataNum = elem.dataset.symbol;
     resBlock.insertAdjacentText('beforeend', `${dataNum}`);
+    metka:
     if (Number(dataNum) || dataNum === 'M+') {
+        // resBlock.textContent = "";
+
+
         if (isOperation || dataNum === 'M+') {
             if (dataNum === 'M+') {
                 memoryF();
@@ -102,12 +90,15 @@ calc.addEventListener('click', (e) => {
         resBlock.textContent = "";
         resBlock.insertAdjacentText('beforeend', `${result}`);
         isOperation = '';
+        result = '';
+        break metka;
 
     } else if (dataNum === 'del') {
         result = '';
         num2 = '';
         isOperation = '';
         resBlock.textContent = "";
+
     }
     // else if (dataNum === 'M+') {
     //     resBlock.textContent = `${memory}`;
