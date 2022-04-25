@@ -41,16 +41,15 @@ function calcOper(number, operation) {
 }
 
 function memoryF(){
-
     if (memory === "") {
         memory = result;
+      return   resBlock.textContent = `${memory}` + memory;
 
     } else {
         num2 = memory
-        calcOper(num2, isOperation);
-        resBlock.textContent = `${memory}`;
+       return  resBlock.textContent = `${memory}` + calcOper(num2, isOperation);
     }
-    memoryBtn.style.backgroundColor = 'aqua'
+
 }
 
 
@@ -63,13 +62,11 @@ calc.addEventListener('click', (e) => {
     }
     const dataNum = elem.dataset.symbol;
     resBlock.insertAdjacentText('beforeend', `${dataNum}`);
-    // resBlock.textContent = "";
-    if (Number(dataNum) || dataNum === '0') {
+    if (Number(dataNum) || dataNum === 'M+') {
         if (isOperation) {
             if (dataNum === 'M+') {
-                resBlock.textContent = `${memory}`;
                 memoryF();
-
+                memoryBtn.style.backgroundColor = 'aqua';
                 // num2 = memory;
             } else {
                 num2 += dataNum;
