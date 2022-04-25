@@ -12,30 +12,29 @@ const body = document.getElementById('body');
 const effectPromt = document.getElementById('effect-prompt');
 const calc = document.getElementById('calc');
 const resBlock = document.getElementById('resBlock');
+const memoryBtn = document.getElementById('memory')
 let isOperation;
 let result = '';
-
+let num2 = '';
+let memory = '';
 /**
  * Функция для подсчёта результатов операции
  * @param param1 - ввреденное число
  * @param simbol - оператор
  */
 function calcOper(number, operation) {
-// if(number.length-1 === 0){
-// number.reverse();
-// }
-
+    num2 = '';
+    result = result*1;
+    number = number*1;
     switch (operation) {
         case '+':
-            return Number(result) + number;
+            return result + number;
         case '-':
-            return Number(result) - number;
+            return result - number;
         case '/':
-            return Number(result) / number;
+            return result / number;
         case '*':
-            return Number(result) * number;
-        case '%':
-            return Number(result) % number;
+            return result * number;
     }
 
 }
@@ -44,36 +43,41 @@ function calcOper(number, operation) {
 
 calc.addEventListener('click', (e) => {
     let elem = e.target;
-    resBlock.textContent = "";
     while (!elem.classList.contains('calc-btn')) {
         elem = elem.parentNode;
     }
     const dataNum = elem.dataset.symbol;
-    let result1 = result + dataNum;
-    resBlock.insertAdjacentText('beforeend', `${result1}`);
-    if (Number(dataNum)) {
-
+    resBlock.insertAdjacentText('beforeend', `${dataNum}`);
+    // resBlock.textContent = "";
+    if (Number(dataNum) || dataNum === '0') {
         if (isOperation) {
-            result = calcOper(Number(dataNum), isOperation);
+            num2 += dataNum;
+            // calcOper(result, isOperation);
         } else {
             result += dataNum;
         }
     } else if (dataNum === '=') {
-        console.log(result);
+        result = calcOper(num2, isOperation);
         resBlock.textContent = "";
         resBlock.insertAdjacentText('beforeend', `${result}`);
         isOperation = '';
 
     } else if (dataNum === 'del') {
         result = '';
+        num2 = '';
         isOperation = '';
         resBlock.textContent = "";
+    } else if (dataNum === 'M+'){
+        memory = result;
+        memoryBtn.style.backgroundColor = 'aqua'
+        resBlock.textContent = `${memory}`;
+        result = calcOper(memory,isOperation);
+
+    } else if (dataNum === 'M-') {
+        memory = '';
+        resBlock.textContent = "";
+        memoryBtn.style.backgroundColor = 'white';
     }
-        // else if(dataNum === '%'){
-        //
-        //     isOperation = '';
-        //     resBlock.textContent="";
-    // }
     else {
         isOperation = dataNum;
     }
