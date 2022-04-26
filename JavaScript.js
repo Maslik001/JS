@@ -110,7 +110,10 @@ function calcOper(num1, operation, num2) {
 /**
  * добавление калькулятора на страницу
  */
+let blockAddNewCalc = true;
 calnOn.addEventListener('click', () => {
+    if(blockAddNewCalc === true){
+        blockAddNewCalc = false;
     calcWrapper = document.getElementById('calc-wrapper');
     let newCalc = `<div class="res" id="resBlock"></div>
         <div class="close" id="close">close</div>
@@ -144,7 +147,7 @@ calnOn.addEventListener('click', () => {
         calcWrapper.classList.remove('animate__fadeInBottomLeft')
     }, 1200)
     closeCalc.addEventListener('click', () => {
-
+        blockAddNewCalc = true;
         calcWrapper.classList.add('animate__fadeOutBottomLeft')
         setTimeout(function () {
             calcWrapper.style.display = 'none';
@@ -153,9 +156,9 @@ calnOn.addEventListener('click', () => {
                 calcWrapper.removeChild(calcWrapper.firstChild);
             }
         }, 1000)
-
     })
     initialization();
+    }
 });
 
 function initialization() {
