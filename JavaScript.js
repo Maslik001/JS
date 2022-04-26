@@ -107,8 +107,6 @@ function calcOper(num1, operation, num2) {
 }
 
 
-
-
 /**
  * добавление калькулятора на страницу
  */
@@ -159,6 +157,7 @@ calnOn.addEventListener('click', () => {
     })
     initialization();
 });
+
 function initialization() {
     calc.addEventListener('click', (e) => {
         let elem = e.target;
@@ -170,33 +169,40 @@ function initialization() {
         resBlock.insertAdjacentText('beforeend', `${dataNum}`);
         if (Number(dataNum) || dataNum === '0') {
             if (isOperation === undefined) {
-                num1 += dataNum*1;
+                num1 += dataNum * 1;
             } else {
                 if (result === '') {
-                    num2 += dataNum*1;
-                    calcOper(num1, isOperation, num2);
+                    if (isOperation !== '='){
+                        num2 += dataNum * 1;
+                    } else {
+                        calcOper(num1, isOperation, num2);
+                    }
                 } else {
-                    num2 = dataNum*1;
+                    num2 = dataNum * 1;
                     calcOper(result, isOperation, num2);
                 }
             }
         } else if (dataNum === '=') {
-            resBlock.textContent = `${result}`;
-        } else if (dataNum === 'del'){
+            if (result === ''){
+                calcOper(num1, isOperation, num2);
+                resBlock.textContent = `${result}`;
+            } else {
+                resBlock.textContent = `${result}`;
+            }
+        } else if (dataNum === 'del') {
             num1 = '';
             num2 = '';
             result = '';
             isOperation = undefined;
             resBlock.textContent = '';
 
-        } else if (dataNum === 'M'){
+        } else if (dataNum === 'M') {
             memoryFunc(a);
-        } else if (dataNum === 'MC'){
+        } else if (dataNum === 'MC') {
             memory = '';
             memSymbol.style.display = 'none';
             resBlock.textContent = `${memory}`;
-        }
-        else {
+        } else {
             isOperation = dataNum;
         }
     });
@@ -210,19 +216,33 @@ function memoryFunc(dataNum) {
     memSymbol = document.getElementById('mem');
     memoryBtn = document.getElementById('memory');
     memSymbol.style.display = 'flex';
-
+    let res = resBlock.textContent.split('M', 1);
     if (memory === '') {
-        memory = dataNum * 1;
-        return resBlock.textContent = `${memory}`;
+        if (Number(res)) {
+            memory = resBlock.textContent.split('M', 1) * 1;
+            return resBlock.textContent = `${memory}`;
+        } else {
+            memSymbol.style.display = 'none';
+            return resBlock.textContent = `Ошибка`;
+        }
+    } else if (memory !== '' && isOperation !== undefined) {
+        if (num1 === '') {
+            calcOper(memory, isOperation, num2);
+            return resBlock.textContent = `${result}`;
+        } else {
+            if (result === '') {
+                calcOper(num1, isOperation, memory);
+                return resBlock.textContent = `${result}`;
+            } else {
+                num2 = result;
+                calcOper(num1, isOperation, num2);
+                return resBlock.textContent = `${result}`;
+            }
+        }
 
-    } else if (memory !== '' && isOperation) {
-        num2 = memory
-        calcOper(num2, isOperation);
-        return resBlock.textContent = `${memory}`;
     } else {
-        result = Number(result);
-        result = memory
-        calcOper(result, isOperation)
+        num1 = memory;
+        calcOper(num1, isOperation, num2);
         return resBlock.textContent = `${memory}`;
     }
 }
