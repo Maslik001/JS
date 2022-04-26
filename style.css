@@ -186,6 +186,19 @@
     cursor: pointer;
 
 }
+.mem{
+    display: none;
+    position: absolute;
+    top: -3%;
+    left: -2%;
+    color: white;
+    padding: 30px;
+    font-size: 16px;
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 500;
+    cursor: pointer;
+}
 .res{
     position: absolute;
     right: 40px;
@@ -209,9 +222,9 @@
     /* box-shadow: 7px 14px 8px rgb(0 0 0 / 30%); */
     border-radius: 12px;
     display: grid;
-    gap: 0px;
+    gap: 0;
     grid-template-columns: repeat(4,1fr);
-    padding: 35px 0px 25px 0px;
+    padding: 35px 0 25px 0;
     cursor: pointer;
 }
 .grid{
