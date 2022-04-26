@@ -12,7 +12,7 @@ const body = document.getElementById('body');
 const effectPromt = document.getElementById('effect-prompt');
 let calc;
 let resBlock;
-const memoryBtn = document.getElementById('memory');
+let memoryBtn;
 let memSymbol;
 let isOperation;
 let result = '';
@@ -106,29 +106,7 @@ function calcOper(num1, operation, num2) {
 
 }
 
-/**
- * Работа с памятью
- * @returns {string}
- */
-/*function memoryF() {
-    memSymbol = document.getElementById('mem');
-    memSymbol.style.display = 'flex';
-    if (memory === '') {
-        memory = result * 1;
-        return resBlock.textContent = `${memory}`;
 
-    } else if (memory !== '' && isOperation) {
-        num2 = memory
-        calcOper(num2, isOperation);
-        return resBlock.textContent = `${memory}`;
-    } else {
-        result = Number(result);
-        result = memory
-        calcOper(result, isOperation)
-        return resBlock.textContent = `${memory}`;
-    }
-
-}*/
 
 
 /**
@@ -141,8 +119,8 @@ calnOn.addEventListener('click', () => {
         <div class="mem" id="mem">M</div>
         <div class="calc" id="calc">
             <div class="calc-btn" data-symbol="del">C</div>
-            <div class="calc-btn memory" id="memory" data-symbol="MS">MS</div>
-            <div class="calc-btn" data-symbol="MС">MС</div>
+            <div class="calc-btn memory" id="memory" data-symbol="M">M</div>
+            <div class="calc-btn" data-symbol="MC">MС</div>
             <div class="calc-btn" data-symbol="/">&divide;</div>
             <div class="calc-btn" data-symbol="7">7</div>
             <div class="calc-btn" data-symbol="8">8</div>
@@ -181,8 +159,6 @@ calnOn.addEventListener('click', () => {
     })
     initialization();
 });
-
-
 function initialization() {
     calc.addEventListener('click', (e) => {
         let elem = e.target;
@@ -190,6 +166,7 @@ function initialization() {
             elem = elem.parentNode;
         }
         const dataNum = elem.dataset.symbol;
+        let a = dataNum;
         resBlock.insertAdjacentText('beforeend', `${dataNum}`);
         if (Number(dataNum) || dataNum === '0') {
             if (isOperation === undefined) {
@@ -212,53 +189,40 @@ function initialization() {
             isOperation = undefined;
             resBlock.textContent = '';
 
+        } else if (dataNum === 'M'){
+            memoryFunc(a);
+        } else if (dataNum === 'MC'){
+            memory = '';
+            memSymbol.style.display = 'none';
+            resBlock.textContent = `${memory}`;
         }
-
         else {
             isOperation = dataNum;
         }
-        /*        metka:
-                    if (Number(dataNum) || dataNum === 'M+' || dataNum === '0') {
-                        // resBlock.textContent = "";
-                        if (isOperation || dataNum === 'M+') {
-                            // resBlock.textContent = "";
-                            if (dataNum === 'M+') {
-                                memoryF();
-                                // memoryBtn.style.backgroundColor = 'aqua';
-                            } else if (num2 !== '') {
-                                num2 += dataNum;
-                            } else {
-                                num2 += dataNum;
-                            }
-
-                        } else {
-                            result += dataNum;
-                        }
-                    } else if (dataNum === '=') {
-                        result = calcOper(num2, isOperation);
-                        resBlock.textContent = "";
-                        resBlock.insertAdjacentText('beforeend', `${result}`);
-                        isOperation = '';
-                        // result = '';
-                        break metka;
-
-                    } else if (dataNum === 'del') {
-                        result = '';
-                        num2 = '';
-                        isOperation = '';
-                        resBlock.textContent = "";
-
-                    } else if (dataNum === 'M-') {
-                        memory = '';
-                        resBlock.textContent = "";
-                        memSymbol.style.display = 'none';
-                        // memoryBtn.style.backgroundColor = 'white';
-                    } else {
-                        isOperation = dataNum;
-                    }*/
-        // console.log(elem.dataset.symbol);
-
     });
 }
 
+/**
+ * Работа с памятью
+ * @returns {string}
+ * **/
+function memoryFunc(dataNum) {
+    memSymbol = document.getElementById('mem');
+    memoryBtn = document.getElementById('memory');
+    memSymbol.style.display = 'flex';
 
+    if (memory === '') {
+        memory = dataNum * 1;
+        return resBlock.textContent = `${memory}`;
+
+    } else if (memory !== '' && isOperation) {
+        num2 = memory
+        calcOper(num2, isOperation);
+        return resBlock.textContent = `${memory}`;
+    } else {
+        result = Number(result);
+        result = memory
+        calcOper(result, isOperation)
+        return resBlock.textContent = `${memory}`;
+    }
+}
