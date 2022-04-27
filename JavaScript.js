@@ -112,10 +112,10 @@ function calcOper(num1, operation, num2) {
  */
 let blockAddNewCalc = true;
 calnOn.addEventListener('click', () => {
-    if(blockAddNewCalc === true){
+    if (blockAddNewCalc === true) {
         blockAddNewCalc = false;
-    calcWrapper = document.getElementById('calc-wrapper');
-    let newCalc = `<div class="res" id="resBlock"></div>
+        calcWrapper = document.getElementById('calc-wrapper');
+        let newCalc = `<div class="res" id="resBlock"></div>
         <div class="close" id="close">close</div>
         <div class="mem" id="mem">M</div>
         <div class="calc" id="calc">
@@ -137,27 +137,27 @@ calnOn.addEventListener('click', () => {
             <div class="calc-btn" data-symbol="+">+</div>
             <div class="calc-btn grid" data-symbol="0">0</div>
             <div class="calc-btn" data-symbol="=">=</div></div>`
-    calcWrapper.insertAdjacentHTML("afterbegin", newCalc);
-    calc = document.getElementById('calc');
-    resBlock = document.getElementById('resBlock');
-    closeCalc = document.getElementById('close');
-    calcWrapper.classList.add('animate__fadeInBottomLeft')
-    calcWrapper.style.display = 'flex';
-    setTimeout(function () {
-        calcWrapper.classList.remove('animate__fadeInBottomLeft')
-    }, 1200)
-    closeCalc.addEventListener('click', () => {
-        blockAddNewCalc = true;
-        calcWrapper.classList.add('animate__fadeOutBottomLeft')
+        calcWrapper.insertAdjacentHTML("afterbegin", newCalc);
+        calc = document.getElementById('calc');
+        resBlock = document.getElementById('resBlock');
+        closeCalc = document.getElementById('close');
+        calcWrapper.classList.add('animate__fadeInBottomLeft')
+        calcWrapper.style.display = 'flex';
         setTimeout(function () {
-            calcWrapper.style.display = 'none';
-            calcWrapper.classList.remove('animate__fadeOutBottomLeft')
-            while (calcWrapper.firstChild) {
-                calcWrapper.removeChild(calcWrapper.firstChild);
-            }
-        }, 1000)
-    })
-    initialization();
+            calcWrapper.classList.remove('animate__fadeInBottomLeft')
+        }, 1200)
+        closeCalc.addEventListener('click', () => {
+            blockAddNewCalc = true;
+            calcWrapper.classList.add('animate__fadeOutBottomLeft')
+            setTimeout(function () {
+                calcWrapper.style.display = 'none';
+                calcWrapper.classList.remove('animate__fadeOutBottomLeft')
+                while (calcWrapper.firstChild) {
+                    calcWrapper.removeChild(calcWrapper.firstChild);
+                }
+            }, 1000)
+        })
+        initialization();
     }
 });
 
@@ -175,22 +175,27 @@ function initialization() {
                 num1 += dataNum * 1;
             } else {
                 if (result === '') {
-                    if (isOperation !== '='){
+                    if (isOperation !== '=') {
                         num2 += dataNum * 1;
+
                     } else {
                         calcOper(num1, isOperation, num2);
                     }
                 } else {
-                    num2 = dataNum * 1;
-                    calcOper(result, isOperation, num2);
+                    if (isOperation !== '='){
+                        num2 += dataNum * 1;
+                    } else{
+                        calcOper(result, isOperation, num2);
+                    }
                 }
             }
         } else if (dataNum === '=') {
-            if (result === ''){
+            if (result === '') {
                 calcOper(num1, isOperation, num2);
                 resBlock.textContent = `${result}`;
             } else {
                 resBlock.textContent = `${result}`;
+                result = '';
             }
         } else if (dataNum === 'del') {
             num1 = '';
