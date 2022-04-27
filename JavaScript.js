@@ -98,7 +98,7 @@ function calcOper(num1, operation, num2) {
             if (num1 === 0 || num2 === 0) {
                 return resBlock.textContent = `Ошибка`;
             } else {
-                return result = num1 / num2;;
+                return result = num1 / num2;
             }
         case '*':
             return result = num1 * num2;
