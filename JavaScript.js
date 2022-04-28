@@ -86,23 +86,24 @@ function keyCodeF(e) {
  * @param simbol - оператор
  */
 function calcOper(num1, operation, num2) {
-    result = '';
-    num2 *= 1;
-    num1 *= 1;
+    num1 = num1 * 1;
+    num2 = num2 * 1;
     switch (operation) {
         case '+':
-            return result = num1 + num2;
+            return num1 += num2;
         case '-':
-            return result = num1 - num2;
+            return num1 -= num2;
         case '/':
             if (num1 === 0 || num2 === 0) {
                 return resBlock.textContent = `Ошибка`;
             } else {
-                return result = Math.floor((num1 / num2) * 100) / 100;
+                // return num1 = Math.floor((num1 / num2) * 100) / 100;
+                return num1 = num1 / num2;
             }
         case '*':
-            return result = num1 * num2;
+            return num1 *= num2;
     }
+    isOperation="";
 
 }
 
@@ -173,29 +174,27 @@ function initialization() {
         if (Number(dataNum) || dataNum === '0') {
             if (isOperation === undefined) {
                 num1 += dataNum * 1;
-            } else {
-                if (result === '') {
-                    if (isOperation !== '=') {
-                        num2 += dataNum * 1;
-                    } else {
-                        calcOper(num1, isOperation, num2);
-                    }
-                } else {
-                    num2 = dataNum * 1;
-                    calcOper(result, isOperation, num2);
-                }
+            } else if (isOperation){
+                num2 += dataNum * 1;
             }
-        } else if (dataNum === '=') {
-            if (result === '') {
-                calcOper(num1, isOperation, num2);
-                resBlock.textContent = `${result}`;
-            } else {
-                resBlock.textContent = `${result}`;
+        }
+        else if (dataNum === '=') {
+            num1 = calcOper(num1, isOperation, num2);
+            // num1 = res;
+            num2 = ''
+            if (Number.isInteger(num1)){
+                resBlock.textContent = `${num1}`;
+            }else if(isOperation){
+                isOperation = dataNum;
             }
+            else{
+                num2 *= 1;
+                resBlock.textContent = `${num1.toFixed(2)}`;
+            }
+
         } else if (dataNum === 'del') {
             num1 = '';
             num2 = '';
-            result = '';
             isOperation = undefined;
             resBlock.textContent = '';
 
@@ -205,7 +204,21 @@ function initialization() {
             memory = '';
             memSymbol.style.display = 'none';
             resBlock.textContent = `${memory}`;
-        } else {
+        } else if (isOperation){
+            let res = calcOper(num1, isOperation, num2);
+            num1 = res;
+            num2 = ''
+            isOperation = dataNum;
+            if (Number.isInteger(num1)){
+                resBlock.textContent = `${num1}`;
+            } else if(isOperation){
+                isOperation = dataNum;
+            }
+            else{
+                num2 *= 1;
+                resBlock.textContent = `${num1.toFixed(2)}`;
+            }
+        }else {
             isOperation = dataNum;
         }
     });
