@@ -86,6 +86,10 @@ function keyCodeF(e) {
  * @param simbol - оператор
  */
 function calcOper(num1, operation, num2) {
+    if (num2 ===""){
+       return  initialization();
+    } else{
+
     num1 = num1 * 1;
     num2 = num2 * 1;
     switch (operation) {
@@ -98,13 +102,13 @@ function calcOper(num1, operation, num2) {
                 return resBlock.textContent = `Ошибка`;
             } else {
                 // return num1 = Math.floor((num1 / num2) * 100) / 100;
-                return num1 = num1 / num2;
+                return num1 /= num2;
             }
         case '*':
             return num1 *= num2;
     }
     isOperation="";
-
+    }
 }
 
 
@@ -211,7 +215,7 @@ function initialization() {
             num1 = calcOper(num1, isOperation, num2);
             num2 = ''
             isOperation = dataNum;
-
+            resBlock.textContent = `${num1}`;
             if (Number.isInteger(num1)){
                 resBlock.textContent = `${num1}`;
             } else if(isOperation){
@@ -219,7 +223,7 @@ function initialization() {
             }
             else{
                 num2 *= 1;
-                resBlock.textContent = `${num1.toFixed(2)}`;
+                resBlock.textContent = `${num1}`;
             }
         }else {
             isOperation = dataNum;
