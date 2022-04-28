@@ -98,7 +98,7 @@ function calcOper(num1, operation, num2) {
             if (num1 === 0 || num2 === 0) {
                 return resBlock.textContent = `Ошибка`;
             } else {
-                return result = num1 / num2;
+                return result = Math.floor((num1 / num2) * 100) / 100;
             }
         case '*':
             return result = num1 * num2;
@@ -177,16 +177,12 @@ function initialization() {
                 if (result === '') {
                     if (isOperation !== '=') {
                         num2 += dataNum * 1;
-
                     } else {
                         calcOper(num1, isOperation, num2);
                     }
                 } else {
-                    if (isOperation !== '='){
-                        num2 += dataNum * 1;
-                    } else{
-                        calcOper(result, isOperation, num2);
-                    }
+                    num2 = dataNum * 1;
+                    calcOper(result, isOperation, num2);
                 }
             }
         } else if (dataNum === '=') {
@@ -195,7 +191,6 @@ function initialization() {
                 resBlock.textContent = `${result}`;
             } else {
                 resBlock.textContent = `${result}`;
-                result = '';
             }
         } else if (dataNum === 'del') {
             num1 = '';
