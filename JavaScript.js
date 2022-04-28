@@ -176,16 +176,18 @@ function initialization() {
                 num1 += dataNum * 1;
             } else if (isOperation){
                 num2 += dataNum * 1;
+                resBlock.textContent = `${num1}${isOperation}${num2}`;
             }
         }
         else if (dataNum === '=') {
+            resBlock.textContent = ``;
             num1 = calcOper(num1, isOperation, num2);
-            // num1 = res;
             num2 = ''
             if (Number.isInteger(num1)){
                 resBlock.textContent = `${num1}`;
             }else if(isOperation){
                 isOperation = dataNum;
+                resBlock.textContent = ``;
             }
             else{
                 num2 *= 1;
@@ -205,10 +207,11 @@ function initialization() {
             memSymbol.style.display = 'none';
             resBlock.textContent = `${memory}`;
         } else if (isOperation){
-            let res = calcOper(num1, isOperation, num2);
-            num1 = res;
+            resBlock.textContent = `${num2}`;
+            num1 = calcOper(num1, isOperation, num2);
             num2 = ''
             isOperation = dataNum;
+
             if (Number.isInteger(num1)){
                 resBlock.textContent = `${num1}`;
             } else if(isOperation){
