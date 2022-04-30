@@ -266,7 +266,12 @@ function memoryFunc(dataNum) {
             memSymbol.style.display = 'none';
             resBlock.textContent = `Ошибка`;
         }
-    } else {
-        
+    } else if (num1 !== ''&& isOperation !== undefined){
+        num2 = memory;
+        resBlock.textContent = `${num1}${isOperation}${memory}`;
+    }
+    else {
+        num1 = memory;
+        resBlock.textContent = `${num1}`;
     }
 }
