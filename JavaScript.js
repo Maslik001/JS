@@ -182,7 +182,7 @@ function initialization() {
                 num1 += dataNum * 1;
             } else if (isOperation) {
                 num2 += dataNum * 1;
-                if (Number.isInteger(num1)) {
+                if (Number.isInteger(num1*1) && Number.isInteger(num2*1)) {
                     resBlock.textContent = `${num1}${isOperation}${num2}`;
                 } else {
                     resBlock.textContent = `${num1.toFixed(2)}${isOperation}${num2}`;
@@ -204,6 +204,7 @@ function initialization() {
                     if (Number.isInteger(num1)) {
                         resBlock.textContent = `${num1}`;
                     } else {
+                        num2 *= 1;
                         resBlock.textContent = `${num1.toFixed(2)}`;
                     }
                 } else {
@@ -218,20 +219,22 @@ function initialization() {
             resBlock.textContent = '';
 
         } else if (dataNum === 'M') {
-            memoryFunc(a);
+            memoryFunc();
         } else if (dataNum === 'MC') {
             resBlock.textContent = ``;
             memory = '';
             memSymbol.style.display = 'none';
         } else if (isOperation) {
-            isOperation = dataNum;
-            resBlock.textContent = `${num1.toFixed(2)}${isOperation}`;
-            if (num2 === "") {
+            if (num2 !== "") {
                 num1 = calcOper(num1, isOperation, num2);
                 num2 = ''
                 num1 *= 1;
                 isOperation = dataNum;
-                resBlock.textContent = `${num1.toFixed(2)}${isOperation}`;
+                if (Number.isInteger(num1)) {
+                    resBlock.textContent = `${num1}${isOperation}`;
+                } else {
+                    resBlock.textContent = `${num1.toFixed(2)}${isOperation}`;
+                }
             } else {
                 if (Number.isInteger(num1)) {
                     resBlock.textContent = `${num1}${isOperation}`;
@@ -252,7 +255,7 @@ function initialization() {
  * Работа с памятью
  * @returns {string}
  * **/
-function memoryFunc(dataNum) {
+function memoryFunc() {
     memSymbol = document.getElementById('mem');
     memoryBtn = document.getElementById('memory');
     memSymbol.style.display = 'flex';
