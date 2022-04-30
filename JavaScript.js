@@ -167,7 +167,6 @@ calnOn.addEventListener('click', () => {
 });
 
 
-
 function initialization() {
     calc.addEventListener('click', (e) => {
         let elem = e.target;
@@ -176,6 +175,7 @@ function initialization() {
         }
         const dataNum = elem.dataset.symbol;
         let a = dataNum;
+
         resBlock.insertAdjacentText('beforeend', `${dataNum}`);
         if (Number(dataNum) || dataNum === '0') {
             if (isOperation === undefined) {
@@ -190,22 +190,26 @@ function initialization() {
                 // resBlock.textContent = `${num1}${isOperation}${num2}`;
             }
         } else if (dataNum === '=') {
-            resBlock.textContent = ``;
-            num1 = calcOper(num1, isOperation, num2);
-            num2 = ''
-            isOperation = undefined;
-            if (Number.isInteger(num1)) {
+            if (num2 === '') {
                 resBlock.textContent = `${num1}`;
-            } else if (isOperation) {
-                // isOperation = dataNum;
+            } else {
+                resBlock.textContent = ``;
+                num1 = calcOper(num1, isOperation, num2);
+                num2 = ''
+                isOperation = undefined;
                 if (Number.isInteger(num1)) {
                     resBlock.textContent = `${num1}`;
+                } else if (isOperation) {
+                    // isOperation = dataNum;
+                    if (Number.isInteger(num1)) {
+                        resBlock.textContent = `${num1}`;
+                    } else {
+                        resBlock.textContent = `${num1.toFixed(2)}`;
+                    }
                 } else {
+                    num2 *= 1;
                     resBlock.textContent = `${num1.toFixed(2)}`;
                 }
-            } else {
-                num2 *= 1;
-                resBlock.textContent = `${num1.toFixed(2)}`;
             }
         } else if (dataNum === 'del') {
             num1 = '';
@@ -225,6 +229,7 @@ function initialization() {
             if (num2 === "") {
                 num1 = calcOper(num1, isOperation, num2);
                 num2 = ''
+                num1 *= 1;
                 isOperation = dataNum;
                 resBlock.textContent = `${num1.toFixed(2)}${isOperation}`;
             } else {
@@ -262,6 +267,6 @@ function memoryFunc(dataNum) {
             resBlock.textContent = `Ошибка`;
         }
     } else {
-
+        
     }
 }
