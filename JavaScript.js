@@ -15,7 +15,6 @@ let resBlock;
 let memoryBtn;
 let memSymbol;
 let isOperation;
-let result = '';
 let num2 = '';
 let num1 = '';
 let memory = '';
@@ -82,8 +81,9 @@ function keyCodeF(e) {
 
 /**
  * Функция для подсчёта результатов операции
- * @param param1 - ввреденное число
- * @param simbol - оператор
+ * @param num1 - первое введенное число
+ * @param operation - оператор
+ * @param num2 - второе ввреденное число
  */
 function calcOper(num1, operation, num2) {
     if (num2 === "") {
@@ -101,7 +101,6 @@ function calcOper(num1, operation, num2) {
                 if (num1 === 0 || num2 === 0) {
                     return resBlock.textContent = `Ошибка`;
                 } else {
-                    // return num1 = Math.floor((num1 / num2) * 100) / 100;
                     return num1 /= num2;
                 }
             case '*':
@@ -110,7 +109,6 @@ function calcOper(num1, operation, num2) {
         isOperation = "";
     }
 }
-
 
 /**
  * добавление калькулятора на страницу
@@ -174,8 +172,6 @@ function initialization() {
             elem = elem.parentNode;
         }
         const dataNum = elem.dataset.symbol;
-        let a = dataNum;
-
         resBlock.insertAdjacentText('beforeend', `${dataNum}`);
         if (Number(dataNum) || dataNum === '0') {
             if (isOperation === undefined) {
@@ -187,7 +183,6 @@ function initialization() {
                 } else {
                     resBlock.textContent = `${num1.toFixed(2)}${isOperation}${num2}`;
                 }
-                // resBlock.textContent = `${num1}${isOperation}${num2}`;
             }
         } else if (dataNum === '=') {
             if (num2 === '') {
@@ -200,7 +195,6 @@ function initialization() {
                 if (Number.isInteger(num1)) {
                     resBlock.textContent = `${num1}`;
                 } else if (isOperation) {
-                    // isOperation = dataNum;
                     if (Number.isInteger(num1)) {
                         resBlock.textContent = `${num1}`;
                     } else {
@@ -227,7 +221,7 @@ function initialization() {
         } else if (isOperation) {
             if (num2 !== "") {
                 num1 = calcOper(num1, isOperation, num2);
-                num2 = ''
+                num2 = '';
                 num1 *= 1;
                 isOperation = dataNum;
                 if (Number.isInteger(num1)) {
@@ -253,7 +247,6 @@ function initialization() {
 
 /**
  * Работа с памятью
- * @returns {string}
  * **/
 function memoryFunc() {
     memSymbol = document.getElementById('mem');
