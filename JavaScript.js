@@ -10,7 +10,7 @@ let Car = function (make, speed) {
 }
 
 Car.prototype.accelerate = function () {
-    console.log(`${this.speed}`*1+10)
+    console.log(`${this.speed+10}`)
     return this.speed*1 + 10;
 }
 Car.prototype.brake = function () {
@@ -36,12 +36,13 @@ class CarCl {
     get speedUS(){
         return this.speed /1.6;
     }
-    set speedUS(speedUS()){
-       return  _speedUS * 1.6;
+    set speedUS(v){
+       this.speed = v * 1.6;
     }
 }
 
 let bmw = new CarCl('BMW', 120);
 console.log(`Скорость ${bmw.make}: ${bmw.speedUS} mph`);
-bmw.speedUS = bmw.speedUS;
+let mill = bmw.speedUS;
+bmw.speedUS = mill;
 console.log(bmw.speedUS);
