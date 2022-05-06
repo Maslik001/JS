@@ -196,6 +196,7 @@ function initialization() {
                 }
             }
             return;
+            
         } else {
             isOperation = dataNum;
         }
