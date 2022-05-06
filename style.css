@@ -38,6 +38,19 @@
     cursor: pointer;
     box-shadow: 5px 5px 5px rgb(0 0 0 / 30%);
 }
+.game-window{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+}
+.game-window iframe{
+
+    width: 100vw;
+    height: 93vh;
+
+}
 .myComp:hover{
     transform: scale(1.1);
 }

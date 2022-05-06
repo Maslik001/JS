@@ -10,6 +10,9 @@ const folder = document.getElementById('cleanerfolder');
 const delFolder = document.getElementById('delFolder');
 const body = document.getElementById('body');
 const effectPromt = document.getElementById('effect-prompt');
+let csGame = document.getElementById('cs')
+let gameWindow = document.getElementById('gameWindow')
+// const csGame = document.getElementById('cs');
 let calc;
 let resBlock;
 let memoryBtn;
@@ -20,9 +23,13 @@ let num1 = '';
 let memory = '';
 let blockAddNewCalc = true;
 
-function newPopup(url) {
-    window.open(url,'popUpWindow1','height=800,width=1200,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
-}
+// function newPopup(url) {
+//     window.open(url,'_blank',"height='100vh',width='100vw',left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes, popup=yes")
+// }
+csGame.addEventListener('click',()=>{
+    gameWindow.style.display = 'block';
+})
+
 
 trash.addEventListener('contextmenu', (e) => {
     e.preventDefault();
