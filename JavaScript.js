@@ -18,6 +18,7 @@ let isOperation;
 let num2 = '';
 let num1 = '';
 let memory = '';
+let blockAddNewCalc = true;
 
 
 trash.addEventListener('contextmenu', (e) => {
@@ -32,13 +33,11 @@ cleaner.addEventListener('click', () => {
 trashCleaner.addEventListener('contextmenu', (e) => {
     e.preventDefault();
 })
-
 folder.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     delFolder.style.display = 'flex';
 
 })
-
 delFolder.addEventListener('click', () => {
     folder.classList.add('animate__hinge');
     setInterval(function () {
@@ -53,7 +52,8 @@ delFolder.addEventListener('click', () => {
 body.addEventListener('click', () => {
     delFolder.style.display = 'none';
     cleaner.style.display = 'none';
-})
+});
+document.addEventListener('keydown', keyCodeF, false);
 
 setTimeout(function () {
     effectPromt.style.display = 'flex';
@@ -68,7 +68,6 @@ setTimeout(function () {
 
 }, 1000);
 
-document.addEventListener('keydown', keyCodeF, false);
 
 function keyCodeF(e) {
     let keyCode = e.key;
@@ -110,10 +109,130 @@ function calcOper(num1, operation, num2) {
     }
 }
 
+function initialization() {
+    // closeCalc = document.getElementById('close');
+    calc.addEventListener('click', (e) => {
+        let elem = e.target;
+        while (!elem.classList.contains('calc-btn')) {
+            elem = elem.parentNode;
+        }
+        const dataNum = elem.dataset.symbol;
+        // resBlock.insertAdjacentText('beforeend', `${dataNum}`);
+        if (Number(dataNum) || dataNum === '0') {
+            if(isOperation==='='){
+                resBlock.textContent = num1='';
+                isOperation = undefined;
+            }
+            if (isOperation === undefined) {
+                num1 += dataNum * 1;
+            } else if (isOperation) {
+                num2 += dataNum * 1;
+                if (Number.isInteger(num1 * 1) && Number.isInteger(num2 * 1)) {
+                    resBlock.textContent = `${num1}${isOperation}${num2}`;
+                } else {
+                    resBlock.textContent = `${num1.toFixed(6)}${isOperation}${num2}`;
+                }
+                return;
+            }
+        } else if (dataNum === '=') {
+            if (num2 === '') {
+                resBlock.textContent = `${num1}`;
+            } else {
+                resBlock.textContent = ``;
+                num1 = calcOper(num1, isOperation, num2);
+                num2 = ''
+                isOperation = '=';
+                if (Number.isInteger(num1)) {
+                    resBlock.textContent = `${num1}`;
+                } else if (isOperation) {
+                    if (Number.isInteger(num1)) {
+                        resBlock.textContent = `${num1.toFixed(6)}`;
+                    } else {
+                        num2 *= 1;
+                        resBlock.textContent = `${num1.toFixed(6)}`;
+                    }
+                } else {
+                    num2 *= 1;
+                    resBlock.textContent = `${num1.toFixed(6)}`;
+                }
+            }
+            return;
+        } else if (dataNum === 'del') {
+            num1 = '';
+            num2 = '';
+            isOperation = undefined;
+            resBlock.textContent = '';
+            return;
+        } else if (dataNum === 'M') {
+            memoryFunc();
+            return;
+        } else if (dataNum === 'MC') {
+            // resBlock.textContent = ``;
+            memory = '';
+            memSymbol.style.display = 'none';
+            return;
+        } else if (isOperation) {
+            if (num2 !== "") {
+                num1 = calcOper(num1, isOperation, num2);
+                num2 = '';
+                num1 *= 1;
+                isOperation = dataNum;
+                if (Number.isInteger(num1)) {
+                    resBlock.textContent = `${num1}${isOperation}`;
+                } else {
+                    resBlock.textContent = `${num1.toFixed(6)}${isOperation}`;
+                }
+            } else {
+                if (Number.isInteger(num1)) {
+                    if(isOperation==='='){
+                        isOperation = dataNum;
+                    }
+                    resBlock.textContent = `${num1}${isOperation}`;
+                } else if (isOperation) {
+                    isOperation = dataNum;
+                } else {
+                    num2 *= 1;
+                    resBlock.textContent = `${num1}${isOperation}`;
+                }
+            }
+            return;
+        } else {
+            isOperation = dataNum;
+        }
+        resBlock.insertAdjacentText('beforeend', `${dataNum}`);
+
+    });
+}
+
+/**
+ * Работа с памятью
+ * **/
+function memoryFunc() {
+    memSymbol = document.getElementById('mem');
+    memoryBtn = document.getElementById('memory');
+    memSymbol.style.display = 'flex';
+    let res = resBlock.textContent.split('M', 1);
+    if (memory === '') {
+        if (Number(res)) {
+            memory = res * 1;
+            num1 = memory;
+            resBlock.textContent = `${memory}`;
+        } else {
+            memSymbol.style.display = 'none';
+            resBlock.textContent = `Ошибка`;
+        }
+    } else if (num1 !== '' && isOperation !== undefined) {
+        num2 = memory;
+        resBlock.textContent = `${num1}${isOperation}${memory}`;
+    } else {
+        num1 = memory;
+        resBlock.textContent = `${num1}`;
+    }
+}
+
 /**
  * добавление калькулятора на страницу
  */
-let blockAddNewCalc = true;
 calnOn.addEventListener('click', () => {
     if (blockAddNewCalc === true) {
         blockAddNewCalc = false;
@@ -150,6 +269,10 @@ calnOn.addEventListener('click', () => {
             calcWrapper.classList.remove('animate__fadeInBottomLeft')
         }, 1200)
         closeCalc.addEventListener('click', () => {
+            isOperation = undefined;
+            num2 = '';
+            num1 = '';
+            memory = '';
             blockAddNewCalc = true;
             calcWrapper.classList.add('animate__fadeOutBottomLeft')
             setTimeout(function () {
@@ -163,111 +286,3 @@ calnOn.addEventListener('click', () => {
         initialization();
     }
 });
-
-
-function initialization() {
-    calc.addEventListener('click', (e) => {
-        let elem = e.target;
-        while (!elem.classList.contains('calc-btn')) {
-            elem = elem.parentNode;
-        }
-        const dataNum = elem.dataset.symbol;
-        resBlock.insertAdjacentText('beforeend', `${dataNum}`);
-        if (Number(dataNum) || dataNum === '0') {
-            if (isOperation === undefined) {
-                num1 += dataNum * 1;
-            } else if (isOperation) {
-                num2 += dataNum * 1;
-                if (Number.isInteger(num1*1) && Number.isInteger(num2*1)) {
-                    resBlock.textContent = `${num1}${isOperation}${num2}`;
-                } else {
-                    resBlock.textContent = `${num1.toFixed(2)}${isOperation}${num2}`;
-                }
-            }
-        } else if (dataNum === '=') {
-            if (num2 === '') {
-                resBlock.textContent = `${num1}`;
-            } else {
-                resBlock.textContent = ``;
-                num1 = calcOper(num1, isOperation, num2);
-                num2 = ''
-                isOperation = undefined;
-                if (Number.isInteger(num1)) {
-                    resBlock.textContent = `${num1}`;
-                } else if (isOperation) {
-                    if (Number.isInteger(num1)) {
-                        resBlock.textContent = `${num1}`;
-                    } else {
-                        num2 *= 1;
-                        resBlock.textContent = `${num1.toFixed(2)}`;
-                    }
-                } else {
-                    num2 *= 1;
-                    resBlock.textContent = `${num1.toFixed(2)}`;
-                }
-            }
-        } else if (dataNum === 'del') {
-            num1 = '';
-            num2 = '';
-            isOperation = undefined;
-            resBlock.textContent = '';
-
-        } else if (dataNum === 'M') {
-            memoryFunc();
-        } else if (dataNum === 'MC') {
-            resBlock.textContent = ``;
-            memory = '';
-            memSymbol.style.display = 'none';
-        } else if (isOperation) {
-            if (num2 !== "") {
-                num1 = calcOper(num1, isOperation, num2);
-                num2 = '';
-                num1 *= 1;
-                isOperation = dataNum;
-                if (Number.isInteger(num1)) {
-                    resBlock.textContent = `${num1}${isOperation}`;
-                } else {
-                    resBlock.textContent = `${num1.toFixed(2)}${isOperation}`;
-                }
-            } else {
-                if (Number.isInteger(num1)) {
-                    resBlock.textContent = `${num1}${isOperation}`;
-                } else if (isOperation) {
-                    isOperation = dataNum;
-                } else {
-                    num2 *= 1;
-                    resBlock.textContent = `${num1}${isOperation}`;
-                }
-            }
-        } else {
-            isOperation = dataNum;
-        }
-    });
-}
-
-/**
- * Работа с памятью
- * **/
-function memoryFunc() {
-    memSymbol = document.getElementById('mem');
-    memoryBtn = document.getElementById('memory');
-    memSymbol.style.display = 'flex';
-    let res = resBlock.textContent.split('M', 1);
-    if (memory === '') {
-        if (Number(res)) {
-            memory = res * 1;
-            num1 = memory;
-            resBlock.textContent = `${memory}`;
-        } else {
-            memSymbol.style.display = 'none';
-            resBlock.textContent = `Ошибка`;
-        }
-    } else if (num1 !== ''&& isOperation !== undefined){
-        num2 = memory;
-        resBlock.textContent = `${num1}${isOperation}${memory}`;
-    }
-    else {
-        num1 = memory;
-        resBlock.textContent = `${num1}`;
-    }
-}
