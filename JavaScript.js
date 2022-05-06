@@ -20,6 +20,9 @@ let num1 = '';
 let memory = '';
 let blockAddNewCalc = true;
 
+function newPopup(url) {
+    window.open(url,'popUpWindow1','height=800,width=1200,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
+}
 
 trash.addEventListener('contextmenu', (e) => {
     e.preventDefault();
@@ -196,7 +199,7 @@ function initialization() {
                 }
             }
             return;
-            
+
         } else {
             isOperation = dataNum;
         }
