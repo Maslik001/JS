@@ -150,6 +150,10 @@ calnOn.addEventListener('click', () => {
             calcWrapper.classList.remove('animate__fadeInBottomLeft')
         }, 1200)
         closeCalc.addEventListener('click', () => {
+            isOperation = undefined;
+            num2 = '';
+            num1 = '';
+            memory = '';
             blockAddNewCalc = true;
             calcWrapper.classList.add('animate__fadeOutBottomLeft')
             setTimeout(function () {
@@ -166,6 +170,7 @@ calnOn.addEventListener('click', () => {
 
 
 function initialization() {
+    // closeCalc = document.getElementById('close');
     calc.addEventListener('click', (e) => {
         let elem = e.target;
         while (!elem.classList.contains('calc-btn')) {
@@ -181,7 +186,7 @@ function initialization() {
                 if (Number.isInteger(num1*1) && Number.isInteger(num2*1)) {
                     resBlock.textContent = `${num1}${isOperation}${num2}`;
                 } else {
-                    resBlock.textContent = `${num1.toFixed(2)}${isOperation}${num2}`;
+                    resBlock.textContent = `${num1.toFixed(6)}${isOperation}${num2}`;
                 }
             }
         } else if (dataNum === '=') {
@@ -196,14 +201,14 @@ function initialization() {
                     resBlock.textContent = `${num1}`;
                 } else if (isOperation) {
                     if (Number.isInteger(num1)) {
-                        resBlock.textContent = `${num1}`;
+                        resBlock.textContent = `${num1.toFixed(6)}`;
                     } else {
                         num2 *= 1;
-                        resBlock.textContent = `${num1.toFixed(2)}`;
+                        resBlock.textContent = `${num1.toFixed(6)}`;
                     }
                 } else {
                     num2 *= 1;
-                    resBlock.textContent = `${num1.toFixed(2)}`;
+                    resBlock.textContent = `${num1.toFixed(6)}`;
                 }
             }
         } else if (dataNum === 'del') {
@@ -227,7 +232,7 @@ function initialization() {
                 if (Number.isInteger(num1)) {
                     resBlock.textContent = `${num1}${isOperation}`;
                 } else {
-                    resBlock.textContent = `${num1.toFixed(2)}${isOperation}`;
+                    resBlock.textContent = `${num1.toFixed(6)}${isOperation}`;
                 }
             } else {
                 if (Number.isInteger(num1)) {
