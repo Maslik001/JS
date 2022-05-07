@@ -11,8 +11,8 @@ const delFolder = document.getElementById('delFolder');
 const body = document.getElementById('body');
 const effectPromt = document.getElementById('effect-prompt');
 let csGame = document.getElementById('cs')
-let gameWindow = document.getElementById('gameWindow')
-// const csGame = document.getElementById('cs');
+let gameWindow;
+let closeGame;
 let calc;
 let resBlock;
 let memoryBtn;
@@ -22,12 +22,27 @@ let num2 = '';
 let num1 = '';
 let memory = '';
 let blockAddNewCalc = true;
+let blockAddNewGame = true;
 
-// function newPopup(url) {
-//     window.open(url,'_blank',"height='100vh',width='100vw',left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes, popup=yes")
-// }
-csGame.addEventListener('click',()=>{
-    gameWindow.style.display = 'block';
+body.addEventListener('keydown', keyCodeF, false);
+csGame.addEventListener('click', () => {
+    if (blockAddNewGame === true) {
+        blockAddNewGame = false;
+        gameWindow = document.getElementById('gameWindow');
+        let game = `
+     <button class="close-game" id="closeGame">Закрыть игру</button>
+        <iframe src="https://game.play-cs.com/ru/cs_italy/27003/de" seamless frameborder=0 ></iframe>
+    `
+        gameWindow.insertAdjacentHTML("afterbegin", game);
+        gameWindow.style.display = 'block';
+        closeGame = document.getElementById('closeGame');
+        closeGame.addEventListener('click', () => {
+            blockAddNewGame = true;
+            while (gameWindow.firstChild) {
+                gameWindow.removeChild(gameWindow.firstChild);
+            }
+        })
+    }
 })
 
 
@@ -84,6 +99,8 @@ function keyCodeF(e) {
     if (keyCode === 'F11') {
         effectPromt.classList.remove('animate__flash');
         effectPromt.style.display = 'none';
+    } else if (keyCode === 'Escape') {
+        gameWindow.style.display = 'none';
     }
 }
 
@@ -129,8 +146,8 @@ function initialization() {
         const dataNum = elem.dataset.symbol;
         // resBlock.insertAdjacentText('beforeend', `${dataNum}`);
         if (Number(dataNum) || dataNum === '0') {
-            if(isOperation==='='){
-                resBlock.textContent = num1='';
+            if (isOperation === '=') {
+                resBlock.textContent = num1 = '';
                 isOperation = undefined;
             }
             if (isOperation === undefined) {
@@ -194,7 +211,7 @@ function initialization() {
                 }
             } else {
                 if (Number.isInteger(num1)) {
-                    if(isOperation==='='){
+                    if (isOperation === '=') {
                         isOperation = dataNum;
                     }
                     resBlock.textContent = `${num1}${isOperation}`;

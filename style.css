@@ -44,11 +44,28 @@
     left: 0;
     top: 0;
     z-index: 2;
+    animation-duration: 2s;
+}
+.close-game{
+    max-width: 270px;
+    height: 30px;
+    position: absolute;
+    left: 45%;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 0;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 16px;
+    line-height: 24px;
+    text-shadow: 2px 2px 9px darkgrey;
 }
 .game-window iframe{
 
     width: 100vw;
-    height: 93vh;
+    min-height: 99.6vmin;
 
 }
 .myComp:hover{
