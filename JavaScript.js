@@ -146,9 +146,9 @@ function demonstration(){
     }
     else {
         if (isOperation === '='){
-            resBlock.textContent = `${num1.toFixed(4)}`; //${isOperation}${num2}
+            resBlock.textContent = `${num1.toFixed(3)}`; //${isOperation}${num2}
         } else {
-            resBlock.textContent = `${num1.toFixed(4)}${isOperation}${num2}`; //${isOperation}${num2}
+            resBlock.textContent = `${num1.toFixed(3)}${isOperation}${num2}`; //${isOperation}${num2}
         }
     }
 }
@@ -181,11 +181,6 @@ function initialization() {
                 num2 = ''
                 isOperation = '=';
                 demonstration();
-                // if (Number.isInteger(num1)) {
-                //     demonstration();
-                // } else {
-                //     demonstration();
-                // }
             }
             return;
         } else if (dataNum === 'del') {
