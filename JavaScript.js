@@ -252,6 +252,7 @@ function memoryFunc() {
 calnOn.addEventListener('click', () => {
     if (blockAddNewCalc === true) {
         blockAddNewCalc = false;
+        calnOn.style = 'background-color: rgba(0, 0, 0, 0.3);'
         calcWrapper = document.getElementById('calc-wrapper');
         let newCalc = `<div class="res" id="resBlock"></div>
         <div class="close" id="close">close</div>
@@ -285,6 +286,7 @@ calnOn.addEventListener('click', () => {
             calcWrapper.classList.remove('animate__fadeInBottomLeft')
         }, 1200)
         closeCalc.addEventListener('click', () => {
+            calnOn.style = 'background-color: inherit;'
             isOperation = undefined;
             num2 = '';
             num1 = '';
