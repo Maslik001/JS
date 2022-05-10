@@ -136,15 +136,30 @@ function calcOper(num1, operation, num2) {
     }
 }
 
+function demonstration(){
+    if (Number.isInteger(num1 * 1)) {
+        if (isOperation === '='){
+        resBlock.textContent = `${num1}`; //${isOperation}${num2}
+        } else {
+            resBlock.textContent = `${num1}${isOperation}${num2}`
+        }
+    }
+    else {
+        if (isOperation === '='){
+            resBlock.textContent = `${num1.toFixed(4)}`; //${isOperation}${num2}
+        } else {
+            resBlock.textContent = `${num1.toFixed(4)}${isOperation}${num2}`; //${isOperation}${num2}
+        }
+    }
+}
+
 function initialization() {
-    // closeCalc = document.getElementById('close');
     calc.addEventListener('click', (e) => {
         let elem = e.target;
         while (!elem.classList.contains('calc-btn')) {
             elem = elem.parentNode;
         }
         const dataNum = elem.dataset.symbol;
-        // resBlock.insertAdjacentText('beforeend', `${dataNum}`);
         if (Number(dataNum) || dataNum === '0') {
             if (isOperation === '=') {
                 resBlock.textContent = num1 = '';
@@ -153,35 +168,24 @@ function initialization() {
             if (isOperation === undefined) {
                 num1 += dataNum * 1;
             } else if (isOperation) {
-                num2 += dataNum * 1;
-                if (Number.isInteger(num1 * 1) && Number.isInteger(num2 * 1)) {
-                    resBlock.textContent = `${num1}${isOperation}${num2}`;
-                } else {
-                    resBlock.textContent = `${num1.toFixed(6)}${isOperation}${num2}`;
-                }
+                num2 += dataNum;
+                demonstration();
                 return;
             }
         } else if (dataNum === '=') {
             if (num2 === '') {
-                resBlock.textContent = `${num1}`;
+                demonstration();
             } else {
                 resBlock.textContent = ``;
                 num1 = calcOper(num1, isOperation, num2);
                 num2 = ''
                 isOperation = '=';
-                if (Number.isInteger(num1)) {
-                    resBlock.textContent = `${num1}`;
-                } else if (isOperation) {
-                    if (Number.isInteger(num1)) {
-                        resBlock.textContent = `${num1.toFixed(6)}`;
-                    } else {
-                        num2 *= 1;
-                        resBlock.textContent = `${num1.toFixed(6)}`;
-                    }
-                } else {
-                    num2 *= 1;
-                    resBlock.textContent = `${num1.toFixed(6)}`;
-                }
+                demonstration();
+                // if (Number.isInteger(num1)) {
+                //     demonstration();
+                // } else {
+                //     demonstration();
+                // }
             }
             return;
         } else if (dataNum === 'del') {
@@ -194,7 +198,6 @@ function initialization() {
             memoryFunc();
             return;
         } else if (dataNum === 'MC') {
-            // resBlock.textContent = ``;
             memory = '';
             memSymbol.style.display = 'none';
             return;
@@ -202,24 +205,14 @@ function initialization() {
             if (num2 !== "") {
                 num1 = calcOper(num1, isOperation, num2);
                 num2 = '';
-                num1 *= 1;
                 isOperation = dataNum;
-                if (Number.isInteger(num1)) {
-                    resBlock.textContent = `${num1}${isOperation}`;
-                } else {
-                    resBlock.textContent = `${num1.toFixed(6)}${isOperation}`;
-                }
+                demonstration();
             } else {
-                if (Number.isInteger(num1)) {
-                    if (isOperation === '=') {
-                        isOperation = dataNum;
-                    }
-                    resBlock.textContent = `${num1}${isOperation}`;
-                } else if (isOperation) {
+                if (isOperation) {
                     isOperation = dataNum;
+                    demonstration();
                 } else {
-                    num2 *= 1;
-                    resBlock.textContent = `${num1}${isOperation}`;
+                    demonstration();
                 }
             }
             return;
