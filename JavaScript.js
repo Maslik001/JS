@@ -50,7 +50,7 @@ EV.prototype.brake = function (brake){
     this.brake = brake;
     this.speed = this.speed - brake;
     this.change = this.change + 1;
-    setTimeout(console.log,6000,(`После торможения на ${this.brake} км/ч, скорость увеличилась до ${this.speed} км/ч и заряд восстановился до ${this.change} %`))
+    setTimeout(console.log,6000,(`После торможения на ${this.brake} км/ч, скорость уменьшилась до ${this.speed} км/ч и заряд восстановился до ${this.change} %`))
 }
 setTimeout(console.log,1000,(`Завели и разгнали ${bmw.model} до ${bmw.speed} км/ч. Заряд батареи ${bmw.change}%`))
 bmw.brake(100);
@@ -60,17 +60,20 @@ bmw.brake(100);
 
 // № 1  -- Повторите задачу № 1, но на этот раз с использованием классов ES6: создайте
 // дочерний класс 'EVCl' класса 'CarCl'
+/*
 
 class CarCl {
-    #change
     constructor(model, speed) {
         this.model = model
         this.speed = speed;
     }
-    brake(brake){
-       return  this._brake = brake;
+
+    brake(brake) {
+        this.speed -= brake;
+        return this._brake = brake;
     }
 }
+
 // № 2 --- Сделайте свойство "charge" приватным
 class EVCl extends CarCl {
     #change;
@@ -78,28 +81,30 @@ class EVCl extends CarCl {
         super(model, speed);
         this.#change = change;
     }
-    chargeBattery (chargeTo){
-        return this.#change = chargeTo;
 
+    chargeBattery(chargeTo) {
+        return this.#change = chargeTo + 1;
     }
-    accelerate(s){
+
+    accelerate(s) {
         this.speed += s;
-        this.#change -= s/100;
-        setTimeout(console.log,1000,(`${this.model} едет со скоростью ${this.speed} км/ч, заряд составляет ${this.chargeBattery(this.#change)} %`))
+        this.#change -= s / 100;
+        setTimeout(console.log, 1000, (`${this.model} едет со скоростью ${this.speed} км/ч, заряд составляет ${this.chargeBattery(this.#change)} %`))
     }
+
 // Реализовать возможность объединения в цепочку методов 'accelerate' и 'chargeBattery' этого класса,
 // а также обновить метод 'brake' в классе 'CarCl'. Тогда поэкспериментируйте с цепочкой!
     brake(brake) {
         super.brake(brake);
-        this.speed -= brake;
-        this.#change += 1;
-        setTimeout(console.log,2000,(`После торможения на ${this._brake} км/ч, скорость увеличилась до ${this.speed} км/ч и заряд восстановился до ${this.#change} %`))
-
+        this.chargeBattery(this.#change);
+        setTimeout(console.log, 2500, (`После торможения на ${this._brake} км/ч, скорость ${this.model} уменьшилась до ${this.speed} км/ч и заряд восстановился до ${this.#change} %`))
     }
 }
 
 //Тестовые данные:
 // § Автомобиль данных 1: " Rivian", движущийся со скоростью 120 км/ч, с зарядом 23%
-let rivian = new EVCl('Rivian',120,23);
-rivian.accelerate(48)
-rivian.brake(25)
+let rivian = new EVCl('Rivian', 120, 23);
+rivian.accelerate(48);
+rivian.brake(25);
+// rivian.accelerate(48).brake(25);  --- не понимаю почему не работает ((((
+*/
