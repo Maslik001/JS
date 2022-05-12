@@ -327,25 +327,31 @@
     color: #FFFFFF;
     margin-left: 30px;
 }
-.win-temp-info{
+.win-temp-info {
     height: 20px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: auto 2fr;
     gap: 10px;
+    margin: 0 20px;
+    align-content: space-around;
 }
-.wind, .prep{
+.wind, .prep, .pressure{
     height: 20px;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 .wind img{
-    width: 20px;
-    margin: 0;
+    width: 16px;
+    margin-right: 6px;
 }
-.prep img{
-    width: 15px;
-    margin: 0;
+.prep img {
+    width: 10px;
+    margin-right: 6px;
+}
+.pressure img{
+    width: 10px;
+    margin-right: 6px;
 }
 .forecast-text{
     font-family: 'Ubuntu';

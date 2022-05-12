@@ -2,54 +2,50 @@
 
 const weatherOn = document.getElementById('weather-img');
 let weatherWrapper;
-let blockAddNewWeather =true;
+let blockAddNewWeather = true;
 let city;
 let currentDate;
 let currenDay;
 
 
-
-
-
-
-
-
 function addCity(cityName) {
     const requestCountry = new XMLHttpRequest();
-    requestCountry.open('GET',`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=1fe8ce000106a64976dd6ee0b0c1299a`);
+    requestCountry.open('GET', `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=1fe8ce000106a64976dd6ee0b0c1299a`);
     requestCountry.send();
-    requestCountry.addEventListener('load',()=>{
+    requestCountry.addEventListener('load', () => {
         let [nameCity] = JSON.parse(requestCountry.responseText);
         let cityLon = nameCity.lon;
         let cityLat = nameCity.lat;
-        addWeather(cityLat,cityLon);
+        addWeather(cityLat, cityLon);
     })
 
 }
+
 addCity('Mahilyow');
 
-function addWeather(lat,lon){
+function addWeather(lat, lon) {
     const requestWeather = new XMLHttpRequest();
-    requestWeather.open('GET',`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
+    requestWeather.open('GET', `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
     requestWeather.send();
-    requestWeather.addEventListener('load',()=>{
+    requestWeather.addEventListener('load', () => {
         let weather = JSON.parse(requestWeather.responseText);
         console.log(weather);
         renderHtml(weather)
     })
 }
 
-function renderHtml(weather){
+function renderHtml(weather) {
     data()
-    let windSpeed = Object.values(weather.wind[0]);
+    let [windSpeed] = Object.values(weather.wind);
     console.log(windSpeed);
-let nameCity = weather?.name;
-let [{description: weatherForecast}] = Object.values(weather.weather);
+    let nameCity = weather?.name;
+    let [{description: weatherForecast}] = Object.values(weather.weather);
     let [temper] = Object.values(weather.main);
-
+    let [{humidity: humidity}] = Object.values([weather.main]);
+    console.log(humidity)
     temper = Math.round(temper);
-    weatherOn.addEventListener('click',()=>{
-        if (blockAddNewWeather){
+    weatherOn.addEventListener('click', () => {
+        if (blockAddNewWeather) {
             blockAddNewWeather = false;
             weatherWrapper = document.getElementById('weather-wrapper');
             let weather = `
@@ -503,25 +499,26 @@ let [{description: weatherForecast}] = Object.values(weather.weather);
                     <div class="temperature" id="temperature">${temper}&#176;</div>
                     <div class="forecast-text" id="forecast-text">${weatherForecast}</div>
                     <div class="win-temp-info">
-                        <div class="wind"><img src="img/weather/wind.png">wind dfsdfs</div>
-                        <div class="prep"><img src="img/weather/prep.png">prep</div>
+                        <div class="wind"><img src="img/weather/wind.png">wind: ${windSpeed} m/s</div>
+                        <div class="prep"><img src="img/weather/prep.png">wet: ${humidity}&#37;</div>
+                        <div class="pressure"><img src="img/weather/pressure.png">pressure:</div>
                     </div>
                 </div>
             </div>
         </div>`;
-            weatherWrapper.insertAdjacentHTML('afterbegin',weather);
+            weatherWrapper.insertAdjacentHTML('afterbegin', weather);
         }
     })
 
 }
 
-function data(){
-   let days =["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
-    let ms =  new Date();
-    let month =["Январь", "Февраль", "Март", "Апрель", "Май", "Пятница", "Суббота"];
-    currentDate = (month[ms.getMonth()]+" "+ ms.getUTCDate());
+function data() {
+    let days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
+    let ms = new Date();
+    let month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Пятница", "Суббота"];
+    currentDate = (month[ms.getMonth()] + " " + ms.getUTCDate());
     currenDay = days[ms.getDay()]
-    console.log(currentDate,currenDay)
+    console.log(currentDate, currenDay)
 
 }
 
