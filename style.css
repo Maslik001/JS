@@ -176,9 +176,9 @@
     height: 70px;
     background: #FFFFFF;
     position: absolute;
-    right: 10px;
-    top: 17%;
-    z-index: 1;
+    top: -6%;
+    right: 0;
+    z-index: -1;
     border-radius: 10px;
     font-family: 'Ubuntu';
     font-style: normal;
@@ -199,6 +199,7 @@
     padding: 10px;
     border-radius: 30px;
     z-index: 2;
+    position: relative;
 }
 
 .search-location {

@@ -53,8 +53,9 @@ function renderHtml(weather) {
             blockAddNewWeather = false;
             weatherWrapper = document.getElementById('weather-wrapper');
             let weather = `
-        <div class="close-weather">X</div>
+        
         <div class="weather">
+        <div class="close-weather">X</div>
             <div class="inter-loc">
                 <img src="img/weather/search-ico.png" alt="">
                 <input type="text" class="search-location" id="search-location">

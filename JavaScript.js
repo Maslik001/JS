@@ -24,7 +24,7 @@ let num1 = '';
 let memory = '';
 let blockAddNewCalc = true;
 let blockAddNewGame = true;
-let currentDate1;
+let currentDateWindows;
 let currenDay1;
 
 
@@ -32,19 +32,12 @@ function date_time() {
     let days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
     let ms = new Date();
     let month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Пятница", "Суббота"];
-    return  currentDate1 = (ms.toLocaleString());
-
-    //
-    // currenDay1 = days[ms.getDay()]
-    // console.log(currentDate1)
-
+    return  currentDateWindows = (ms.toLocaleString());
 }
 setInterval(function (){
-    // currentData.insertAdjacentText('afterbegin',currentDate1);
     document.getElementById('currentDate').innerHTML = date_time();
-
 },1000)
-console.log(currentDate1)
+
 
 
 body.addEventListener('keydown', keyCodeF, false);
