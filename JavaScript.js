@@ -1,8 +1,6 @@
 'use strict';
 
-let closeCalc;
 const calnOn = document.getElementById('calc-img');
-let calcWrapper;
 const trash = document.getElementById('trash');
 const trashCleaner = document.getElementById('trashiconCleaner');
 const cleaner = document.getElementById('cleaner');
@@ -10,8 +8,9 @@ const folder = document.getElementById('cleanerfolder');
 const delFolder = document.getElementById('delFolder');
 const body = document.getElementById('body');
 const effectPromt = document.getElementById('effect-prompt');
-const currentData = document.getElementById('currentDate');
-let csGame = document.getElementById('cs')
+let csGame = document.getElementById('cs');
+let closeCalc;
+let calcWrapper;
 let gameWindow;
 let closeGame;
 let calc;
@@ -25,18 +24,18 @@ let memory = '';
 let blockAddNewCalc = true;
 let blockAddNewGame = true;
 let currentDateWindows;
-let currenDay1;
 
 
 function date_time() {
-    let days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
+    // let days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
     let ms = new Date();
-    let month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Пятница", "Суббота"];
-    return  currentDateWindows = (ms.toLocaleString());
+    // let month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Пятница", "Суббота"];
+    return currentDateWindows = (ms.toLocaleString());
 }
-setInterval(function (){
+
+setInterval(function () {
     document.getElementById('currentDate').innerHTML = date_time();
-},1000)
+}, 1000);
 
 body.addEventListener('keydown', keyCodeF, false);
 csGame.addEventListener('click', () => {
@@ -150,16 +149,15 @@ function calcOper(num1, operation, num2) {
     }
 }
 
-function demonstration(){
+function demonstration() {
     if (Number.isInteger(num1 * 1)) {
-        if (isOperation === '='){
-        resBlock.textContent = `${num1}`; //${isOperation}${num2}
+        if (isOperation === '=') {
+            resBlock.textContent = `${num1}`; //${isOperation}${num2}
         } else {
             resBlock.textContent = `${num1}${isOperation}${num2}`
         }
-    }
-    else {
-        if (isOperation === '='){
+    } else {
+        if (isOperation === '=') {
             resBlock.textContent = `${num1.toFixed(3)}`; //${isOperation}${num2}
         } else {
             resBlock.textContent = `${num1.toFixed(3)}${isOperation}${num2}`; //${isOperation}${num2}
@@ -300,7 +298,7 @@ calnOn.addEventListener('click', () => {
             calcWrapper.classList.remove('animate__fadeInBottomLeft')
         }, 1200)
         closeCalc.addEventListener('click', () => {
-            calnOn.style = 'background-color: inherit;'
+            calnOn.style = 'background-color: inherit;';
             isOperation = undefined;
             num2 = '';
             num1 = '';
