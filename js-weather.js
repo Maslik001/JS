@@ -6,6 +6,8 @@ let blockAddNewWeather = true;
 let city;
 let currentDate;
 let currenDay;
+let pressure;
+
 
 
 function addCity(cityName) {
@@ -21,7 +23,8 @@ function addCity(cityName) {
 
 }
 
-addCity('Mahilyow');
+addCity('Miami');
+//Mahilyow
 
 function addWeather(lat, lon) {
     const requestWeather = new XMLHttpRequest();
@@ -29,20 +32,21 @@ function addWeather(lat, lon) {
     requestWeather.send();
     requestWeather.addEventListener('load', () => {
         let weather = JSON.parse(requestWeather.responseText);
-        console.log(weather);
         renderHtml(weather)
     })
 }
 
 function renderHtml(weather) {
     data()
+    //sys    country
+    let [{country: countryID}] = Object.values([weather.sys]);
     let [windSpeed] = Object.values(weather.wind);
     console.log(windSpeed);
     let nameCity = weather?.name;
     let [{description: weatherForecast}] = Object.values(weather.weather);
     let [temper] = Object.values(weather.main);
     let [{humidity: humidity}] = Object.values([weather.main]);
-    console.log(humidity)
+    [{pressure: pressure}] = Object.values([weather.main]);
     temper = Math.round(temper);
     weatherOn.addEventListener('click', () => {
         if (blockAddNewWeather) {
@@ -61,6 +65,7 @@ function renderHtml(weather) {
                     <div class="city-location">
                         <img src="/img/weather/local.png" alt="">
                         <div class="city-name" id="city-name">${nameCity}</div>
+                        <div class="country-id" id="country-id">${countryID}</div>
                     </div>
 <!--Анимация погоды--------------------------------------------------------------------------->
                     <div class="container">
@@ -494,14 +499,14 @@ function renderHtml(weather) {
                         </div>
                     </div>
 <!--Анимация погоды--------------------------------------------------------------------------->
-                    <div class="data-time" id="data-time">Сегодня,
+                    <div class="data-time" id="data-time">${currenDay}, 
                         ${currentDate}</div>
                     <div class="temperature" id="temperature">${temper}&#176;</div>
                     <div class="forecast-text" id="forecast-text">${weatherForecast}</div>
                     <div class="win-temp-info">
                         <div class="wind"><img src="img/weather/wind.png">wind: ${windSpeed} m/s</div>
                         <div class="prep"><img src="img/weather/prep.png">wet: ${humidity}&#37;</div>
-                        <div class="pressure"><img src="img/weather/pressure.png">pressure:</div>
+                        <div class="pressure"><img src="img/weather/pressure.png">pressure: ${pressure} hPa</div>
                     </div>
                 </div>
             </div>
