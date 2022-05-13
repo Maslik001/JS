@@ -38,8 +38,6 @@ setInterval(function (){
     document.getElementById('currentDate').innerHTML = date_time();
 },1000)
 
-
-
 body.addEventListener('keydown', keyCodeF, false);
 csGame.addEventListener('click', () => {
     if (blockAddNewGame === true) {
