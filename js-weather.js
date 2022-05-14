@@ -1,7 +1,7 @@
 'use strict';
 
 const weatherOn = document.getElementById('weather-img');
-let search = addCity(ds);
+let search;
 let searchIco;
 let locCity;
 let weatherWrapper;
@@ -12,9 +12,8 @@ let pressure;
 
 
 
-function addCity(cityName) {
+function addCity(cityName = ds()) {
 
-    cityName = search;
     const requestCountry = new XMLHttpRequest();
     requestCountry.open('GET', `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=1fe8ce000106a64976dd6ee0b0c1299a`);
     requestCountry.send();
@@ -43,11 +42,10 @@ function addWeather(lat, lon) {
 function ds(){
     let search1 = document.getElementById('searchLocation').value;
     console.log(search1)
-    return search1;
-
+    return  search1;
 }
 
-
+addCity(search)
 
 function renderHtml(weather) {
     data()
