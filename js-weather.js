@@ -1,9 +1,11 @@
 'use strict';
 
 const weatherOn = document.getElementById('weather-img');
+let search = addCity(ds);
+let searchIco;
+let locCity;
 let weatherWrapper;
 let blockAddNewWeather = true;
-let city;
 let currentDate;
 let currenDay;
 let pressure;
@@ -11,19 +13,20 @@ let pressure;
 
 
 function addCity(cityName) {
+
+    cityName = search;
     const requestCountry = new XMLHttpRequest();
     requestCountry.open('GET', `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=1fe8ce000106a64976dd6ee0b0c1299a`);
     requestCountry.send();
     requestCountry.addEventListener('load', () => {
-        let [nameCity] = JSON.parse(requestCountry.responseText);
+        let [nameCity] = JSON.parse(requestCountry?.responseText);
         let cityLon = nameCity.lon;
         let cityLat = nameCity.lat;
         addWeather(cityLat, cityLon);
     })
-
 }
 
-addCity('Miami');
+
 //Mahilyow
 
 function addWeather(lat, lon) {
@@ -36,9 +39,18 @@ function addWeather(lat, lon) {
     })
 }
 
+
+function ds(){
+    let search1 = document.getElementById('searchLocation').value;
+    console.log(search1)
+    return search1;
+
+}
+
+
+
 function renderHtml(weather) {
     data()
-    //sys    country
     let [{country: countryID}] = Object.values([weather.sys]);
     let [windSpeed] = Object.values(weather.wind);
     console.log(windSpeed);
@@ -57,8 +69,8 @@ function renderHtml(weather) {
         <div class="weather">
         <div class="close-weather">X</div>
             <div class="inter-loc">
-                <img src="img/weather/search-ico.png" alt="">
-                <input type="text" class="search-location" id="search-location">
+                <img src="img/weather/search-ico.png" alt="search-ico" class="search" id="search">
+                <input type="text" class="search-location" id="searchLocation" placeholder="Введите город" value">
                 <img src="img/weather/geographic.png" alt="">
             </div>
             <div class="weather-info">
@@ -513,7 +525,12 @@ function renderHtml(weather) {
             </div>
         </div>`;
             weatherWrapper.insertAdjacentHTML('afterbegin', weather);
+
+
         }
+        searchIco = document.getElementById('search')
+        searchIco.addEventListener('click',ds);
+
     })
 
 }
