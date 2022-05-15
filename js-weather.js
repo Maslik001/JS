@@ -4,7 +4,7 @@ const weatherOn = document.getElementById('weather-img');
 let cityName;
 let search;
 let searchIco;
-let locCity = 'Могилёв';
+let locCity = 'Minsk';
 let weatherWrapper;
 let blockAddNewWeather = true;
 let currentDate;
@@ -511,16 +511,15 @@ function renderHtml() {
         </div>`;
             console.log(countryID)
             cityName = document.getElementById('city-name');
-            // cityName.textContent = locCity;
+
             weatherWrapper.insertAdjacentHTML('afterbegin', weather);
             listenSearch()
-
         }
-
+        cityName.textContent = `${locCity}`;
 
     })
 
-    cityName.textContent = locCity;
+
 }
 function listenSearch(){
     searchIco = document.getElementById('search');
