@@ -505,6 +505,7 @@ weatherOn.addEventListener('click', () => {
             </div>
         </div>`;
         weatherWrapper.insertAdjacentHTML('afterbegin', weather);
+        listenSearch()
     }
 
     addCity();
@@ -528,12 +529,13 @@ function dataWeather() {
     temperatureDiv.innerHTML = `${temperature}&#176;`;
     countryIdDiv.textContent = `${countryID}`
     cityNameDiv.textContent = `${locCity}`;
-    listenSearch()
+
 }
 
 function listenSearch() {
     searchIco = document.getElementById('search');
-    searchIco.addEventListener('click', () => {
+    searchIco.addEventListener('click', (e) => {
+        // console.log(e.target,'--------')
         search = document.getElementById('searchLocation').value;
         locCity = search;
         addCity(locCity)
