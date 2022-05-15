@@ -525,7 +525,7 @@ function dataWeather() {
     prepDiv.innerHTML = `влажность: ${humidity}&#37;`;
     pressureDiv.innerText = `давление: ${pressure} hPa`;
     forecastTextDiv.textContent = `${weatherForecast}`
-    dataTimeDiv.innerHTML = `${currenDay}: ${currentDate} число`;
+    dataTimeDiv.innerHTML = `${currenDay}: ${currentDate}`;
     temperatureDiv.innerHTML = `${temperature}&#176;`;
     countryIdDiv.textContent = `${countryID}`
     cityNameDiv.textContent = `${locCity}`;
@@ -546,8 +546,8 @@ function listenSearch() {
 function data() {
     let days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
     let ms = new Date();
-    let month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Пятница", "Суббота"];
-    currentDate = (month[ms.getMonth()] + " " + ms.getUTCDate());
+    let month = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
+    currentDate = (ms.getUTCDate() + " " + month[ms.getMonth()]);
     currenDay = days[ms.getDay()]
 
 
