@@ -1,6 +1,7 @@
 'use strict';
 
 const weatherOn = document.getElementById('weather-img');
+let weatherElementsIco;
 let search;
 let searchIco;
 let locCity = 'Minsk';
@@ -14,34 +15,35 @@ let temperature;
 let humidity;
 let weatherForecast;
 let windSpeed;
+let status;
 
-
+/**
+ * Функция получения данных о погоде по API
+ */
 function addCity() {
     const requestCountry = new XMLHttpRequest();
     requestCountry.open('GET', `https://api.openweathermap.org/data/2.5/weather?q=${locCity}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
     requestCountry.send();
     requestCountry.addEventListener('load', () => {
         let nameCity = JSON.parse(requestCountry?.responseText);
-        // console.log(nameCity)
+        console.log(nameCity)
         locCity = nameCity?.name;
-        let [{country: id}] = Object.values([nameCity.sys]);
-        countryID = id;
-        [windSpeed] = Object.values(nameCity.wind);
-        [{description: weatherForecast}] = Object.values(nameCity.weather);
-        let [temper] = Object.values(nameCity.main);
-        temper = Math.round(temper);
-        temperature = temper;
-        [{humidity: humidity}] = Object.values([nameCity.main]);
-        [{pressure: pressure}] = Object.values([nameCity.main]);
+        countryID= nameCity.sys.country;
+        windSpeed = nameCity.wind.speed;
+        status = nameCity.weather[0].main;
+        weatherForecast= nameCity.weather[0].description;
+        temperature = Math.round(nameCity.main.temp);
+        humidity = nameCity.main.humidity;
+        pressure = nameCity.main.pressure;
         dataWeather()
-
+        weatherIco(status);
     })
 }
 
-console.log(locCity);
-
+/***
+ * Функция добавления виджета "погода" на страницу
+ */
 weatherOn.addEventListener('click', () => {
-    addCity();
     if (blockAddNewWeather) {
         blockAddNewWeather = false;
         weatherWrapper = document.getElementById('weather-wrapper');
@@ -60,13 +62,13 @@ weatherOn.addEventListener('click', () => {
                         <img src="/img/weather/local.png" alt="">
                         <div class="city-name" id="city-name"></div>
                         <div class="country-id" id="country-id"></div>
-                    </div>
+                    </div>              
 <!--Анимация погоды--------------------------------------------------------------------------->
                     <div class="container">
                         <div class="elements">
 
                             <!-- Cloudy -->
-                            <div class="element">
+                            <div class="element cloudy" id="cloudy">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60.7 40" style="enable-background:new 0 0 60.7 40;" xml:space="preserve">
             <g id="Cloud_1">
   \t          <g id="White_cloud_1">
@@ -101,7 +103,7 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Rainy -->
-                            <div class="element">
+                            <div class="element rainy" id="rainy">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55.1 60" style="enable-background:new 0 0 55.1 49.5;" xml:space="preserve">
             <g id="Cloud_2">
         \t    <g id="Rain_2">
@@ -137,7 +139,7 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Cloudy with sun -->
-                            <div class="element">
+                            <div class="element cloudyWithSun" id="cloudyWithSun">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 61.7 42.8" style="enable-background:new 0 0 61.7 42.8;" xml:space="preserve">
             <g id="Cloud_3">
       \t      <g id="White_cloud_3">
@@ -204,7 +206,7 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Cloudy with lightning -->
-                            <div class="element">
+                            <div class="element cloudyWithLightning" id="cloudyWithLightning">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60.7 48.7" style="enable-background:new 0 0 60.7 48.7;" xml:space="preserve">
             <g id="Cloud_4">
       \t      <g id="White_cloud_4">
@@ -254,7 +256,7 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Cloudy with moon -->
-                            <div class="element">
+                            <div class="element cloudyWithMoon" id="cloudyWithMoon">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60.7 44.4" style="enable-background:new 0 0 60.7 44.4;" xml:space="preserve">
             <g id="Cloud_5">
     \t        <g id="White_cloud_5">
@@ -290,7 +292,7 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Cloudy with rain and lightning -->
-                            <div class="element">
+                            <div class="element cloudyWithRainAndLightning" id="cloudyWithRainAndLightning ">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60.7 80" style="enable-background:new 0 0 60.7 55;" xml:space="preserve">
             <g id="Cloud_6">
     \t        <g id="White_cloud_6">
@@ -354,8 +356,8 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Sunny -->
-                            <div class="element">
-                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 44.9 44.9" style="enable-background:new 0 0 44.9 44.9;" xml:space="preserve" height="40px" width="40px">
+                            <div class="element sunny" id="sunny">
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 44.9 44.9" style="enable-background:new 0 0 44.9 44.9;" xml:space="preserve" height="100px" width="100px">
             <g id="Sun">
     \t        <circle id="XMLID_61_" class="yellow" cx="22.4" cy="22.6" r="11"/>
                 <g>
@@ -382,20 +384,20 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Clear night -->
-                            <div class="element">
+                            <div class="element clearNight" id="clearNight">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 30.8 42.5" style="enable-background:new 0 0 30.8 42.5;" xml:space="preserve" height="40px" width="40px">
             <path id="Moon" class="yellow" d="M15.3,21.4C15,12.1,21.1,4.2,29.7,1.7c-2.8-1.2-5.8-1.8-9.1-1.7C8.9,0.4-0.3,10.1,0,21.9 c0.3,11.7,10.1,20.9,21.9,20.6c3.2-0.1,6.3-0.9,8.9-2.3C22.2,38.3,15.6,30.7,15.3,21.4z"/>
           </svg>
                             </div>
 
                             <!-- Sunny with wind -->
-                            <div class="element">
-                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 45.1 47.6" style="enable-background:new 0 0 45.1 47.6;" xml:space="preserve" height="45px" width="45px">
+                            <div class="element sunnyWithWind" id="sunnyWithWind">
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 45.1 47.6" style="enable-background:new 0 0 45.1 47.6;" xml:space="preserve" height="100px" width="100px" margin-bottom="45px" margin-left ="50px">
             <style type="text/css">
     \t        .st1{fill:none;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
             </style>
-                                    <g id="Wind_Sun">
-    \t        <g id="Sun_1_">
+<!--                                    <g id="Wind_Sun">
+    \t      <g id="Sun_1_">
             \t\t<circle id="XMLID_25_" class="yellow" cx="27.1" cy="18.1" r="8.9"/>
                     <g>
             \t\t    <path id="XMLID_21_" class="yellow" d="M27.2,6.5L27.2,6.5c-0.4,0-0.6-0.3-0.6-0.6V0.6c0-0.3,0.3-0.6,0.6-0.6l0.1,0 c0.3,0,0.6,0.3,0.6,0.6v5.4C27.7,6.2,27.5,6.5,27.2,6.5z"/>
@@ -416,7 +418,7 @@ weatherOn.addEventListener('click', () => {
                                  calcMode="linear"/>
                         attributeType="XML"
                 </g>
-    \t        </g>
+    \t        </g>-->
                                         <g id="Wind">
             \t\t<path id="XMLID_27_" class="st1" d="M1.3,33.1h19.3c2.1,0,3.8-1.3,3.8-3v0v0c0-1.7-1.7-3-3.8-3h-2.1"/>
                                             <path id="XMLID_40_" class="st1" d="M2.4,42.4h18.2c2,0,3.6,0.9,3.6,2.1l0,0v0c0,1.2-1.6,2.1-3.6,2.1h-2"/>
@@ -446,7 +448,7 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Snowy -->
-                            <div class="element">
+                            <div class="element snowy" id="snowy">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55.1 52.5" style="enable-background:new 0 0 55.1 52.5;" xml:space="preserve">
             <g id="Cloud_7">
   \t          <g id="White_cloud_7">
@@ -505,12 +507,50 @@ weatherOn.addEventListener('click', () => {
             </div>
         </div>`;
         weatherWrapper.insertAdjacentHTML('afterbegin', weather);
+        weatherElementsIco = document.querySelector('.elements');
         listenSearch()
     }
-
     addCity();
 })
 
+/**
+ *  Функция для вывода анимированной картинки погодных условий
+ * @param weatherStatus - погодные условия
+ * @returns {string} смещение по Y для корректного отобращение анимации погоды
+ */
+function weatherIco(weatherStatus){
+    switch (weatherStatus) {
+        case 'Clouds':
+            if (weatherForecast === 'few clouds'){
+                return  weatherElementsIco.style = 'top: -195%;'
+            } else {
+                return  weatherElementsIco.style = 'top: 0;'
+            }
+        case 'Clear':
+            return  weatherElementsIco.style = 'top: -579%;'
+        case 'Atmosphere':
+            return  weatherElementsIco.style = 'top: -95%;'
+        case 'Snow':
+            return  weatherElementsIco.style = 'top: -95%;'
+        case 'Rain':
+            if (weatherForecast==="freezing rain"){
+                return  weatherElementsIco.style = 'top: -861%;'
+            } else {
+            return  weatherElementsIco.style = 'top: -95%;'
+            }
+        case 'Drizzle':
+            return  weatherElementsIco.style = 'top: -95%;'
+        case 'Thunderstorm':
+            if (weatherForecast === 'ragged thunderstorm' || weatherForecast === 'heavy thunderstorm' || weatherForecast === 'thunderstorm' || weatherForecast === 'light thunderstorm'){
+                return  weatherElementsIco.style = 'top: -285%;'
+            }
+            return  weatherElementsIco.style = 'top: -480%;'
+    }
+}
+
+/**
+ * Функция для отображения данных о погодных условиях
+ */
 function dataWeather() {
     data()
     let cityNameDiv = document.getElementById('city-name');
@@ -532,6 +572,9 @@ function dataWeather() {
 
 }
 
+/**
+ * Функия ввода города
+ */
 function listenSearch() {
     searchIco = document.getElementById('search');
     searchIco.addEventListener('click', (e) => {
@@ -543,6 +586,9 @@ function listenSearch() {
     })
 }
 
+/**
+ * Функия отпределения даты
+ */
 function data() {
     let days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
     let ms = new Date();

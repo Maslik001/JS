@@ -25,18 +25,15 @@ let blockAddNewCalc = true;
 let blockAddNewGame = true;
 let currentDateWindows;
 
-
 function date_time() {
     // let days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
     let ms = new Date();
     // let month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Пятница", "Суббота"];
     return currentDateWindows = (ms.toLocaleString());
 }
-
 setInterval(function () {
     document.getElementById('currentDate').innerHTML = date_time();
 }, 1000);
-
 body.addEventListener('keydown', keyCodeF, false);
 csGame.addEventListener('click', () => {
     if (blockAddNewGame === true) {
@@ -57,8 +54,6 @@ csGame.addEventListener('click', () => {
         })
     }
 })
-
-
 trash.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     cleaner.style.display = 'flex';
@@ -92,7 +87,6 @@ body.addEventListener('click', () => {
     cleaner.style.display = 'none';
 });
 document.addEventListener('keydown', keyCodeF, false);
-
 setTimeout(function () {
     effectPromt.style.display = 'flex';
     setTimeout(function () {
@@ -105,8 +99,6 @@ setTimeout(function () {
     }, 1000)
 
 }, 1000);
-
-
 function keyCodeF(e) {
     let keyCode = e.key;
     if (keyCode === 'F11') {
@@ -116,7 +108,6 @@ function keyCodeF(e) {
         gameWindow.style.display = 'none';
     }
 }
-
 
 /**
  * Функция для подсчёта результатов операции

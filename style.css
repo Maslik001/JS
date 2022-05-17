@@ -307,11 +307,14 @@
 }
 
 .elements {
-    display: flex;
     justify-content: center;
     position: absolute;
-    bottom: 0;
-    right: -415%;
+    top: -92%;
+}
+.sunnyWithWind{
+    display: flex;
+    align-items: center;
+    padding-bottom: 60px;
 }
 
 .white {
