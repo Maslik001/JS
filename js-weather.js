@@ -17,6 +17,7 @@ let weatherForecast;
 let windSpeed;
 let status;
 
+
 /**
  * Функция получения данных о погоде по API
  */
@@ -49,7 +50,7 @@ weatherOn.addEventListener('click', () => {
         weatherWrapper = document.getElementById('weather-wrapper');
         let weather = `
         
-        <div class="weather">
+        <div class="weather" id='weather'>
         <div class="close-weather">X</div>
             <div class="inter-loc">
                 <img src="img/weather/search-ico.png" alt="search-ico" class="search" id="search">
@@ -506,9 +507,24 @@ weatherOn.addEventListener('click', () => {
                 </div>
             </div>
         </div>`;
+
         weatherWrapper.insertAdjacentHTML('afterbegin', weather);
         weatherElementsIco = document.querySelector('.elements');
+        let closeWeather = document.querySelector('.close-weather');
         listenSearch()
+        let weatherBlock = document.getElementById('weather');
+        weatherBlock.classList.add('animate__fadeInRight');
+        closeWeather.addEventListener('click',()=> {
+            blockAddNewWeather = true;
+            weatherBlock.classList.remove('animate__fadeInRight');
+            weatherBlock.classList.add('animate__fadeOutRight');
+            setTimeout(function (){
+                while (weatherWrapper.firstChild) {
+                    weatherWrapper.removeChild(weatherWrapper.firstChild);
+                }
+            },1000)
+
+        })
     }
     addCity();
 })
@@ -575,8 +591,20 @@ function dataWeather() {
 /**
  * Функия ввода города
  */
+
 function listenSearch() {
+    document.addEventListener('keydown', keyCodeF, false);
     searchIco = document.getElementById('search');
+    function keyCodeF(e) {
+        let keyCode = e.key;
+        if (keyCode === 13) {
+            search = document.getElementById('searchLocation').value;
+            locCity = search;
+            addCity(locCity)
+            document.getElementById('searchLocation').value = '';
+        }
+    }
+
     searchIco.addEventListener('click', (e) => {
         // console.log(e.target,'--------')
         search = document.getElementById('searchLocation').value;
