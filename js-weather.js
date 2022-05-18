@@ -16,6 +16,7 @@ let humidity;
 let weatherForecast;
 let windSpeed;
 let status;
+let closeWeather;
 
 
 /**
@@ -23,16 +24,16 @@ let status;
  */
 function addCity() {
     const requestCountry = new XMLHttpRequest();
-    requestCountry.open('GET', `https://api.openweathermap.org/data/2.5/weather?q=${locCity}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
+    requestCountry?.open('GET', `https://api.openweathermap.org/data/2.5/weather?q=${locCity}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
     requestCountry.send();
     requestCountry.addEventListener('load', () => {
         let nameCity = JSON.parse(requestCountry?.responseText);
         console.log(nameCity)
         locCity = nameCity?.name;
-        countryID= nameCity.sys.country;
+        countryID = nameCity.sys.country;
         windSpeed = nameCity.wind.speed;
         status = nameCity.weather[0].main;
-        weatherForecast= nameCity.weather[0].description;
+        weatherForecast = nameCity.weather[0].description;
         temperature = Math.round(nameCity.main.temp);
         humidity = nameCity.main.humidity;
         pressure = nameCity.main.pressure;
@@ -51,7 +52,7 @@ weatherOn.addEventListener('click', () => {
         let weather = `
         
         <div class="weather" id='weather'>
-        <div class="close-weather">X</div>
+        <div class="close-weather">&#9658;</div>
             <div class="inter-loc">
                 <img src="img/weather/search-ico.png" alt="search-ico" class="search" id="search">
                 <input type="text" class="search-location" id="searchLocation" placeholder="Введите город" ">
@@ -510,19 +511,25 @@ weatherOn.addEventListener('click', () => {
 
         weatherWrapper.insertAdjacentHTML('afterbegin', weather);
         weatherElementsIco = document.querySelector('.elements');
-        let closeWeather = document.querySelector('.close-weather');
+        closeWeather = document.querySelector('.close-weather');
         listenSearch()
         let weatherBlock = document.getElementById('weather');
+        weatherBlock.addEventListener('mouseover', () => {
+                closeWeather.style.display = 'flex';
+        })
+        weatherBlock.addEventListener('mouseout', () => {
+                closeWeather.style.display = 'none';
+        })
         weatherBlock.classList.add('animate__fadeInRight');
-        closeWeather.addEventListener('click',()=> {
+        closeWeather.addEventListener('click', () => {
             blockAddNewWeather = true;
             weatherBlock.classList.remove('animate__fadeInRight');
             weatherBlock.classList.add('animate__fadeOutRight');
-            setTimeout(function (){
+            setTimeout(function () {
                 while (weatherWrapper.firstChild) {
                     weatherWrapper.removeChild(weatherWrapper.firstChild);
                 }
-            },1000)
+            }, 1000)
 
         })
     }
@@ -534,33 +541,33 @@ weatherOn.addEventListener('click', () => {
  * @param weatherStatus - погодные условия
  * @returns {string} смещение по Y для корректного отобращение анимации погоды
  */
-function weatherIco(weatherStatus){
+function weatherIco(weatherStatus) {
     switch (weatherStatus) {
         case 'Clouds':
-            if (weatherForecast === 'few clouds'){
-                return  weatherElementsIco.style = 'top: -195%;'
+            if (weatherForecast === 'few clouds') {
+                return weatherElementsIco.style = 'top: -195%;'
             } else {
-                return  weatherElementsIco.style = 'top: 0;'
+                return weatherElementsIco.style = 'top: 0;'
             }
         case 'Clear':
-            return  weatherElementsIco.style = 'top: -579%;'
+            return weatherElementsIco.style = 'top: -579%;'
         case 'Atmosphere':
-            return  weatherElementsIco.style = 'top: -95%;'
+            return weatherElementsIco.style = 'top: -95%;'
         case 'Snow':
-            return  weatherElementsIco.style = 'top: -95%;'
+            return weatherElementsIco.style = 'top: -95%;'
         case 'Rain':
-            if (weatherForecast==="freezing rain"){
-                return  weatherElementsIco.style = 'top: -861%;'
+            if (weatherForecast === "freezing rain") {
+                return weatherElementsIco.style = 'top: -861%;'
             } else {
-            return  weatherElementsIco.style = 'top: -95%;'
+                return weatherElementsIco.style = 'top: -95%;'
             }
         case 'Drizzle':
-            return  weatherElementsIco.style = 'top: -95%;'
+            return weatherElementsIco.style = 'top: -95%;'
         case 'Thunderstorm':
-            if (weatherForecast === 'ragged thunderstorm' || weatherForecast === 'heavy thunderstorm' || weatherForecast === 'thunderstorm' || weatherForecast === 'light thunderstorm'){
-                return  weatherElementsIco.style = 'top: -285%;'
+            if (weatherForecast === 'ragged thunderstorm' || weatherForecast === 'heavy thunderstorm' || weatherForecast === 'thunderstorm' || weatherForecast === 'light thunderstorm') {
+                return weatherElementsIco.style = 'top: -285%;'
             }
-            return  weatherElementsIco.style = 'top: -480%;'
+            return weatherElementsIco.style = 'top: -480%;'
     }
 }
 
@@ -592,12 +599,15 @@ function dataWeather() {
  * Функия ввода города
  */
 
+
+
 function listenSearch() {
-    document.addEventListener('keydown', keyCodeF, false);
-    searchIco = document.getElementById('search');
-    function keyCodeF(e) {
+    document.addEventListener('keydown', keyCodeIn, false);
+
+    function keyCodeIn(e) {
         let keyCode = e.key;
-        if (keyCode === 13) {
+        if (keyCode === 'Enter' && document.getElementById('searchLocation').value !== '') {
+            console.log('-------------------')
             search = document.getElementById('searchLocation').value;
             locCity = search;
             addCity(locCity)
@@ -605,12 +615,13 @@ function listenSearch() {
         }
     }
 
+    searchIco = document.getElementById('search');
     searchIco.addEventListener('click', (e) => {
-        // console.log(e.target,'--------')
         search = document.getElementById('searchLocation').value;
         locCity = search;
         addCity(locCity)
         document.getElementById('searchLocation').value = '';
+
     })
 }
 

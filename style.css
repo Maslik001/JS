@@ -171,22 +171,7 @@
     text-shadow: 2px 2px 9px darkgrey;
     animation-duration: 2.4s;
 }
-.close-weather{
-    width: 45px;
-    height: 70px;
-    background: #FFFFFF;
-    position: absolute;
-    top: -6%;
-    right: 0;
-    z-index: -1;
-    border-radius: 10px;
-    font-family: 'Ubuntu';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 25px;
-    color: cornflowerblue;
 
-}
 .weather-wrapper {
     display: flex;
     margin-right: 0;
@@ -203,6 +188,7 @@
     position: relative;
     animation-duration: 1s;
 }
+
 .search{
     cursor: pointer;
 }
@@ -380,7 +366,24 @@
     text-align: center;
     color: #FFFFFF;
 }
+/*.close-weather{*/
+/*    width: 45px;*/
+/*    height: 70px;*/
+/*    background: #FFFFFF;*/
+/*    position: absolute;*/
+/*    top: -6%;*/
+/*    right: 0;*/
+/*    z-index: -1;*/
+/*    border-radius: 10px;*/
+/*    font-family: 'Ubuntu';*/
+/*    font-style: normal;*/
+/*    font-weight: 700;*/
+/*    font-size: 25px;*/
+/*    color: cornflowerblue;*/
+
+/*}*/
 .close-weather{
+    display: none;
     width: 45px;
     height: 70px;
     background: #FFFFFF;
@@ -395,14 +398,14 @@
     color: cornflowerblue;
     cursor: pointer;
     font-size: 20px;
-    display: flex;
+    /*display: flex;*/
     justify-content: center;
     padding-top: 5px;
     animation-duration: 1s;
 }
 .close-weather:hover{
     font-size: 20px;
-    color: #570202;
+    color: #050505;
 }
 
 .footer {
