@@ -52,7 +52,7 @@ weatherOn.addEventListener('click', () => {
         let weather = `
         
         <div class="weather" id='weather'>
-        <div class="close-weather">&#9658;</div>
+        <div class="close-weather">&#10150;</div>
             <div class="inter-loc">
                 <img src="img/weather/search-ico.png" alt="search-ico" class="search" id="search">
                 <input type="text" class="search-location" id="searchLocation" placeholder="Введите город" ">
