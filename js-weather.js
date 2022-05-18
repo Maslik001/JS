@@ -516,6 +516,7 @@ weatherOn.addEventListener('click', () => {
         let weatherBlock = document.getElementById('weather');
         weatherBlock.addEventListener('mouseover', () => {
                 closeWeather.style.display = 'flex';
+                closeWeather.classList.add('animate__flipInX')
         })
         weatherBlock.addEventListener('mouseout', () => {
                 closeWeather.style.display = 'none';
@@ -598,8 +599,6 @@ function dataWeather() {
 /**
  * Функия ввода города
  */
-
-
 
 function listenSearch() {
     document.addEventListener('keydown', keyCodeIn, false);
