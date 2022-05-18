@@ -516,7 +516,7 @@ weatherOn.addEventListener('click', () => {
         let weatherBlock = document.getElementById('weather');
         weatherBlock.addEventListener('mouseover', () => {
                 closeWeather.style.display = 'flex';
-                closeWeather.classList.add('animate__flipInX')
+                closeWeather.classList.add('animate__flipInY')
         })
         weatherBlock.addEventListener('mouseout', () => {
                 closeWeather.style.display = 'none';
@@ -597,7 +597,7 @@ function dataWeather() {
 }
 
 /**
- * Функия ввода города
+ * Функия ввода города ( работает от нажания кнопки Enter , так и по клику картинки "поиска"
  */
 
 function listenSearch() {
@@ -606,7 +606,6 @@ function listenSearch() {
     function keyCodeIn(e) {
         let keyCode = e.key;
         if (keyCode === 'Enter' && document.getElementById('searchLocation').value !== '') {
-            console.log('-------------------')
             search = document.getElementById('searchLocation').value;
             locCity = search;
             addCity(locCity)
