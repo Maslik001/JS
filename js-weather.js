@@ -17,14 +17,16 @@ let weatherForecast;
 let windSpeed;
 let status;
 let closeWeather;
+let dataTimeMin;
+let timeZone;
 
 
 /**
  * Функция получения данных о погоде по API
  */
-function addCity() {
+async function addCity() {
     const requestCountry = new XMLHttpRequest();
-    requestCountry?.open('GET', `https://api.openweathermap.org/data/2.5/weather?q=${locCity}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
+    await requestCountry?.open('GET', `https://api.openweathermap.org/data/2.5/weather?q=${locCity}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
     requestCountry.send();
     requestCountry.addEventListener('load', () => {
         let nameCity = JSON.parse(requestCountry?.responseText);
@@ -37,10 +39,17 @@ function addCity() {
         temperature = Math.round(nameCity.main.temp);
         humidity = nameCity.main.humidity;
         pressure = nameCity.main.pressure;
+        dataTimeMin = nameCity.dt  * 1000 ;
+        timeZone = nameCity.timezone;
+        let d = new Date(dataTimeMin + timeZone);
+        console.log(d)
+        console.log(d.getTimezoneOffset());
+        console.log("The local time in " + locCity + " is " + d.toLocaleString());
         dataWeather()
         weatherIco(status);
     })
 }
+
 
 /***
  * Функция добавления виджета "погода" на страницу
@@ -515,11 +524,11 @@ weatherOn.addEventListener('click', () => {
         listenSearch()
         let weatherBlock = document.getElementById('weather');
         weatherBlock.addEventListener('mouseover', () => {
-                closeWeather.style.display = 'flex';
-                closeWeather.classList.add('animate__flipInY')
+            closeWeather.style.display = 'flex';
+            closeWeather.classList.add('animate__flipInY')
         })
         weatherBlock.addEventListener('mouseout', () => {
-                closeWeather.style.display = 'none';
+            closeWeather.style.display = 'none';
         })
         weatherBlock.classList.add('animate__fadeInRight');
         closeWeather.addEventListener('click', () => {
@@ -573,6 +582,19 @@ function weatherIco(weatherStatus) {
 }
 
 /**
+ * Функия отпределения даты
+ */
+function data() {
+    let days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
+    let ms = new Date();
+    let month = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
+    currentDate = (ms.getUTCDate() + " " + month[ms.getMonth()]);
+    currenDay = days[ms.getDay()]
+
+
+}
+
+/**
  * Функция для отображения данных о погодных условиях
  */
 function dataWeather() {
@@ -623,16 +645,5 @@ function listenSearch() {
     })
 }
 
-/**
- * Функия отпределения даты
- */
-function data() {
-    let days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
-    let ms = new Date();
-    let month = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
-    currentDate = (ms.getUTCDate() + " " + month[ms.getMonth()]);
-    currenDay = days[ms.getDay()]
 
-
-}
 
