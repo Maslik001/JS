@@ -19,7 +19,9 @@ let status;
 let closeWeather;
 let dataTimeMin;
 let timeZone;
-
+let latWeather;
+let lonWeather;
+let blockAddNewForec = true;
 
 /**
  * Функция получения данных о погоде по API
@@ -30,16 +32,21 @@ async function addCity() {
     requestCountry.send();
     requestCountry.addEventListener('load', () => {
         let nameCity = JSON.parse(requestCountry?.responseText);
+        if  (nameCity.cod !== 200){
+            console.log('City not founded')
+        } else {
         console.log(nameCity)
         locCity = nameCity?.name;
-        countryID = nameCity.sys.country;
-        windSpeed = nameCity.wind.speed;
+        countryID = nameCity?.sys.country;
+        windSpeed = nameCity?.wind.speed;
         status = nameCity.weather[0].main;
         weatherForecast = nameCity.weather[0].description;
         temperature = Math.round(nameCity.main.temp);
         humidity = nameCity.main.humidity;
         pressure = nameCity.main.pressure;
-        dataTimeMin = nameCity.dt  * 1000 ;
+        latWeather = nameCity.coord.lat;
+        lonWeather = nameCity.coord.lon;
+        dataTimeMin = nameCity.dt * 1000;
         timeZone = nameCity.timezone;
         let d = new Date(dataTimeMin + timeZone);
         console.log(d)
@@ -47,7 +54,64 @@ async function addCity() {
         console.log("The local time in " + locCity + " is " + d.toLocaleString());
         dataWeather()
         weatherIco(status);
+
+        }
     })
+}
+
+// let forecastWeather;
+async function forecast() {
+    let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latWeather}&lon=${lonWeather}&exclude=daily&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`)
+
+    if (!response.ok) {
+        throw new Error(`${response.status}. Page is not found`);
+    }
+    let data = await response.json();
+
+    resultForecast(data);
+}
+
+
+
+function resultForecast(city) {
+    console.log(city)
+    let  [temp1,temp2,tepm3] = [Math.round(city.hourly[0].temp),Math.round(city.hourly[3].temp),Math.round(city.hourly[5].temp)]
+    let sec1 = city.hourly[0].dt;
+    let sec2 = city.hourly[6].dt;
+    let sec3 = city.hourly[12].dt;
+    console.log(sec1,sec2,sec3)
+    let theBigDay = new Date();
+    theBigDay.getUTCMilliseconds(sec1);
+    console.log(theBigDay)
+    console.log(temp1,temp2,tepm3)
+
+    let progn = `
+   <div class="wr-prog">
+            <div class="d1">
+                <div class="pic-weather">
+                    <img src="/img/weather/Weather.png" alt="">
+                </div>
+                <div class="tem1">${temp1}&#176;</div>
+                <div class="day">Пятница</div>
+            </div>
+            <div class="d1">
+                <div class="pic-weather">
+                    <img src="/img/weather/Weather.png" alt="">
+                </div>
+                <div class="tem1">${temp2}&#176;</div>
+                <div class="day">Пятница</div>
+            </div>
+            <div class="d1">
+                <div class="pic-weather">
+                    <img src="/img/weather/Weather.png" alt="">
+                </div>
+                <div class="tem1">${tepm3}&#176;</div>
+                <div class="day">Пятница</div>
+            </div>
+        </div>
+`
+    weatherWrapper.insertAdjacentHTML('afterbegin', progn);
+
 }
 
 
@@ -514,6 +578,7 @@ weatherOn.addEventListener('click', () => {
                         <div class="prep" ><img src="img/weather/prep.png"><p id="prep"></p></div>
                         <div class="pressure" ><img src="img/weather/pressure.png"><p id="pressure"></p></div>
                     </div>
+                    <button class="btn" id="btn">жми</button>
                 </div>
             </div>
         </div>`;
@@ -521,6 +586,14 @@ weatherOn.addEventListener('click', () => {
         weatherWrapper.insertAdjacentHTML('afterbegin', weather);
         weatherElementsIco = document.querySelector('.elements');
         closeWeather = document.querySelector('.close-weather');
+        let btnWeather = document.querySelector('.btn');
+        btnWeather.addEventListener('mouseout', () => {
+            if (blockAddNewForec){
+                blockAddNewForec = false;
+                forecast();
+            }
+
+        })
         listenSearch()
         let weatherBlock = document.getElementById('weather');
         weatherBlock.addEventListener('mouseover', () => {
@@ -615,7 +688,6 @@ function dataWeather() {
     temperatureDiv.innerHTML = `${temperature}&#176;`;
     countryIdDiv.textContent = `${countryID}`
     cityNameDiv.textContent = `${locCity}`;
-
 }
 
 /**
