@@ -17,12 +17,16 @@ let weatherForecast;
 let windSpeed;
 let status;
 let closeWeather;
-let dataTimeMin;
-let timeZone;
 let latWeather;
 let lonWeather;
 let blockAddNewForec = true;
-
+let ico1;
+let ico2;
+let ico3;
+let temp1;
+let temp2;
+let tepm3;
+let forecastBlock = true;
 /**
  * Функция получения данных о погоде по API
  */
@@ -32,88 +36,88 @@ async function addCity() {
     requestCountry.send();
     requestCountry.addEventListener('load', () => {
         let nameCity = JSON.parse(requestCountry?.responseText);
-        if  (nameCity.cod !== 200){
+        if (nameCity.cod !== 200) {
             console.log('City not founded')
         } else {
-        console.log(nameCity)
-        locCity = nameCity?.name;
-        countryID = nameCity?.sys.country;
-        windSpeed = nameCity?.wind.speed;
-        status = nameCity.weather[0].main;
-        weatherForecast = nameCity.weather[0].description;
-        temperature = Math.round(nameCity.main.temp);
-        humidity = nameCity.main.humidity;
-        pressure = nameCity.main.pressure;
-        latWeather = nameCity.coord.lat;
-        lonWeather = nameCity.coord.lon;
-        dataTimeMin = nameCity.dt * 1000;
-        timeZone = nameCity.timezone;
-        let d = new Date(dataTimeMin + timeZone);
-        console.log(d)
-        console.log(d.getTimezoneOffset());
-        console.log("The local time in " + locCity + " is " + d.toLocaleString());
-        dataWeather()
-        weatherIco(status);
-
+            console.log(nameCity)
+            locCity = nameCity?.name;
+            countryID = nameCity?.sys.country;
+            windSpeed = nameCity?.wind.speed;
+            status = nameCity.weather[0].main;
+            weatherForecast = nameCity.weather[0].description;
+            temperature = Math.round(nameCity.main.temp);
+            humidity = nameCity.main.humidity;
+            pressure = nameCity.main.pressure;
+            latWeather = nameCity.coord.lat;
+            lonWeather = nameCity.coord.lon;
+            let timeCity = nameCity.dt * 1000;
+            let timeZone = nameCity.timezone;
+            data(timeCity, timeZone);
+            dataWeather()
+            weatherIco(status);
+            forecast()
         }
     })
 }
 
-// let forecastWeather;
 async function forecast() {
+
+
     let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latWeather}&lon=${lonWeather}&exclude=daily&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`)
 
     if (!response.ok) {
         throw new Error(`${response.status}. Page is not found`);
     }
-    let data = await response.json();
+    let city = await response.json();
+    [temp1, temp2, tepm3] = [Math.round(city.hourly[0].temp), Math.round(city.hourly[3].temp), Math.round(city.hourly[5].temp)]
+    let sec1 = city.hourly[5].dt;
+    let sec2 = city.hourly[9].dt;
+    let sec3 = city.hourly[15].dt;
+    [ico1,ico2,ico3] = [city.hourly[5].weather[0].icon,city.hourly[9].weather[0].icon,city.hourly[15].weather[0].icon]
+    console.log(ico1)
+    resultForecast();
 
-    resultForecast(data);
 }
 
 
-
-function resultForecast(city) {
-    console.log(city)
-    let  [temp1,temp2,tepm3] = [Math.round(city.hourly[0].temp),Math.round(city.hourly[3].temp),Math.round(city.hourly[5].temp)]
-    let sec1 = city.hourly[0].dt;
-    let sec2 = city.hourly[6].dt;
-    let sec3 = city.hourly[12].dt;
-    console.log(sec1,sec2,sec3)
-    let theBigDay = new Date();
-    theBigDay.getUTCMilliseconds(sec1);
-    console.log(theBigDay)
-    console.log(temp1,temp2,tepm3)
-
+function resultForecast() {
+    if (!blockAddNewForec){
     let progn = `
    <div class="wr-prog">
+<!--   <div class="close-prog">&#10150;</div>-->
             <div class="d1">
-                <div class="pic-weather">
-                    <img src="/img/weather/Weather.png" alt="">
+                <div class="pic-weather" id="ico1">
+                    
                 </div>
-                <div class="tem1">${temp1}&#176;</div>
+                <div class="tem1 temp1">${temp1}&#176;</div>
                 <div class="day">Пятница</div>
             </div>
             <div class="d1">
-                <div class="pic-weather">
-                    <img src="/img/weather/Weather.png" alt="">
+                <div class="pic-weather" id="ico2">
+                    <img src="http://openweathermap.org/img/wn/${ico2}@2x.png" alt="">
                 </div>
-                <div class="tem1">${temp2}&#176;</div>
+                <div class="tem1 temp2">${temp2}&#176;</div>
                 <div class="day">Пятница</div>
             </div>
             <div class="d1">
-                <div class="pic-weather">
-                    <img src="/img/weather/Weather.png" alt="">
+                <div class="pic-weather id="ico3">
+                    <img src="http://openweathermap.org/img/wn/${ico3}@2x.png" alt="">
                 </div>
-                <div class="tem1">${tepm3}&#176;</div>
+                <div class="tem1 temp3">${tepm3}&#176;</div>
                 <div class="day">Пятница</div>
             </div>
         </div>
 `
     weatherWrapper.insertAdjacentHTML('afterbegin', progn);
-
+    forecastVue()
+    }
 }
-
+function forecastVue(){
+    let forecastIco1 = document.getElementById('ico1');
+    let forecastIco2 = document.getElementById('ico2');
+    let forecastIco3 = document.getElementById('ico3');
+    forecastIco1.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico1}@2x.png" alt="">`;
+}
 
 /***
  * Функция добавления виджета "погода" на страницу
@@ -578,7 +582,7 @@ weatherOn.addEventListener('click', () => {
                         <div class="prep" ><img src="img/weather/prep.png"><p id="prep"></p></div>
                         <div class="pressure" ><img src="img/weather/pressure.png"><p id="pressure"></p></div>
                     </div>
-                    <button class="btn" id="btn">жми</button>
+                    <button class="weather-btn" id="btn">прогноз на 3 дня</button>
                 </div>
             </div>
         </div>`;
@@ -586,12 +590,12 @@ weatherOn.addEventListener('click', () => {
         weatherWrapper.insertAdjacentHTML('afterbegin', weather);
         weatherElementsIco = document.querySelector('.elements');
         closeWeather = document.querySelector('.close-weather');
-        let btnWeather = document.querySelector('.btn');
-        btnWeather.addEventListener('mouseout', () => {
-            if (blockAddNewForec){
+        let btnWeather = document.querySelector('.weather-btn');
+        btnWeather.addEventListener('click', () => {
+         
                 blockAddNewForec = false;
                 forecast();
-            }
+
 
         })
         listenSearch()
@@ -657,13 +661,18 @@ function weatherIco(weatherStatus) {
 /**
  * Функия отпределения даты
  */
-function data() {
+function data(timeCity, timeZone) {
+    let monthName = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
     let days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
-    let ms = new Date();
-    let month = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
-    currentDate = (ms.getUTCDate() + " " + month[ms.getMonth()]);
-    currenDay = days[ms.getDay()]
 
+
+    let ms = new Date(timeCity);
+    let fdf = new Date(`2022/12/01 GMT+${timeZone / 60}`)
+    console.log(fdf)
+    console.log(ms)
+    console.log(timeZone)
+    currentDate = (ms.getUTCDate() + " " + monthName[ms.getMonth()]);
+    currenDay = days[ms.getDay()]
 
 }
 
@@ -671,7 +680,6 @@ function data() {
  * Функция для отображения данных о погодных условиях
  */
 function dataWeather() {
-    data()
     let cityNameDiv = document.getElementById('city-name');
     let countryIdDiv = document.getElementById('country-id')
     let temperatureDiv = document.getElementById('temperature')
@@ -688,12 +696,12 @@ function dataWeather() {
     temperatureDiv.innerHTML = `${temperature}&#176;`;
     countryIdDiv.textContent = `${countryID}`
     cityNameDiv.textContent = `${locCity}`;
+
 }
 
 /**
  * Функия ввода города ( работает от нажания кнопки Enter , так и по клику картинки "поиска"
  */
-
 function listenSearch() {
     document.addEventListener('keydown', keyCodeIn, false);
 

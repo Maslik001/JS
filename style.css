@@ -188,7 +188,9 @@
     position: relative;
     animation-duration: 1s;
 }
-
+.weather-btn{
+    margin-top: 35px;
+}
 .wr-prog{
     width: 329px;
     height: 536px;
