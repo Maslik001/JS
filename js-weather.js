@@ -629,15 +629,11 @@ weatherOn.addEventListener('click', () => {
         let btnWeather = document.querySelector('.weather-btn');
         btnWeather.addEventListener('click', () => {
 <<<<<<< HEAD
-<<<<<<< HEAD
 
                 blockAddNewForec = false;
                 forecast();
 
 
-=======
-            forecast();
->>>>>>> origin/Calc
 =======
             forecast();
 >>>>>>> origin/Calc
