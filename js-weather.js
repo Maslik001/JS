@@ -592,7 +592,7 @@ weatherOn.addEventListener('click', () => {
         closeWeather = document.querySelector('.close-weather');
         let btnWeather = document.querySelector('.weather-btn');
         btnWeather.addEventListener('click', () => {
-         
+
                 blockAddNewForec = false;
                 forecast();
 
