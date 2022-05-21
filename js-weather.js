@@ -19,7 +19,6 @@ let status;
 let closeWeather;
 let latWeather;
 let lonWeather;
-let blockAddNewForec = true;
 let ico1;
 let ico2;
 let ico3;
@@ -27,6 +26,10 @@ let temp1;
 let temp2;
 let tepm3;
 let forecastBlock = true;
+let forecNextDay1;
+let forecNextDay2;
+let forecNextDay3;
+
 /**
  * Функция получения данных о погоде по API
  */
@@ -39,7 +42,6 @@ async function addCity() {
         if (nameCity.cod !== 200) {
             console.log('City not founded')
         } else {
-            console.log(nameCity)
             locCity = nameCity?.name;
             countryID = nameCity?.sys.country;
             windSpeed = nameCity?.wind.speed;
@@ -55,68 +57,90 @@ async function addCity() {
             data(timeCity, timeZone);
             dataWeather()
             weatherIco(status);
-            forecast()
         }
     })
 }
 
 async function forecast() {
-
-
-    let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latWeather}&lon=${lonWeather}&exclude=daily&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`)
-
+    let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latWeather}&lon=${lonWeather}&exclude=alerts&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`)
     if (!response.ok) {
         throw new Error(`${response.status}. Page is not found`);
     }
     let city = await response.json();
-    [temp1, temp2, tepm3] = [Math.round(city.hourly[0].temp), Math.round(city.hourly[3].temp), Math.round(city.hourly[5].temp)]
-    let sec1 = city.hourly[5].dt;
-    let sec2 = city.hourly[9].dt;
-    let sec3 = city.hourly[15].dt;
-    [ico1,ico2,ico3] = [city.hourly[5].weather[0].icon,city.hourly[9].weather[0].icon,city.hourly[15].weather[0].icon]
-    console.log(ico1)
+    console.log(city);
+    [temp1, temp2, tepm3] = [Math.round([city.daily[1].temp.day]), Math.round([city.daily[2].temp.day]), Math.round([city.daily[3].temp.day])]
+        let sec1 = city.daily[1].dt*1000;
+        let sec2 = city.daily[2].dt*1000;
+        let sec3 = city.daily[3].dt*1000;
+    console.log(sec1)
+
+    data(sec1)
+    data(sec2)
+    data(sec3)
+        // [ico1, ico2, ico3] = [city.daily[0].weather[0].icon, city.daily[1].weather[0].icon, city.daily[2].weather[0].icon]
+    ico1 =  city.daily[1].weather[0].icon;
+    ico2 =  city.daily[2].weather[0].icon;
+    ico3 =  city.daily[3].weather[0].icon;
     resultForecast();
 
 }
 
 
 function resultForecast() {
-    if (!blockAddNewForec){
-    let progn = `
+    if (forecastBlock) {
+        let progn = `
    <div class="wr-prog">
 <!--   <div class="close-prog">&#10150;</div>-->
             <div class="d1">
                 <div class="pic-weather" id="ico1">
                     
                 </div>
-                <div class="tem1 temp1">${temp1}&#176;</div>
-                <div class="day">Пятница</div>
+                <div class="tem1 temp1"></div>
+                <div class="day netx1"></div>
             </div>
             <div class="d1">
                 <div class="pic-weather" id="ico2">
-                    <img src="http://openweathermap.org/img/wn/${ico2}@2x.png" alt="">
+                    
                 </div>
-                <div class="tem1 temp2">${temp2}&#176;</div>
-                <div class="day">Пятница</div>
+                <div class="tem1 temp2"></div>
+                <div class="day netx2"></div>
             </div>
             <div class="d1">
-                <div class="pic-weather id="ico3">
-                    <img src="http://openweathermap.org/img/wn/${ico3}@2x.png" alt="">
+                <div class="pic-weather" id="ico3">
+                    
                 </div>
-                <div class="tem1 temp3">${tepm3}&#176;</div>
-                <div class="day">Пятница</div>
+                <div class="tem1 temp3"></div>
+                <div class="day netx3"></div>
             </div>
         </div>
 `
-    weatherWrapper.insertAdjacentHTML('afterbegin', progn);
-    forecastVue()
-    }
+        weatherWrapper.insertAdjacentHTML('afterbegin', progn);
+        forecastBlock = false;
+        forecastVue()
+    } else {forecastVue()}
 }
-function forecastVue(){
+
+function forecastVue() {
     let forecastIco1 = document.getElementById('ico1');
     let forecastIco2 = document.getElementById('ico2');
     let forecastIco3 = document.getElementById('ico3');
+    let forecastTemp1 = document.querySelector('.temp1');
+    let forecastTemp2 = document.querySelector('.temp2');
+    let forecastTemp3 = document.querySelector('.temp3');
+    let netx1 = document.querySelector('.netx1');
+    let netx2 = document.querySelector('.netx2');
+    let netx3 = document.querySelector('.netx3');
+
     forecastIco1.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico1}@2x.png" alt="">`;
+    forecastIco2.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico2}@2x.png" alt="">`;
+    forecastIco3.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico3}@2x.png" alt="">`;
+    forecastTemp1.innerHTML = `${temp1}&#176;`
+    forecastTemp2.innerHTML = `${temp2}&#176;`
+    forecastTemp3.innerHTML = `${tepm3}&#176;`
+    netx1.innerHTML = `${forecNextDay1}`
+    netx2.innerHTML = `${forecNextDay2}`
+    netx3.innerHTML = `${forecNextDay3}`
+
 }
 
 /***
@@ -592,11 +616,7 @@ weatherOn.addEventListener('click', () => {
         closeWeather = document.querySelector('.close-weather');
         let btnWeather = document.querySelector('.weather-btn');
         btnWeather.addEventListener('click', () => {
-         
-                blockAddNewForec = false;
-                forecast();
-
-
+            forecast();
         })
         listenSearch()
         let weatherBlock = document.getElementById('weather');
@@ -667,10 +687,12 @@ function data(timeCity, timeZone) {
 
 
     let ms = new Date(timeCity);
-    let fdf = new Date(`2022/12/01 GMT+${timeZone / 60}`)
-    console.log(fdf)
-    console.log(ms)
-    console.log(timeZone)
+    let day = ms.getUTCDate();
+    console.log(day)
+    forecNextDay1= [(day + " " + monthName[ms.getMonth()])];
+    forecNextDay2= [(day + " " + monthName[ms.getMonth()])];
+    forecNextDay3= [(day + " " + monthName[ms.getMonth()])];
+
     currentDate = (ms.getUTCDate() + " " + monthName[ms.getMonth()]);
     currenDay = days[ms.getDay()]
 
@@ -680,6 +702,9 @@ function data(timeCity, timeZone) {
  * Функция для отображения данных о погодных условиях
  */
 function dataWeather() {
+    if (!forecastBlock){
+        forecast()
+    }
     let cityNameDiv = document.getElementById('city-name');
     let countryIdDiv = document.getElementById('country-id')
     let temperatureDiv = document.getElementById('temperature')
@@ -696,6 +721,8 @@ function dataWeather() {
     temperatureDiv.innerHTML = `${temperature}&#176;`;
     countryIdDiv.textContent = `${countryID}`
     cityNameDiv.textContent = `${locCity}`;
+
+
 
 }
 
