@@ -69,18 +69,16 @@ async function forecast() {
     let city = await response.json();
     console.log(city);
     [temp1, temp2, tepm3] = [Math.round([city.daily[1].temp.day]), Math.round([city.daily[2].temp.day]), Math.round([city.daily[3].temp.day])]
-        let sec1 = city.daily[1].dt*1000;
-        let sec2 = city.daily[2].dt*1000;
-        let sec3 = city.daily[3].dt*1000;
-    console.log(sec1)
-
-    data(sec1)
-    data(sec2)
-    data(sec3)
-        // [ico1, ico2, ico3] = [city.daily[0].weather[0].icon, city.daily[1].weather[0].icon, city.daily[2].weather[0].icon]
-    ico1 =  city.daily[1].weather[0].icon;
-    ico2 =  city.daily[2].weather[0].icon;
-    ico3 =  city.daily[3].weather[0].icon;
+    let sec1 = city.daily[1].dt * 1000;
+    let sec2 = city.daily[2].dt * 1000;
+    let sec3 = city.daily[3].dt * 1000;
+    forecNextDay1 = data(sec1)
+    forecNextDay2 = data(sec2)
+    forecNextDay3 = data(sec3)
+    // [ico1, ico2, ico3] = [city.daily[0].weather[0].icon, city.daily[1].weather[0].icon, city.daily[2].weather[0].icon]
+    ico1 = city.daily[1].weather[0].icon;
+    ico2 = city.daily[2].weather[0].icon;
+    ico3 = city.daily[3].weather[0].icon;
     resultForecast();
 
 }
@@ -92,32 +90,46 @@ function resultForecast() {
    <div class="wr-prog">
 <!--   <div class="close-prog">&#10150;</div>-->
             <div class="d1">
-                <div class="pic-weather" id="ico1">
-                    
+                <div class="wr">
+                    <div class="wrapper-temp-forec">
+                        <div class="pic-weather" id="ico1"></div>
+                        <div class="tem1 temp1"></div>
+                        <p id="textTem1">Пасмурно</p>
+                    </div>
+<!--                <img src="/img/weather/temperature.png" alt="" width="15px"></div>   -->
+                    <div class="day netx1"></div>
                 </div>
-                <div class="tem1 temp1"></div>
-                <div class="day netx1"></div>
             </div>
             <div class="d1">
-                <div class="pic-weather" id="ico2">
-                    
+                <div class="wr">
+                    <div class="wrapper-temp-forec">
+                        <div class="pic-weather" id="ico2"></div>
+                        <div class="tem1 temp2"></div>
+                        <p id="textTem2">Пасмурно</p>
+                    </div>
+<!--                <img src="/img/weather/temperature.png" alt="" width="15px"></div>   -->
+                    <div class="day netx2"></div>
                 </div>
-                <div class="tem1 temp2"></div>
-                <div class="day netx2"></div>
             </div>
             <div class="d1">
-                <div class="pic-weather" id="ico3">
-                    
+                <div class="wr">
+                    <div class="wrapper-temp-forec">
+                        <div class="pic-weather" id="ico3"></div>
+                        <div class="tem1 temp3"></div>
+                        <p id="textTem3">Пасмурно</p>
+                    </div>
+<!--                <img src="/img/weather/temperature.png" alt="" width="15px"></div>   -->
+                    <div class="day netx3"></div>
                 </div>
-                <div class="tem1 temp3"></div>
-                <div class="day netx3"></div>
             </div>
-        </div>
+            
 `
         weatherWrapper.insertAdjacentHTML('afterbegin', progn);
         forecastBlock = false;
         forecastVue()
-    } else {forecastVue()}
+    } else {
+        forecastVue()
+    }
 }
 
 function forecastVue() {
@@ -688,21 +700,16 @@ function data(timeCity, timeZone) {
 
     let ms = new Date(timeCity);
     let day = ms.getUTCDate();
-    console.log(day)
-    forecNextDay1= [(day + " " + monthName[ms.getMonth()])];
-    forecNextDay2= [(day + " " + monthName[ms.getMonth()])];
-    forecNextDay3= [(day + " " + monthName[ms.getMonth()])];
-
     currentDate = (ms.getUTCDate() + " " + monthName[ms.getMonth()]);
     currenDay = days[ms.getDay()]
-
+    return [(day + " " + monthName[ms.getMonth()]) + " " + ms.getUTCFullYear()];
 }
 
 /**
  * Функция для отображения данных о погодных условиях
  */
 function dataWeather() {
-    if (!forecastBlock){
+    if (!forecastBlock) {
         forecast()
     }
     let cityNameDiv = document.getElementById('city-name');
@@ -721,7 +728,6 @@ function dataWeather() {
     temperatureDiv.innerHTML = `${temperature}&#176;`;
     countryIdDiv.textContent = `${countryID}`
     cityNameDiv.textContent = `${locCity}`;
-
 
 
 }
