@@ -684,21 +684,17 @@ weatherOn.addEventListener('click', () => {
             }
             blockAddNewWeather = true;
             forecastBlock = true;
-
+            weatherBlock.classList.remove('animate__fadeInRight');
             forecastWrapper.classList.add('animate__fadeOutRight');
             setTimeout(function () {
-                weatherBlock.classList.remove('animate__fadeInRight');
                 weatherBlock.classList.add('animate__fadeOutRight');
 
             }, 800)
             setTimeout(function () {
-                // weatherBlock.classList.remove('animate__fadeInRight');
-                // weatherBlock.classList.add('animate__fadeOutRight');
                 while (weatherWrapper.firstChild) {
                     weatherWrapper.removeChild(weatherWrapper.firstChild);
-
                 }
-            }, 900)
+            }, 1000)
 
         })
     }

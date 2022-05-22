@@ -249,6 +249,7 @@
     font-weight: 400;
     font-size: 12px;
     line-height: 24px;
+    padding-right: 10px;
 }
 .wr{
     display: flex;
@@ -492,13 +493,13 @@
     height: 80px;
     top: 40%;
     z-index: -1;
-    left: -7%;
+    left: -3%;
     background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 .close-forecast p {
     font-size: 40px;
