@@ -32,8 +32,6 @@ let forecastBlock = true;
 let forecNextDay1;
 let forecNextDay2;
 let forecNextDay3;
-<<<<<<< HEAD
-=======
 let forecastWeatherStatus1;
 let forecastWeatherStatus2;
 let forecastWeatherStatus3;
@@ -41,7 +39,6 @@ let forecastWrapper;
 let nightTemp1;
 let nightTemp2;
 let nightTemp3;
->>>>>>> branch-2
 
 /**
  * Функция получения данных о погоде по API
@@ -93,14 +90,11 @@ async function forecast() {
     ico1 = city.daily[1].weather[0].icon;
     ico2 = city.daily[2].weather[0].icon;
     ico3 = city.daily[3].weather[0].icon;
-<<<<<<< HEAD
-=======
     [forecastWeatherStatus1,forecastWeatherStatus2,forecastWeatherStatus3] = [city.daily[1].weather[0].description,city.daily[2].weather[0].description,city.daily[3].weather[0].description]
     // [nightTemp1, nightTemp2, nightTemp3] = [Math.round([city.daily[1].temp.night]), Math.round([city.daily[2].temp.night]), Math.round([city.daily[3].temp.night])]
     nightTemp1 = Math.round([city.daily[1].temp.night]);
     nightTemp2 = Math.round([city.daily[2].temp.night]);
     nightTemp3 = Math.round([city.daily[3].temp.night]);
->>>>>>> branch-2
     resultForecast();
 
 }
@@ -118,14 +112,8 @@ function resultForecast() {
                     <div class="wrapper-temp-forec">
                         <div class="pic-weather" id="ico1"></div>
                         <div class="tem1 temp1"></div>
-<<<<<<< HEAD
-                        <p id="textTem1">Пасмурно</p>
-                    </div>
-<!--                <img src="/img/weather/temperature.png" alt="" width="15px"></div>   -->
-=======
                         <p id="textTem1"></p>
                     </div>
->>>>>>> branch-2
                     <div class="day netx1"></div>
                 </div>
             </div>
@@ -134,14 +122,8 @@ function resultForecast() {
                     <div class="wrapper-temp-forec">
                         <div class="pic-weather" id="ico2"></div>
                         <div class="tem1 temp2"></div>
-<<<<<<< HEAD
-                        <p id="textTem2">Пасмурно</p>
-                    </div>
-<!--                <img src="/img/weather/temperature.png" alt="" width="15px"></div>   -->
-=======
                         <p id="textTem2"></p>
                     </div>
->>>>>>> branch-2
                     <div class="day netx2"></div>
                 </div>
             </div>
@@ -150,18 +132,6 @@ function resultForecast() {
                     <div class="wrapper-temp-forec">
                         <div class="pic-weather" id="ico3"></div>
                         <div class="tem1 temp3"></div>
-<<<<<<< HEAD
-                        <p id="textTem3">Пасмурно</p>
-                    </div>
-<!--                <img src="/img/weather/temperature.png" alt="" width="15px"></div>   -->
-                    <div class="day netx3"></div>
-                </div>
-            </div>
-            
-`
-        weatherWrapper.insertAdjacentHTML('afterbegin', progn);
-        forecastBlock = false;
-=======
                         <p id="textTem3"></p>
                     </div>
                     <div class="day netx3"></div>
@@ -185,19 +155,14 @@ function resultForecast() {
 
         })
 
->>>>>>> branch-2
         forecastVue()
     } else {
         forecastVue()
     }
 }
-<<<<<<< HEAD
-
-=======
 /**
  * Функция для отображения данных о прогнощируемых погодных условиях
  */
->>>>>>> branch-2
 function forecastVue() {
     let forecastIco1 = document.getElementById('ico1');
     let forecastIco2 = document.getElementById('ico2');
@@ -208,18 +173,6 @@ function forecastVue() {
     let netx1 = document.querySelector('.netx1');
     let netx2 = document.querySelector('.netx2');
     let netx3 = document.querySelector('.netx3');
-<<<<<<< HEAD
-
-    forecastIco1.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico1}@2x.png" alt="">`;
-    forecastIco2.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico2}@2x.png" alt="">`;
-    forecastIco3.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico3}@2x.png" alt="">`;
-    forecastTemp1.innerHTML = `${temp1}&#176;`
-    forecastTemp2.innerHTML = `${temp2}&#176;`
-    forecastTemp3.innerHTML = `${tepm3}&#176;`
-    netx1.innerHTML = `${forecNextDay1}`
-    netx2.innerHTML = `${forecNextDay2}`
-    netx3.innerHTML = `${forecNextDay3}`
-=======
     let textTem1 = document.getElementById('textTem1');
     let textTem2 = document.getElementById('textTem2');
     let textTem3 = document.getElementById('textTem3');
@@ -235,7 +188,6 @@ function forecastVue() {
     textTem1.innerHTML = `${forecastWeatherStatus1}`
     textTem2.innerHTML = `${forecastWeatherStatus2}`
     textTem3.innerHTML = `${forecastWeatherStatus3}`
->>>>>>> branch-2
 
 }
 
