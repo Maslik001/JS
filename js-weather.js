@@ -33,6 +33,9 @@ let forecastWeatherStatus1;
 let forecastWeatherStatus2;
 let forecastWeatherStatus3;
 let forecastWrapper;
+let nightTemp1;
+let nightTemp2;
+let nightTemp3;
 
 /**
  * Функция получения данных о погоде по API
@@ -83,7 +86,10 @@ async function forecast() {
     ico2 = city.daily[2].weather[0].icon;
     ico3 = city.daily[3].weather[0].icon;
     [forecastWeatherStatus1,forecastWeatherStatus2,forecastWeatherStatus3] = [city.daily[1].weather[0].description,city.daily[2].weather[0].description,city.daily[3].weather[0].description]
-
+    // [nightTemp1, nightTemp2, nightTemp3] = [Math.round([city.daily[1].temp.night]), Math.round([city.daily[2].temp.night]), Math.round([city.daily[3].temp.night])]
+    nightTemp1 = Math.round([city.daily[1].temp.night]);
+    nightTemp2 = Math.round([city.daily[2].temp.night]);
+    nightTemp3 = Math.round([city.daily[3].temp.night]);
     resultForecast();
 
 }
@@ -132,11 +138,12 @@ function resultForecast() {
         forecastWrapper.classList.add('animate__fadeInRight');
         let closeForecast = document.querySelector('.close-forecast');
         closeForecast.addEventListener('click', () => {
-            forecastBlock = false;
+            forecastBlock = true;
             forecastWrapper.classList.remove('animate__fadeInRight');
             forecastWrapper.classList.add('animate__fadeOutRight');
             setTimeout(function () {
                 weatherWrapper.removeChild(weatherWrapper.firstChild);
+                forecastWrapper.classList.remove('animate__fadeOutRight');
             }, 1000)
 
         })
@@ -163,9 +170,9 @@ function forecastVue() {
     forecastIco1.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico1}@2x.png" alt="">`;
     forecastIco2.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico2}@2x.png" alt="">`;
     forecastIco3.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico3}@2x.png" alt="">`;
-    forecastTemp1.innerHTML = `${temp1}&#176;`
-    forecastTemp2.innerHTML = `${temp2}&#176;`
-    forecastTemp3.innerHTML = `${tepm3}&#176;`
+    forecastTemp1.innerHTML = `<span class="forecast-temp">${temp1}&#176;</span> <span class="night-temp">/ ${nightTemp1}&#176;</span>`
+    forecastTemp2.innerHTML = `<span class="forecast-temp">${temp2}&#176;</span> <span class="night-temp">/ ${nightTemp2}&#176;</span>`
+    forecastTemp3.innerHTML = `<span class="forecast-temp">${tepm3}&#176;</span> <span class="night-temp">/ ${nightTemp3}&#176;</span>`
     netx1.innerHTML = `${forecNextDay1}`
     netx2.innerHTML = `${forecNextDay2}`
     netx3.innerHTML = `${forecNextDay3}`
@@ -638,7 +645,7 @@ weatherOn.addEventListener('click', () => {
                         <div class="prep" ><img src="img/weather/prep.png"><p id="prep"></p></div>
                         <div class="pressure" ><img src="img/weather/pressure.png"><p id="pressure"></p></div>
                     </div>
-                    <button class="weather-btn" id="btn">прогноз на 3 дня</button>
+                    <div class="weather-btn" id="btn">прогноз на 3 дня</div>
                 </div>
             </div>
         </div>`;
@@ -661,6 +668,7 @@ weatherOn.addEventListener('click', () => {
         })
         weatherBlock.classList.add('animate__fadeInRight');
         closeWeather.addEventListener('click', () => {
+
             if (!forecastBlock){
                 forecastWrapper.classList.remove('animate__fadeInRight');
                 forecastWrapper.classList.add('animate__fadeOutRight');
@@ -669,10 +677,11 @@ weatherOn.addEventListener('click', () => {
             forecastBlock = true;
             weatherBlock.classList.remove('animate__fadeInRight');
             weatherBlock.classList.add('animate__fadeOutRight');
-           
+
             setTimeout(function () {
                 while (weatherWrapper.firstChild) {
                     weatherWrapper.removeChild(weatherWrapper.firstChild);
+
                 }
             }, 1000)
 

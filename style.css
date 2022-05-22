@@ -235,6 +235,13 @@
 .tem1{
     font-size: 35px;
     font-weight: 500;
+    padding-right: 8px;
+}
+.forecast-temp{
+    font-size: 35px;
+}
+.night-temp{
+    font-size: 17px;
 }
 .wrapper-temp-forec p{
     margin-top: 5px;
@@ -437,7 +444,24 @@
     text-align: center;
     color: #FFFFFF;
 }
-
+.weather-btn{
+    width: 130px;
+    height: 27px;
+    box-sizing: border-box;
+    background-color: #004b9b;
+    box-shadow: 1px 1px 3px black;
+    display: flex;
+    margin-top: 37px;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    border-radius: 5px;
+    transition: all 0.6s;
+}
+.weather-btn:hover{
+    cursor: pointer;
+    transform: scale(0.95);
+}
 .close-weather{
     display: none;
     width: 45px;
