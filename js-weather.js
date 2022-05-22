@@ -32,6 +32,7 @@ let forecNextDay3;
 let forecastWeatherStatus1;
 let forecastWeatherStatus2;
 let forecastWeatherStatus3;
+let forecastWrapper;
 
 /**
  * Функция получения данных о погоде по API
@@ -92,7 +93,7 @@ function resultForecast() {
     if (forecastBlock) {
         let progn = `
    <div class="wr-prog">
-   <div class="close-forecast">&#10097;</div>
+   <div class="close-forecast"><p>&#10097;</p></div>
             <div class="d1">
                 <div class="wr">
                     <div class="wrapper-temp-forec">
@@ -127,6 +128,19 @@ function resultForecast() {
 `
         weatherWrapper.insertAdjacentHTML('afterbegin', progn);
         forecastBlock = false;
+        forecastWrapper = document.querySelector('.wr-prog');
+        forecastWrapper.classList.add('animate__fadeInRight');
+        let closeForecast = document.querySelector('.close-forecast');
+        closeForecast.addEventListener('click', () => {
+            forecastBlock = false;
+            forecastWrapper.classList.remove('animate__fadeInRight');
+            forecastWrapper.classList.add('animate__fadeOutRight');
+            setTimeout(function () {
+                weatherWrapper.removeChild(weatherWrapper.firstChild);
+            }, 1000)
+
+        })
+
         forecastVue()
     } else {
         forecastVue()
@@ -177,7 +191,7 @@ weatherOn.addEventListener('click', () => {
                 <input type="text" class="search-location" id="searchLocation" placeholder="Введите город" ">
                 <img src="img/weather/geographic.png" alt="">
             </div>
-            <div class="weather-info">
+            <div class="weather-info animate__jackInTheBox">
                 <div class="location">
                     <div class="city-location">
                         <img src="/img/weather/local.png" alt="">
@@ -647,10 +661,15 @@ weatherOn.addEventListener('click', () => {
         })
         weatherBlock.classList.add('animate__fadeInRight');
         closeWeather.addEventListener('click', () => {
+            if (!forecastBlock){
+                forecastWrapper.classList.remove('animate__fadeInRight');
+                forecastWrapper.classList.add('animate__fadeOutRight');
+            }
             blockAddNewWeather = true;
             forecastBlock = true;
             weatherBlock.classList.remove('animate__fadeInRight');
             weatherBlock.classList.add('animate__fadeOutRight');
+           
             setTimeout(function () {
                 while (weatherWrapper.firstChild) {
                     weatherWrapper.removeChild(weatherWrapper.firstChild);
