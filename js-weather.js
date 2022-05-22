@@ -29,6 +29,9 @@ let forecastBlock = true;
 let forecNextDay1;
 let forecNextDay2;
 let forecNextDay3;
+let forecastWeatherStatus1;
+let forecastWeatherStatus2;
+let forecastWeatherStatus3;
 
 /**
  * Функция получения данных о погоде по API
@@ -53,8 +56,7 @@ async function addCity() {
             latWeather = nameCity.coord.lat;
             lonWeather = nameCity.coord.lon;
             let timeCity = nameCity.dt * 1000;
-            let timeZone = nameCity.timezone;
-            data(timeCity, timeZone);
+            data(timeCity);
             dataWeather()
             weatherIco(status);
         }
@@ -79,6 +81,8 @@ async function forecast() {
     ico1 = city.daily[1].weather[0].icon;
     ico2 = city.daily[2].weather[0].icon;
     ico3 = city.daily[3].weather[0].icon;
+    [forecastWeatherStatus1,forecastWeatherStatus2,forecastWeatherStatus3] = [city.daily[1].weather[0].description,city.daily[2].weather[0].description,city.daily[3].weather[0].description]
+
     resultForecast();
 
 }
@@ -88,15 +92,14 @@ function resultForecast() {
     if (forecastBlock) {
         let progn = `
    <div class="wr-prog">
-<!--   <div class="close-prog">&#10150;</div>-->
+   <div class="close-forecast">&#10097;</div>
             <div class="d1">
                 <div class="wr">
                     <div class="wrapper-temp-forec">
                         <div class="pic-weather" id="ico1"></div>
                         <div class="tem1 temp1"></div>
-                        <p id="textTem1">Пасмурно</p>
+                        <p id="textTem1"></p>
                     </div>
-<!--                <img src="/img/weather/temperature.png" alt="" width="15px"></div>   -->
                     <div class="day netx1"></div>
                 </div>
             </div>
@@ -105,9 +108,8 @@ function resultForecast() {
                     <div class="wrapper-temp-forec">
                         <div class="pic-weather" id="ico2"></div>
                         <div class="tem1 temp2"></div>
-                        <p id="textTem2">Пасмурно</p>
+                        <p id="textTem2"></p>
                     </div>
-<!--                <img src="/img/weather/temperature.png" alt="" width="15px"></div>   -->
                     <div class="day netx2"></div>
                 </div>
             </div>
@@ -116,13 +118,12 @@ function resultForecast() {
                     <div class="wrapper-temp-forec">
                         <div class="pic-weather" id="ico3"></div>
                         <div class="tem1 temp3"></div>
-                        <p id="textTem3">Пасмурно</p>
+                        <p id="textTem3"></p>
                     </div>
-<!--                <img src="/img/weather/temperature.png" alt="" width="15px"></div>   -->
                     <div class="day netx3"></div>
                 </div>
             </div>
-            
+            <div class="flip"></div>
 `
         weatherWrapper.insertAdjacentHTML('afterbegin', progn);
         forecastBlock = false;
@@ -142,7 +143,9 @@ function forecastVue() {
     let netx1 = document.querySelector('.netx1');
     let netx2 = document.querySelector('.netx2');
     let netx3 = document.querySelector('.netx3');
-
+    let textTem1 = document.getElementById('textTem1');
+    let textTem2 = document.getElementById('textTem2');
+    let textTem3 = document.getElementById('textTem3');
     forecastIco1.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico1}@2x.png" alt="">`;
     forecastIco2.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico2}@2x.png" alt="">`;
     forecastIco3.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico3}@2x.png" alt="">`;
@@ -152,6 +155,9 @@ function forecastVue() {
     netx1.innerHTML = `${forecNextDay1}`
     netx2.innerHTML = `${forecNextDay2}`
     netx3.innerHTML = `${forecNextDay3}`
+    textTem1.innerHTML = `${forecastWeatherStatus1}`
+    textTem2.innerHTML = `${forecastWeatherStatus2}`
+    textTem3.innerHTML = `${forecastWeatherStatus3}`
 
 }
 
@@ -628,15 +634,7 @@ weatherOn.addEventListener('click', () => {
         closeWeather = document.querySelector('.close-weather');
         let btnWeather = document.querySelector('.weather-btn');
         btnWeather.addEventListener('click', () => {
-<<<<<<< HEAD
-
-                blockAddNewForec = false;
-                forecast();
-
-
-=======
             forecast();
->>>>>>> origin/Calc
         })
         listenSearch()
         let weatherBlock = document.getElementById('weather');
@@ -650,6 +648,7 @@ weatherOn.addEventListener('click', () => {
         weatherBlock.classList.add('animate__fadeInRight');
         closeWeather.addEventListener('click', () => {
             blockAddNewWeather = true;
+            forecastBlock = true;
             weatherBlock.classList.remove('animate__fadeInRight');
             weatherBlock.classList.add('animate__fadeOutRight');
             setTimeout(function () {
@@ -701,7 +700,7 @@ function weatherIco(weatherStatus) {
 /**
  * Функия отпределения даты
  */
-function data(timeCity, timeZone) {
+function data(timeCity) {
     let monthName = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
     let days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
 
@@ -728,6 +727,7 @@ function dataWeather() {
     let windDiv = document.getElementById('wind');
     let prepDiv = document.getElementById('prep');
     let pressureDiv = document.getElementById('pressure');
+
     windDiv.innerText = `ветер: ${windSpeed} m/s`;
     prepDiv.innerHTML = `влажность: ${humidity}&#37;`;
     pressureDiv.innerText = `давление: ${pressure} hPa`;
