@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Переменные
+ */
 const weatherOn = document.getElementById('weather-img');
 let weatherElementsIco;
 let search;
@@ -66,7 +69,9 @@ async function addCity() {
         }
     })
 }
-
+/**
+ * Функция получения данных о Прогнозе погоды по API
+ */
 async function forecast() {
     let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latWeather}&lon=${lonWeather}&exclude=alerts&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`)
     if (!response.ok) {
@@ -94,7 +99,9 @@ async function forecast() {
 
 }
 
-
+/***
+ * Функция добавления виджета "Прогноза" на страницу
+ */
 function resultForecast() {
     if (forecastBlock) {
         let progn = `
@@ -153,7 +160,9 @@ function resultForecast() {
         forecastVue()
     }
 }
-
+/**
+ * Функция для отображения данных о прогнощируемых погодных условиях
+ */
 function forecastVue() {
     let forecastIco1 = document.getElementById('ico1');
     let forecastIco2 = document.getElementById('ico2');
