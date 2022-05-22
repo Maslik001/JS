@@ -684,15 +684,21 @@ weatherOn.addEventListener('click', () => {
             }
             blockAddNewWeather = true;
             forecastBlock = true;
-            weatherBlock.classList.remove('animate__fadeInRight');
-            weatherBlock.classList.add('animate__fadeOutRight');
 
+            forecastWrapper.classList.add('animate__fadeOutRight');
             setTimeout(function () {
+                weatherBlock.classList.remove('animate__fadeInRight');
+                weatherBlock.classList.add('animate__fadeOutRight');
+
+            }, 800)
+            setTimeout(function () {
+                // weatherBlock.classList.remove('animate__fadeInRight');
+                // weatherBlock.classList.add('animate__fadeOutRight');
                 while (weatherWrapper.firstChild) {
                     weatherWrapper.removeChild(weatherWrapper.firstChild);
 
                 }
-            }, 1000)
+            }, 900)
 
         })
     }
@@ -740,8 +746,6 @@ function weatherIco(weatherStatus) {
 function data(timeCity) {
     let monthName = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
     let days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
-
-
     let ms = new Date(timeCity);
     let day = ms.getUTCDate();
     currentDate = (ms.getUTCDate() + " " + monthName[ms.getMonth()]);
