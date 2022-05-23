@@ -145,14 +145,13 @@ function resultForecast() {
         forecastWrapper.classList.add('animate__fadeInRight');
         let closeForecast = document.querySelector('.close-forecast');
         closeForecast.addEventListener('click', () => {
-            forecastBlock = true;
+            weatherWrapper.removeChild(weatherWrapper.firstChild);
             forecastWrapper.classList.remove('animate__fadeInRight');
             forecastWrapper.classList.add('animate__fadeOutRight');
             setTimeout(function () {
                 weatherWrapper.removeChild(weatherWrapper.firstChild);
-                forecastWrapper.classList.remove('animate__fadeOutRight');
+                forecastBlock = true;
             }, 1000)
-
         })
 
         forecastVue()
