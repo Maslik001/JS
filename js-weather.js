@@ -676,25 +676,31 @@ weatherOn.addEventListener('click', () => {
         })
         weatherBlock.classList.add('animate__fadeInRight');
         closeWeather.addEventListener('click', () => {
-
             if (!forecastBlock){
                 forecastWrapper.classList.remove('animate__fadeInRight');
                 forecastWrapper.classList.add('animate__fadeOutRight');
+                forecastBlock = true;
+                setTimeout(function () {
+                    forecastWrapper.style = 'opacity: 0;'
+                    weatherBlock.classList.remove('animate__fadeInRight');
+                    weatherBlock.classList.add('animate__fadeOutRight');
+                    weatherBlock.style = 'animation-duration: 2s;'
+                }, 1000)
+                setTimeout(function () {
+                    while (weatherWrapper.firstChild) {
+                        weatherWrapper.removeChild(weatherWrapper.firstChild);
+                    }
+                }, 2000)
+            } else {
+                weatherBlock.classList.remove('animate__fadeInRight');
+                weatherBlock.classList.add('animate__fadeOutRight');
+                setTimeout(function () {
+                    while (weatherWrapper.firstChild) {
+                        weatherWrapper.removeChild(weatherWrapper.firstChild);
+                    }
+                }, 1000)
             }
             blockAddNewWeather = true;
-            forecastBlock = true;
-            weatherBlock.classList.remove('animate__fadeInRight');
-            forecastWrapper.classList.add('animate__fadeOutRight');
-            setTimeout(function () {
-                weatherBlock.classList.add('animate__fadeOutRight');
-
-            }, 800)
-            setTimeout(function () {
-                while (weatherWrapper.firstChild) {
-                    weatherWrapper.removeChild(weatherWrapper.firstChild);
-                }
-            }, 1000)
-
         })
     }
     addCity();

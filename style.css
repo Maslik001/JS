@@ -188,7 +188,8 @@
     border-radius: 30px;
     z-index: 2;
     position: relative;
-    animation-duration: 1s;
+    animation-duration: 1.5s;
+
 }
 .weather-btn{
     margin-top: 35px;
