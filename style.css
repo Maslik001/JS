@@ -673,3 +673,17 @@
     color: #FFFFFF;
     width: 50px;
 }
+.calendar-wrapper{
+    width: 400px;
+    height: 400px;
+    background: #000;
+    z-index: 3;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.b1{
+    width: 12%;
+    height: 12%;
+    background: #FFFFFF;
+}
