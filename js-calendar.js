@@ -15,17 +15,19 @@ const option = {
 
 const now = new Date();
 
-let [day, myDate, myTime,myYear] = now.toLocaleString('ru-RU', option).split(',');
+let [day, myDate, myTime] = now.toLocaleString('ru-RU', option).split(',');
 // console.log([myTime.trim(), day.trim(), myDate.trim()].join(', '));
 let myMonth = now.getMonth()
-console.log(myMonth)
+let myYear = now.getFullYear()
+console.log(myYear)
 let calendarWrapper = document.querySelector('.calendar-wrapper');
 
-function pushData() {
+function pushData(result) {
+    console.log(result)
     let daysInMonth = [];
 
 
-    for (let i = 25; i >= 1; i--) {
+    for (let i = 1; i <= result.length; i++) {
         let dayMonth;
         dayMonth = i;
         let a =  `<div class="b1">${i}</div>`;
@@ -34,7 +36,7 @@ function pushData() {
     }
 }
 
-pushData()
+
 
 let getDaysArray = function(year, month) {
     // let names = [ 'sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat' ];
@@ -44,6 +46,8 @@ let getDaysArray = function(year, month) {
         result.push(date.getDate() );
         date.setDate(date.getDate() + 1);
     }
+    pushData(result)
+    console.log(...result)
     return result;
 }
-console.log(getDaysArray(now.year, now.month));
+getDaysArray(myYear, myMonth)
