@@ -567,7 +567,8 @@
     display: none;
     align-items: end;
     animation-duration: 1s;
-    position: relative;
+    position: absolute;
+    left: 30%;
 
 }
 

@@ -78,7 +78,7 @@ async function forecast() {
         throw new Error(`${response.status}. Page is not found`);
     }
     let city = await response.json();
-    console.log(city);
+    // console.log(city);
     [temp1, temp2, tepm3] = [Math.round([city.daily[1].temp.day]), Math.round([city.daily[2].temp.day]), Math.round([city.daily[3].temp.day])]
     let sec1 = city.daily[1].dt * 1000;
     let sec2 = city.daily[2].dt * 1000;
