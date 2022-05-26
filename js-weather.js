@@ -78,7 +78,7 @@ async function forecast() {
         throw new Error(`${response.status}. Page is not found`);
     }
     let city = await response.json();
-    console.log(city);
+    // console.log(city);
     [temp1, temp2, tepm3] = [Math.round([city.daily[1].temp.day]), Math.round([city.daily[2].temp.day]), Math.round([city.daily[3].temp.day])]
     let sec1 = city.daily[1].dt * 1000;
     let sec2 = city.daily[2].dt * 1000;
@@ -676,25 +676,31 @@ weatherOn.addEventListener('click', () => {
         })
         weatherBlock.classList.add('animate__fadeInRight');
         closeWeather.addEventListener('click', () => {
-
             if (!forecastBlock){
                 forecastWrapper.classList.remove('animate__fadeInRight');
                 forecastWrapper.classList.add('animate__fadeOutRight');
+                forecastBlock = true;
+                setTimeout(function () {
+                    forecastWrapper.style = 'opacity: 0;'
+                    weatherBlock.classList.remove('animate__fadeInRight');
+                    weatherBlock.classList.add('animate__fadeOutRight');
+                    weatherBlock.style = 'animation-duration: 2s;'
+                }, 1000)
+                setTimeout(function () {
+                    while (weatherWrapper.firstChild) {
+                        weatherWrapper.removeChild(weatherWrapper.firstChild);
+                    }
+                }, 2000)
+            } else {
+                weatherBlock.classList.remove('animate__fadeInRight');
+                weatherBlock.classList.add('animate__fadeOutRight');
+                setTimeout(function () {
+                    while (weatherWrapper.firstChild) {
+                        weatherWrapper.removeChild(weatherWrapper.firstChild);
+                    }
+                }, 1000)
             }
             blockAddNewWeather = true;
-            forecastBlock = true;
-            weatherBlock.classList.remove('animate__fadeInRight');
-            forecastWrapper.classList.add('animate__fadeOutRight');
-            setTimeout(function () {
-                weatherBlock.classList.add('animate__fadeOutRight');
-
-            }, 800)
-            setTimeout(function () {
-                while (weatherWrapper.firstChild) {
-                    weatherWrapper.removeChild(weatherWrapper.firstChild);
-                }
-            }, 1000)
-
         })
     }
     addCity();
