@@ -20,18 +20,33 @@ let [day, myDate, myTime] = now.toLocaleString('ru-RU', option).split(',');
 let myMonth = now.getMonth()
 let myYear = now.getFullYear()
 console.log(myYear)
-let calendarWrapper = document.querySelector('.calendar-wrapper');
+let numDay = document.querySelector('.numDay');
+let daysWrap = document.querySelector('.days-wrap');
+let dataShort = document.querySelector('.data-short');
 
-function pushData(result) {
-    console.log(result)
+function pushData(result,days,date) {
+
+    let dataDay = `
+    <div class="data-day">${myDate}</div>
+    `
+    dataShort.insertAdjacentHTML("afterbegin", dataDay);
+    let day = days[date.getDay()]
     let daysInMonth = [];
+
+    for (let j = days.length-1; j >= 0; j-- ){
+        let d =  `
+        <div class="days">${days[j]}</div>`;
+        daysWrap.insertAdjacentHTML("afterbegin", d);
+    }
+
 
 
     for (let i = 1; i <= result.length; i++) {
         let dayMonth;
         dayMonth = i;
-        let a =  `<div class="b1">${i}</div>`;
-        calendarWrapper.insertAdjacentHTML("afterbegin", a);
+        let a =  `
+<div class="b1">${i}</div>`;
+        numDay.insertAdjacentHTML("beforeend", a);
 
     }
 }
@@ -39,14 +54,17 @@ function pushData(result) {
 
 
 let getDaysArray = function(year, month) {
-    // let names = [ 'sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat' ];
+    let days = [ "Пн", "Вт", "Ср", "Чт", "Пт", "Сб","Вс"];
+
     let date = new Date(year, month - 1, 1);
     let result = [];
+
+
     while (date.getMonth() === month - 1) {
         result.push(date.getDate() );
         date.setDate(date.getDate() + 1);
     }
-    pushData(result)
+    pushData(result,days,date)
     console.log(...result)
     return result;
 }

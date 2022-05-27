@@ -674,17 +674,41 @@
     width: 50px;
 }
 .calendar-wrapper{
-    width: 400px;
+    width: 420px;
     height: 400px;
     background: #000;
     z-index: 3;
-    display: none;
-    flex-wrap: wrap;
-    gap: 5px;
+}
+.numDay{
+    margin-top: 10px;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding-bottom: 40px;
 
 }
 .b1{
     width: 12%;
     height: 12%;
-    background: #FFFFFF;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+.days{
+    color: #FFFFFF;
+    width: 12%;
+    height: 4%;
+}
+.data-day{
+    color: wheat;
+}
+.days-wrap{
+    display: flex;
+    padding-bottom: 10px;
+}
+.data-short{
+    height: 30px;
+    margin-top: 10px;
 }
