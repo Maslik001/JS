@@ -3,8 +3,8 @@
 
 const option = {
     // timeZone: `Etc/GMT${'-7'}`,
-    month: '2-digit',
-    year: '2-digit',
+    month: 'numeric',
+    year: 'numeric',
     day: 'numeric',
     weekday: 'long',
     hour: '2-digit',
@@ -15,19 +15,19 @@ const option = {
 
 const now = new Date();
 
-let [day, myDate, myTime] = now.toLocaleString('ru-RU', option).split(',');
+let [myday, myDate, month] = now.toLocaleString('ru-RU', option).split(',');
 // console.log([myTime.trim(), day.trim(), myDate.trim()].join(', '));
 let myMonth = now.getMonth()
 let myYear = now.getFullYear()
-console.log(myYear)
+console.log(myday)
 let numDay = document.querySelector('.numDay');
 let daysWrap = document.querySelector('.days-wrap');
 let dataShort = document.querySelector('.data-short');
 
-function pushData(result,days,date) {
-
+function pushData(result,days,date,month) {
+    let m = option.now
     let dataDay = `
-    <div class="data-day">${myDate}</div>
+    <div class="data-day">${month}</div>
     `
     dataShort.insertAdjacentHTML("afterbegin", dataDay);
     let day = days[date.getDay()]
@@ -59,13 +59,13 @@ let getDaysArray = function(year, month) {
     let date = new Date(year, month - 1, 1);
     let result = [];
 
-
     while (date.getMonth() === month - 1) {
         result.push(date.getDate() );
         date.setDate(date.getDate() + 1);
     }
-    pushData(result,days,date)
+    pushData(result,days,date,month)
     console.log(...result)
+    console.log(month)
     return result;
 }
-getDaysArray(myYear, myMonth)
+getDaysArray(myYear, myMonth+1)
