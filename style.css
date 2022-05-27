@@ -678,6 +678,7 @@
     height: 400px;
     background: #000;
     z-index: 3;
+    display: none;
 }
 .numDay{
     margin-top: 10px;
