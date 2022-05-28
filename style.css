@@ -678,7 +678,7 @@
     height: 400px;
     background: #000;
     z-index: 3;
-    display: none;
+    /*display: none;*/
 }
 .numDay{
     margin-top: 10px;
@@ -712,4 +712,7 @@
 .data-short{
     height: 30px;
     margin-top: 10px;
+}
+.n1{
+    color: lightblue;
 }
