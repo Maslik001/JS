@@ -663,6 +663,7 @@
     color: #FFFFFF;
 }
 
+/*
 .memory {
 
 }
@@ -678,7 +679,7 @@
     height: 400px;
     background: #000;
     z-index: 3;
-    /*display: none;*/
+    !*display: none;*!
 }
 .numDay{
     margin-top: 10px;
@@ -722,4 +723,29 @@
 }
 .day-now{
     border: solid 1px #ffffff;
+}*/
+
+.calendar-table{
+    display: flex;
+    align-items: flex-end;
+    width: 450px;
+    height: 500px;
+    border: 1px solid #dddddd;
+    border-collapse: collapse;
+    z-index: 3;
+    background-color: black;
+}
+
+.day{
+    border: 1px solid #dddddd;
+    width: 4%;
+    padding: 20px;
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+}
+.day_weekend{
+    background-color: #b51c1c;
+    color: #FFFFFF;
 }

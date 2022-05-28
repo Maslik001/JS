@@ -13,7 +13,10 @@ const option = {
     timeZoneName: 'short'
 }
 
+
 const now = new Date();
+
+
 
 let [day, myDate, month] = now.toLocaleString('ru-RU', option).split(',');
 // console.log([myTime.trim(), day.trim(), myDate.trim()].join(', '));
@@ -28,8 +31,7 @@ let numDay = document.querySelector('.numDay');
 let daysWrap = document.querySelector('.days-wrap');
 let dataShort = document.querySelector('.data-short');
 
-function pushData(result, days, date, month, nowMonth, resultLast, resultNex) {
-    console.log(days)
+function pushData(result, days, date, month, nowMonth, resultLast) {
 
     let dataDay = `
     <div class="data-day">${myDate}</div>
@@ -77,7 +79,6 @@ function pushData(result, days, date, month, nowMonth, resultLast, resultNex) {
 
 
 let getDaysArray = function (year, month) {
-    console.log(month)
     let days = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
     let monthName = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
     let nowMonth = monthName[month]
@@ -88,6 +89,7 @@ let getDaysArray = function (year, month) {
         resultLast.push(lastDate.getDate());
         lastDate.setDate(lastDate.getDate() + 1);
     }
+
     let nexDate = new Date(year, month + 1,);
     let resultNex = [];
     while (nexDate.getMonth() === month + 1) {
