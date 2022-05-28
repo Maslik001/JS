@@ -19,7 +19,9 @@ let [day, myDate, month] = now.toLocaleString('ru-RU', option).split(',');
 // console.log([myTime.trim(), day.trim(), myDate.trim()].join(', '));
 let myMonth = now.getMonth()
 let myYear = now.getFullYear()
-let myDay = now.getDay();
+let myDayWeek = now.getDay();
+let myDay = now.getDate();
+
 console.log(myDay)
 
 
@@ -27,76 +29,81 @@ let numDay = document.querySelector('.numDay');
 let daysWrap = document.querySelector('.days-wrap');
 let dataShort = document.querySelector('.data-short');
 
-function pushData(result,days,date,month,nowMonth,resultLast,resultNex) {
-
+function pushData(result, days, date, month, nowMonth, resultLast, resultNex) {
+    console.log(myDayWeek)
     let dataDay = `
-    <div class="data-day">${month} ${nowMonth} ${myYear}</div>
+    <div class="data-day">${myDate}</div>
     `
     dataShort.insertAdjacentHTML("afterbegin", dataDay);
 
-    for (let b = (resultLast.length+1)-myDay; b <= resultLast.length; b++) {
+    for (let b = (resultLast.length + 1) - myDayWeek; b <= resultLast.length; b++) {
         let dayMonth;
         dayMonth = b;
-        let a =  `
-<div class="b1">${b}</div>`;
+        let a = `
+<div class="b1 nextDay">${b}</div>`;
         numDay.insertAdjacentHTML("beforeend", a);
 
     }
 
 
+    for (let j = days.length - 1; j >= 0; j--) {
+        let a = `
+        <div class="days ">${days[j]}</div>`;
+        daysWrap.insertAdjacentHTML("afterbegin", a);
 
-    for (let j = days.length-1; j >= 0; j-- ){
-        let d =  `
-        <div class="days">${days[j]}</div>`;
-        daysWrap.insertAdjacentHTML("afterbegin", d);
     }
+
 
     for (let i = 1; i <= result.length; i++) {
         let dayMonth;
         dayMonth = i;
-        let a =  `
+        let a = `
 <div class="b1">${i}</div>`;
         numDay.insertAdjacentHTML("beforeend", a);
 
     }
-    for (let n = 1; n <= myDay-1; n++) {
+    for (let n = 1; n <= myDayWeek - 1; n++) {
         let dayMonth;
         dayMonth = n;
-        let a =  `
-<div class="n1">${n}</div>`;
+        let a = `
+<div class="b1 nextDay">${n}</div>`;
         numDay.insertAdjacentHTML("beforeend", a);
 
     }
+    result.indexOf(myDay+1);
+    let styleNowDay = document.querySelector('.b1');
 }
 
 
 
-let getDaysArray = function(year, month) {
-    let days = [ "Пн", "Вт", "Ср", "Чт", "Пт", "Сб","Вс"];
+
+
+
+let getDaysArray = function (year, month) {
+    let days = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
     let monthName = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
     let nowMonth = monthName[month]
 
-    let lastDate = new Date(year, month - 1, 1);
+    let lastDate = new Date(year, month - 1, );
     let resultLast = [];
     while (lastDate.getMonth() === month - 1) {
-        resultLast.push(lastDate.getDate() );
+        resultLast.push(lastDate.getDate());
         lastDate.setDate(lastDate.getDate() + 1);
     }
-    let nexDate = new Date(year, month + 1, 1);
+    let nexDate = new Date(year, month + 1, );
     let resultNex = [];
     while (nexDate.getMonth() === month + 1) {
-        resultNex.push(nexDate.getDate() );
+        resultNex.push(nexDate.getDate());
         nexDate.setDate(nexDate.getDate() + 1);
     }
 
-    let date = new Date(year, month, 1);
+    let date = new Date(year, month, );
     let result = [];
-    while (date.getMonth() === month ) {
-        result.push(date.getDate() );
+    while (date.getMonth() === month) {
+        result.push(date.getDate());
         date.setDate(date.getDate() + 1);
     }
-    pushData(result,days,date,month,nowMonth,resultLast,resultNex)
-    console.log(resultNex)
-    // return result + resultLast;
+    pushData(result, days, date, month, nowMonth, resultLast, resultNex)
+
 }
 getDaysArray(myYear, myMonth)

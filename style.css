@@ -685,7 +685,7 @@
     height: 100%;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    padding-bottom: 40px;
+    padding-bottom: 55px;
 
 }
 .b1{
@@ -696,6 +696,8 @@
     justify-content: center;
     align-items: flex-end;
     flex-wrap: wrap;
+    font-family: 'Oswald';
+    font-style: normal;
 }
 .days{
     color: #FFFFFF;
@@ -713,6 +715,7 @@
     height: 30px;
     margin-top: 10px;
 }
-.n1{
-    color: lightblue;
+.nextDay{
+    color: #898989;
+
 }
