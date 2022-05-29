@@ -49,12 +49,24 @@ function getNowDay() {
  * Цвет текущей даты
  */
 function currentDay(dayA){
-    let b = (+nowData + dayA) -1
-    getMonthDays().forEach((day,index)=>{
-        if (index === nowData){
-            days[b].style = 'background-color: blue'
-        }
-    })
+    let nowDate = new Date();
+    let nowMonth = nowDate.getMonth();
+    console.log(nowMonth)
+    if  (month === nowMonth ){
+        let b = (+nowData + dayA) -1
+        getMonthDays().forEach((day,index)=>{
+            if (index === nowData){
+                days[b].style = 'background-color: blue'
+            }
+        })
+    } else {
+        days.style = 'background-color: inherit'
+        getMonthDays().forEach((day,index)=>{
+                days[index].style = 'background-color: inherit'
+
+        })
+    }
+
 }
 
 
