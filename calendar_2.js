@@ -4,9 +4,14 @@ let days = document.querySelectorAll('.day');
 const now = new Date();
 let month = now.getMonth();
 let year = now.getFullYear();
-// month++
-// month++
-// функция получения кол-ва дней в месяце
+let nowData = now.getDate()
+
+console.log(nowData)
+
+/**
+ * функция получения кол-ва дней в месяце
+ * @returns {*[]}
+ */
 function getMonthDays() {
     let date = new Date(year, month);
     let result = [];
@@ -24,12 +29,14 @@ function getNowDay() {
     let daysInMonth = getMonthDays();
     let date = new Date(year, month);
     let day = date.getUTCDay();
+    currentDay(day)
     dayMonthInCalendar(date)
 
     for (let i = 1; i <= daysInMonth.length; i++) {
         days[day].innerText = `${i}`;
         day++
     }
+
 /*let c = 0;
     for (let b = daysInMonth.length; b <= day; b++) {
 
@@ -37,6 +44,19 @@ function getNowDay() {
         c++
     }*/
 }
+
+/**
+ * Цвет текущей даты
+ */
+function currentDay(dayA){
+    let b = (+nowData + dayA) -1
+    getMonthDays().forEach((day,index)=>{
+        if (index === nowData){
+            days[b].style = 'background-color: blue'
+        }
+    })
+}
+
 
 /**
  * Вывод месяц и года на экран
