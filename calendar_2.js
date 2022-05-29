@@ -59,12 +59,7 @@ function currentDay(dayA){
                 days[b].style = 'background-color: blue'
             }
         })
-    } else {
-        days.style = 'background-color: inherit'
-        getMonthDays().forEach((day,index)=>{
-                days[index].style = 'background-color: inherit'
-
-        })
+        days[b].style = 'background-color: inherit'
     }
 
 }
