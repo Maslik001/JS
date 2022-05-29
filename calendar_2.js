@@ -17,11 +17,14 @@ function getMonthDays() {
     return result;
 }
 
-// Добаление
+/**
+ * Добаление дней на страницу
+ */
 function getNowDay() {
     let daysInMonth = getMonthDays();
     let date = new Date(year, month);
     let day = date.getUTCDay();
+    dayMonthInCalendar(date)
 
     for (let i = 1; i <= daysInMonth.length; i++) {
         days[day].innerText = `${i}`;
@@ -35,27 +38,51 @@ function getNowDay() {
     }*/
 }
 
+/**
+ * Вывод месяц и года на экран
+ */
+function dayMonthInCalendar(date){
+    let dataInfo = document.querySelector('.data-info');
+    let monthName = [ "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь","Январь"];
+    let currentData = date.getUTCMonth();
+    let yearD = date.getFullYear();
+    dataInfo.innerText = `${monthName[currentData]} ${yearD}`
+
+}
 getNowDay()
 
+/**
+ * переключение месяца
+ * @type {HTMLElement}
+ */
 let arrow = document.getElementById('daysWrap');
 arrow.addEventListener('click',(e)=>{
     let target = e.target;
     let left = document.querySelector('.arrow-left');
     let right = document.querySelector('.arrow-right');
     if (target === left){
-        month--
+        if (month === 0){
+            month = 11;
+            year--
+        } else {
+            month--
+        }
+
         days.forEach((days) => {
             days.innerText = ''
         })
-
         getMonthDays()
         getNowDay()
-
     } else if(target === right){
+        if (month === 11){
+            month = 0;
+            year++
+        } else {
+            month++
+        }
         days.forEach((days) => {
             days.innerText = ''
         })
-        month++
         getMonthDays()
         getNowDay()
     }
