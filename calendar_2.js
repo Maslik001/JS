@@ -52,14 +52,18 @@ function currentDay(dayA){
     let nowDate = new Date();
     let nowMonth = nowDate.getMonth();
     console.log(nowMonth)
+    console.log(month)
+    let b = nowData + dayA -1
     if  (month === nowMonth ){
-        let b = (+nowData + dayA) -1
         getMonthDays().forEach((day,index)=>{
             if (index === nowData){
-                days[b].style = 'background-color: blue'
+                days[b].classList.add('data-now');
             }
         })
-        days[b].style = 'background-color: inherit'
+    } else {
+        days.forEach((classL,index)=>{
+            days[index].classList.remove('data-now');
+        })
     }
 
 }
