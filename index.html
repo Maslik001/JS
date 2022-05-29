@@ -6,12 +6,85 @@
     <link rel="shortcut icon" href="img/Microsoft-Windows-Icon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="js-weather.js" defer></script>
     <script type="text/javascript" src="JavaScript.js" defer></script>
+    <script type="text/javascript" src="calendar_2.js" defer></script>
+
 </head>
 <body id="body">
+<div class="game-window animate__zoomIn" id="gameWindow"></div>
 <main class="main">
+<!--    <div class="calendar-wrapper">-->
+<!--        <div class="data-short"></div>-->
+<!--        <div class="days-wrap"></div>-->
+<!--        <div class="numDay"></div>-->
+<!--    </div>-->
+    <div class="calendar-table">
+        <div class="days-wrap" id="daysWrap">
+            <div class="arrow-left">&#129092;</div>
+            <div class="data-info"></div>
+            <div class="arrow-right">&#129094;</div>
+        </div>
+        <table class="month-days">
+            <tr class="week-days-block">
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day day_weekend"></td>
+                <td class="day day_weekend"></td>
+            </tr>
+            <tr class="week-days-block">
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day day_weekend"></td>
+                <td class="day day_weekend"></td>
+            </tr>
+            <tr class="week-days-block">
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day day_weekend"></td>
+                <td class="day day_weekend"></td>
+            </tr>
+            <tr class="week-days-block">
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day day_weekend"></td>
+                <td class="day day_weekend"></td>
+            </tr>
+            <tr class="week-days-block">
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day day_weekend"></td>
+                <td class="day day_weekend"></td>
+            </tr>
+            <tr class="week-days-block">
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day"></td>
+                <td class="day day_weekend"></td>
+                <td class="day day_weekend"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="weather-wrapper" id="weather-wrapper"></div>
     <img src="img/my-comp.png" class="myComp" id="myComp" alt="myComp">
-    <img src="img/csGo.png" class="csgo" id="csgo" alt="csgo">
+    <img src="img/csGo.png" class="csgo" id="cs" alt="csgo">
     <img src="img/trashiconCleaner.webp" class="trashiconCleaner" id="trashiconCleaner" alt="trashiconCleaner">
     <img src="img/Trash.png" class="trash" id="trash" alt="trash">
     <div class="effect-prompt animate__zoomInUp" id="effect-prompt">Для лучшего эффекта нажмите F11</div>
@@ -24,6 +97,7 @@
         <span>Очистить корзину</span>
     </div>
     <div class="calc-wrapper" id="calc-wrapper"></div>
+
 </main>
 <footer class="footer">
     <div class="footer-menu">
@@ -32,13 +106,15 @@
         <img src="img/logos_microsoft-edge.png" alt="" class="footer-menu__img">
         <img src="img/market.png" alt="" class="footer-menu__img">
         <img src="img/Calculator.png" alt="" class="footer-menu__img" id="calc-img">
+        <img src="img/weather/weather-icon.png" alt="" class="footer-menu__img" id="weather-img">
     </div>
     <div class="footer-inform">
         <img src="img/arrow.png" alt="" class="footer-inform__img">
         <img src="img/wifi.png" alt="" class="footer-inform__img">
         <img src="img/sound.png" alt="" class="footer-inform__img">
         <img src="img/bi_battery-half.png" alt="" class="footer-inform__img">
-        <img src="img/2022.png" alt="" class="footer-inform__img">
+        <div class="currentDate" id='currentDate'></div>
+        <!--        <img src="img/2022.png" alt="" class="footer-inform__img">-->
     </div>
 </footer>
 
