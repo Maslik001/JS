@@ -140,7 +140,7 @@ function calcOper(num1, operation, num2) {
     }
 }
 
-<<<<<<< HEAD
+
 /**
  * добавление калькулятора на страницу
  */
@@ -196,7 +196,7 @@ calnOn.addEventListener('click', () => {
             }, 1000)
         })
         initialization();
-=======
+
 function demonstration() {
     if (Number.isInteger(num1 * 1)) {
         if (isOperation === '=') {
@@ -210,7 +210,7 @@ function demonstration() {
         } else {
             resBlock.textContent = `${num1.toFixed(3)}${isOperation}${num2}`; //${isOperation}${num2}
         }
->>>>>>> Calc
+
     }
 }
 
@@ -230,18 +230,18 @@ function initialization() {
             if (isOperation === undefined) {
                 num1 += dataNum * 1;
             } else if (isOperation) {
-<<<<<<< HEAD
+
                 num2 += dataNum * 1;
                 if (Number.isInteger(num1*1) && Number.isInteger(num2*1)) {
                     resBlock.textContent = `${num1}${isOperation}${num2}`;
                 } else {
                     resBlock.textContent = `${num1.toFixed(6)}${isOperation}${num2}`;
                 }
-=======
+
                 num2 += dataNum;
                 demonstration();
                 return;
->>>>>>> Calc
+
             }
         } else if (dataNum === '=') {
             if (num2 === '') {
@@ -250,7 +250,7 @@ function initialization() {
                 resBlock.textContent = ``;
                 num1 = calcOper(num1, isOperation, num2);
                 num2 = ''
-<<<<<<< HEAD
+
                 isOperation = undefined;
                 if (Number.isInteger(num1)) {
                     resBlock.textContent = `${num1}`;
@@ -265,10 +265,10 @@ function initialization() {
                     num2 *= 1;
                     resBlock.textContent = `${num1.toFixed(6)}`;
                 }
-=======
+
                 isOperation = '=';
                 demonstration();
->>>>>>> Calc
+
             }
             return;
         } else if (dataNum === 'del') {
