@@ -21,15 +21,13 @@ function getMonthDays() {
     return result;
 }
 
-//***********************************************************
-let bloks=document.querySelectorAll('.blok');
+console.log(getMonthDays())
 
-
-function getDate(myDate,day){
-    myDate.setDate(myDate.getDate()-day);
+function getDateAlter(myDate, day) {
+    myDate.setDate(myDate.getDate() - day);
     return myDate;
 }
-//**************************************************************
+
 
 /**
  * Добаление дней на страницу
@@ -37,40 +35,41 @@ function getDate(myDate,day){
 function getNowDay() {
     let date = new Date(year, month);
     let day = date.getUTCDay();
-    let startDate = getDate(date,day);
+    let startDate = getDateAlter(date, day);
     currentDay(day)
     dayMonthInCalendar(date)
-    days.forEach(days=>{
-        days.innerText=startDate.getDate();
-        startDate.setDate(startDate.getDate()+1);
-    })
-    // for (let i = 1; i <= daysInMonth.length; i++) {
-    //
-    //     days.innerText=startDate.getDate();
-    //     days[day].innerText = `${i}`;
-    //     day++
-    //     startDate.setDate(startDate.getDate()+1);
-    // }
+    let arr = [];
+    console.log(arr)
+    console.log(arr.length)
+    console.log(getMonthDays().length);
+    days.forEach((daysAdd, index) => {
 
+        arr.push(index)
+
+        daysAdd.innerText = startDate.getDate();
+        startDate.setDate(startDate.getDate() + 1);
+        
+        if (index < day || getMonthDays().length > arr) {
+            days[index].classList.add('data-now');
+        }
+    })
 }
 
 /**
  * Цвет текущей даты
  */
-function currentDay(dayA){
+function currentDay(dayA) {
     let nowDate = new Date();
     let nowMonth = nowDate.getMonth();
-    console.log(nowMonth)
-    console.log(month)
-    let b = nowData + dayA -1
-    if  (month === nowMonth ){
-        getMonthDays().forEach((day,index)=>{
-            if (index === nowData){
+    let b = nowData + dayA - 1
+    if (month === nowMonth) {
+        getMonthDays().forEach((day, index) => {
+            if (index === nowData) {
                 days[b].classList.add('data-now');
             }
         })
     } else {
-        days.forEach((classL,index)=>{
+        days.forEach((classL, index) => {
             days[index].classList.remove('data-now');
         })
     }
@@ -81,14 +80,15 @@ function currentDay(dayA){
 /**
  * Вывод месяц и года на экран
  */
-function dayMonthInCalendar(date){
+function dayMonthInCalendar(date) {
     let dataInfo = document.querySelector('.data-info');
-    let monthName = [ "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь","Январь"];
+    let monthName = ["Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь", "Январь"];
     let currentData = date.getUTCMonth();
     let yearD = date.getFullYear();
     dataInfo.innerText = `${monthName[currentData]} ${yearD}`
 
 }
+
 getNowDay()
 
 /**
@@ -96,12 +96,12 @@ getNowDay()
  * @type {HTMLElement}
  */
 let arrow = document.getElementById('daysWrap');
-arrow.addEventListener('click',(e)=>{
+arrow.addEventListener('click', (e) => {
     let target = e.target;
     let left = document.querySelector('.arrow-left');
     let right = document.querySelector('.arrow-right');
-    if (target === left){
-        if (month === 0){
+    if (target === left) {
+        if (month === 0) {
             month = 11;
             year--
         } else {
@@ -113,8 +113,8 @@ arrow.addEventListener('click',(e)=>{
         })
         getMonthDays()
         getNowDay()
-    } else if(target === right){
-        if (month === 11){
+    } else if (target === right) {
+        if (month === 11) {
             month = 0;
             year++
         } else {
