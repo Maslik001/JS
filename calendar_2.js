@@ -1,6 +1,6 @@
 'use strict';
 
-let days = document.querySelectorAll('.day');
+let days = document.querySelectorAll('.day-text');
 const now = new Date();
 let month = now.getMonth();
 let year = now.getFullYear();
