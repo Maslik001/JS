@@ -6,7 +6,6 @@ let month = now.getMonth();
 let year = now.getFullYear();
 let nowData = now.getDate()
 
-console.log(nowData)
 
 /**
  * функция получения кол-ва дней в месяце
@@ -22,27 +21,37 @@ function getMonthDays() {
     return result;
 }
 
+//***********************************************************
+let bloks=document.querySelectorAll('.blok');
+
+
+function getDate(myDate,day){
+    myDate.setDate(myDate.getDate()-day);
+    return myDate;
+}
+//**************************************************************
+
 /**
  * Добаление дней на страницу
  */
 function getNowDay() {
-    let daysInMonth = getMonthDays();
     let date = new Date(year, month);
     let day = date.getUTCDay();
+    let startDate = getDate(date,day);
     currentDay(day)
     dayMonthInCalendar(date)
+    days.forEach(days=>{
+        days.innerText=startDate.getDate();
+        startDate.setDate(startDate.getDate()+1);
+    })
+    // for (let i = 1; i <= daysInMonth.length; i++) {
+    //
+    //     days.innerText=startDate.getDate();
+    //     days[day].innerText = `${i}`;
+    //     day++
+    //     startDate.setDate(startDate.getDate()+1);
+    // }
 
-    for (let i = 1; i <= daysInMonth.length; i++) {
-        days[day].innerText = `${i}`;
-        day++
-    }
-
-/*let c = 0;
-    for (let b = daysInMonth.length; b <= day; b++) {
-
-        days[c].innerText = `${b}`;
-        c++
-    }*/
 }
 
 /**
