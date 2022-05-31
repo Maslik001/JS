@@ -127,7 +127,36 @@ arrow.addEventListener('click', (e) => {
     }
 })
 
-//////
+let locCityCalendar = 'london';
+async function addCity1() {
+
+    const requestCountry = new XMLHttpRequest();
+    await requestCountry?.open('GET', `https://api.openweathermap.org/data/2.5/weather?q=${locCityCalendar}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
+    requestCountry.send();
+    requestCountry.addEventListener('load', () => {
+        let nameCity = JSON.parse(requestCountry?.responseText);
+        if (nameCity.cod !== 200) {
+            console.log('City not founded')
+        } else {
+
+            let latWeather = nameCity.coord.lat;
+            let lonWeather = nameCity.coord.lon;
+
+            forecast(latWeather, lonWeather)
+        }
+    })
+}
+
+async function forecast(latWeather, lonWeather) {
+
+    let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latWeather}&lon=${lonWeather}&exclude=alerts&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`)
+    if (!response.ok) {
+        throw new Error(`${response.status}. Page is not found`);
+    }
+    let city = await response.json();
+    console.log(city)
+}
+addCity1()
 
 // function find_max(nums) {
 // let max_num = Number.NEGATIVE_INFINITY; // smaller than all other numbers
