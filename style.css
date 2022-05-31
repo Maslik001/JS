@@ -728,13 +728,11 @@
 .calendar-table{
     display: flex;
     align-items: flex-end;
-    /*border: 1px solid #dddddd;*/
-    border-collapse: collapse;
     z-index: 3;
     flex-direction: column;
     min-width: 360px;
     min-height: 451px;
-    background: #1F1F21;
+    background: #0a1e54;
     border-radius: 15px;
 }
 
@@ -749,7 +747,7 @@
 /*    color: white;*/
 /*}*/
 .day_weekend{
-    background-color: rgba(235, 123, 123, 0.5);
+    background-color: rgba(185, 72, 64, 1);
     color: #FFFFFF;
 }
 .days-wrap{
@@ -786,13 +784,13 @@
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
-    height: 55px;
+    height: 50px;
     color: white;
-    border-radius: 10px;
+    border-radius: 50px;
 }
 .data-now{
-    background-color: rgba(248, 248, 248, 0.7);
-    color: black;
+    background-color: rgb(12, 122, 241);
+    color: #000000;
 }
 .week-days-wrapper{
     flex-direction: row;
@@ -823,4 +821,9 @@
     flex-wrap: wrap;
     gap: 3px;
     padding: 3px;
+}
+.others-month{
+    background-color: rgba(255 255 255);
+    color: #000000;
+    opacity: 0.2;
 }
