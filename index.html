@@ -3,21 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<!--    <script type="text/javascript" src="js.js"></script>-->
-<!--    <script type="text/javascript" src="HW6.js"></script>-->
-<!--    <script type="text/javascript" src="HW7.js"></script>-->
-<!--    <script type="text/javascript" src="class__work.js"></script>-->
-    <script type="text/javascript" src="HW-9.js"></script>
+    <link rel="shortcut icon" href="img/Microsoft-Windows-Icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <script type="text/javascript" src="js-weather.js" defer></script>
+    <script type="text/javascript" src="JavaScript.js" defer></script>
+    <script type="text/javascript" src="calendar_2.js" defer></script>
 
-<form class="form">
-    <p class="text-form"><b>Введите Ваше имя</b></p>
-    <input class="user-Name-Input" type="text" name="comment" onchange="userValue = (this.value);">
-    <p class="button-wrapper">
-    <button class="button" type="button" onClick="dataField(this.form)">ОК</button></p>
-</form>
+</head>
+<body id="body">
+<div class="game-window animate__zoomIn" id="gameWindow"></div>
+<main class="main">
+<!--    <div class="calendar-wrapper">-->
+<!--        <div class="data-short"></div>-->
+<!--        <div class="days-wrap"></div>-->
+<!--        <div class="numDay"></div>-->
+<!--    </div>-->
+    <div class="calendar-table">
+        <div class="days-wrap" id="daysWrap">
+            <div class="arrow-left">&#129092;</div>
+            <div class="data-info"></div>
+            <div class="arrow-right">&#129094;</div>
+        </div>
+
+        <div class="month-days">
+            <div class="week-days-wrapper">
+                <div class="day-week">ПН</div>
+                <div class="day-week">ВТ</div>
+                <div class="day-week">СР</div>
+                <div class="day-week">ЧТ</div>
+                <div class="day-week">ПТ</div>
+                <div class="day-week day_weekend">СБ</div>
+                <div class="day-week day_weekend">ВС</div>
+            </div>
+            <div class="week-days-block">
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text day_weekend"></div>
+                <div class="day-text day_weekend"></div>
+            </div>
+            <div class="week-days-block">
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text day_weekend"></div>
+                <div class="day-text day_weekend"></div>
+            </div>
+            <div class="week-days-block">
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text day_weekend"></div>
+                <div class="day-text day_weekend"></div>
+            </div>
+            <div class="week-days-block">
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text day_weekend"></div>
+                <div class="day-text day_weekend"></div>
+            </div>
+            <div class="week-days-block">
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text day_weekend"></div>
+                <div class="day-text day_weekend"></div>
+            </div>
+            <div class="week-days-block">
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text day_weekend"></div>
+                <div class="day-text day_weekend"></div>
+            </div>
+        </div>
+    </div>
+    <div class="weather-wrapper" id="weather-wrapper"></div>
+    <img src="img/my-comp.png" class="myComp" id="myComp" alt="myComp">
+    <img src="img/csGo.png" class="csgo" id="cs" alt="csgo">
+    <img src="img/trashiconCleaner.webp" class="trashiconCleaner" id="trashiconCleaner" alt="trashiconCleaner">
+    <img src="img/Trash.png" class="trash" id="trash" alt="trash">
+    <div class="effect-prompt animate__zoomInUp" id="effect-prompt">Для лучшего эффекта нажмите F11</div>
+    <div class="cleanerfolder" id="cleanerfolder">
+        <img src="img/folder.png" class="folder" id="folder" alt="folder">
+        <span>Папка на удаление</span>
+        <span class="delFolder animate__jackInTheBox" id="delFolder">Удалить папку</span>
+    </div>
+    <div class="cleanerTrash animate__jackInTheBox" id="cleaner">
+        <span>Очистить корзину</span>
+    </div>
+    <div class="calc-wrapper" id="calc-wrapper"></div>
+
+</main>
+<footer class="footer">
+    <div class="footer-menu">
+        <img src="img/Startbutton.png" alt="" class="footer-menu__img">
+        <img src="img/explorer.png" alt="" class="footer-menu__img">
+        <img src="img/logos_microsoft-edge.png" alt="" class="footer-menu__img">
+        <img src="img/market.png" alt="" class="footer-menu__img">
+        <img src="img/Calculator.png" alt="" class="footer-menu__img" id="calc-img">
+        <img src="img/weather/weather-icon.png" alt="" class="footer-menu__img" id="weather-img">
+    </div>
+    <div class="footer-inform">
+        <img src="img/arrow.png" alt="" class="footer-inform__img">
+        <img src="img/wifi.png" alt="" class="footer-inform__img">
+        <img src="img/sound.png" alt="" class="footer-inform__img">
+        <img src="img/bi_battery-half.png" alt="" class="footer-inform__img">
+        <div class="currentDate" id='currentDate'></div>
+        <!--        <img src="img/2022.png" alt="" class="footer-inform__img">-->
+    </div>
+</footer>
 
 </body>
 </html>
