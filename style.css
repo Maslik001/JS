@@ -747,7 +747,7 @@
 /*    color: white;*/
 /*}*/
 .day_weekend{
-    background-color: rgba(185, 72, 64, 1);
+    background-color: rgba(224, 52, 40, 0.7);
     color: #FFFFFF;
 }
 .days-wrap{
@@ -789,8 +789,8 @@
     border-radius: 50px;
 }
 .data-now{
-    background-color: rgb(12, 122, 241);
-    color: #000000;
+    background-color: rgb(135 166 200);;
+    color: #FFFFFF;
 }
 .week-days-wrapper{
     flex-direction: row;
@@ -825,5 +825,5 @@
 .others-month{
     background-color: rgba(255 255 255);
     color: #000000;
-    opacity: 0.2;
+    opacity: 0.1;
 }
