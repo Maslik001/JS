@@ -127,36 +127,64 @@ arrow.addEventListener('click', (e) => {
     }
 })
 
-let locCityCalendar = 'london';
-async function addCity1() {
 
-    const requestCountry = new XMLHttpRequest();
-    await requestCountry?.open('GET', `https://api.openweathermap.org/data/2.5/weather?q=${locCityCalendar}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
-    requestCountry.send();
-    requestCountry.addEventListener('load', () => {
-        let nameCity = JSON.parse(requestCountry?.responseText);
-        if (nameCity.cod !== 200) {
-            console.log('City not founded')
-        } else {
-
-            let latWeather = nameCity.coord.lat;
-            let lonWeather = nameCity.coord.lon;
-
-            forecast(latWeather, lonWeather)
-        }
-    })
-}
-
-async function forecast(latWeather, lonWeather) {
-
-    let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latWeather}&lon=${lonWeather}&exclude=alerts&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`)
-    if (!response.ok) {
-        throw new Error(`${response.status}. Page is not found`);
+/**
+ * Получение данных о погоде
+ * @param latWeather - широта
+ * @param lonWeather - долгота
+ * @returns {Promise<void>}
+ */
+async function forecastCalendar(latWeatherC, lonWeatherC) {
+    let responseC = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latWeatherC}&lon=${lonWeatherC}&exclude=alerts&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`)
+    if (!responseC.ok) {
+        throw new Error(`${responseC.status}. Page is not found`);
     }
-    let city = await response.json();
-    console.log(city)
+    let city = await responseC.json();
+    let tempCal = Math.round(city.current.temp);
+    let icoCalendarWeather = city.current.weather[0].icon;
+    let cityName = city.timezone.split('/')[1]
+    console.log(cityName);
+    console.log(tempCal);
+    console.log(city);
+    weatherCalendar(tempCal,icoCalendarWeather,cityName);
 }
-addCity1()
+
+/**
+ * Определение геолокации пользователя
+ */
+function getGeo(){
+navigator.geolocation.getCurrentPosition(
+    function(position) {
+        let lan = position.coords.latitude
+        let lot = position.coords.longitude
+        forecastCalendar(lan, lot);
+       // if (!forecastBlock) {forecast(lan, lot)};  /// привязка к geo погоде
+
+    }
+);
+}
+getGeo()
+
+
+function weatherCalendar(tempCal,icoCalendarWeather,cityName){
+    const weather = document.querySelector('.weather-for-calendar');
+    weather.innerHTML = `
+<div class="inform-weather-left">
+    <span class="forecast-calendar-weather">${tempCal}&#176;</span> <span class="night-temp">${tempCal}&#176;</span>
+</div>
+<div class="wrapper-weather-calendar">
+        <div class="city-name-calendar">${cityName}</div>
+
+        <div class="temp-calendar">${tempCal}&#176;C</div>
+    </div>
+<div class="inform-weather-right">
+            <img src="http://openweathermap.org/img/wn/${icoCalendarWeather}@2x.png"  class="ico-Calendar-Weather" alt="icoCalendarWeather">
+</div>
+            
+`
+
+
+}
 
 // function find_max(nums) {
 // let max_num = Number.NEGATIVE_INFINITY; // smaller than all other numbers

@@ -664,6 +664,7 @@ weatherOn.addEventListener('click', () => {
         let btnWeather = document.querySelector('.weather-btn');
         btnWeather.addEventListener('click', () => {
             forecast();
+            // getGeo()
         })
         listenSearch()
         let weatherBlock = document.getElementById('weather');

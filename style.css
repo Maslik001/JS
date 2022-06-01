@@ -736,16 +736,6 @@
     border-radius: 15px;
 }
 
-/*.day{*/
-/*    width: 14%;*/
-/*    padding: 23px;*/
-/*    font-family: 'Oswald';*/
-/*    font-style: normal;*/
-/*    font-weight: 500;*/
-/*    font-size: 20px;*/
-/*    height: 55px;*/
-/*    color: white;*/
-/*}*/
 .day_weekend{
     background-color: rgba(224, 52, 40, 0.7);
     color: #FFFFFF;
@@ -761,10 +751,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Oswald';
+    font-family: 'Ubuntu';
     font-style: normal;
-    font-weight: 500;
-    font-size: 25px;
+    font-weight: 700;
+    font-size: 23px;
     height: 55px;
     color: white;
     border-radius: 10px;
@@ -826,4 +816,37 @@
     background-color: rgba(255 255 255);
     color: #000000;
     opacity: 0.1;
+}
+.weather-for-calendar {
+    width: 345px;
+    margin-top: 13px;
+    border-radius: 10px;
+    height: 90px;
+    display: flex;
+    background-color: white;
+    align-items: center;
+}
+.temp-calendar{
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+}
+.city-name-calendar{
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 23px;
+}
+.wrapper-weather-calendar{
+
+}
+.inform-weather-left{
+
+}
+.inform-weather-right{
+    margin: 0;
+}
+.ico-Calendar-Weather{
+    width: 100px;
 }
