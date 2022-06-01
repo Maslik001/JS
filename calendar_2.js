@@ -142,11 +142,13 @@ async function forecastCalendar(latWeatherC, lonWeatherC) {
     let city = await responseC.json();
     let tempCal = Math.round(city.current.temp);
     let icoCalendarWeather = city.current.weather[0].icon;
-    let cityName = city.timezone.split('/')[1]
-    console.log(cityName);
-    console.log(tempCal);
+    let cityNameC = city.timezone.split('/')[1];
+    let descriptionC = city.current.weather[0].description;
+    let windSpeedC = city.current.wind_speed;
+    let pressureC = city.current.pressure;
+
     console.log(city);
-    weatherCalendar(tempCal,icoCalendarWeather,cityName);
+    weatherCalendar(tempCal,icoCalendarWeather,cityNameC,descriptionC,windSpeedC,pressureC);
 }
 
 /**
@@ -166,19 +168,22 @@ navigator.geolocation.getCurrentPosition(
 getGeo()
 
 
-function weatherCalendar(tempCal,icoCalendarWeather,cityName){
+function weatherCalendar(tempCal,icoCalendarWeather,cityNameC,descriptionC,windSpeedC,pressureC){
     const weather = document.querySelector('.weather-for-calendar');
     weather.innerHTML = `
 <div class="inform-weather-left">
-    <span class="forecast-calendar-weather">${tempCal}&#176;</span> <span class="night-temp">${tempCal}&#176;</span>
+    <div class="wind-calendar-weather"><div class="wind" ><img src="img/weather/wind.png"><p id="wind"></p></div> ${windSpeedC} m/s</div> 
+    <div class="pressure-calendar-weather"><div class="prep" ><img src="img/weather/prep.png"><p id="prep"></p></div>   ${pressureC} hPa</div>
 </div>
 <div class="wrapper-weather-calendar">
-        <div class="city-name-calendar">${cityName}</div>
+        <div class="city-name-calendar">${cityNameC}</div>
 
         <div class="temp-calendar">${tempCal}&#176;C</div>
+        <div class="description-calendar">${descriptionC}</div>
     </div>
 <div class="inform-weather-right">
             <img src="http://openweathermap.org/img/wn/${icoCalendarWeather}@2x.png"  class="ico-Calendar-Weather" alt="icoCalendarWeather">
+            
 </div>
             
 `

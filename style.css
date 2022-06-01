@@ -818,35 +818,52 @@
     opacity: 0.1;
 }
 .weather-for-calendar {
-    width: 345px;
+    width: 350px;
     margin-top: 13px;
     border-radius: 10px;
     height: 90px;
     display: flex;
-    background-color: white;
     align-items: center;
+    box-shadow: 0px 2px 16px white;
 }
 .temp-calendar{
     font-family: 'Ubuntu';
     font-style: normal;
     font-weight: 700;
     font-size: 30px;
+    color: white;
 }
 .city-name-calendar{
     font-family: 'Ubuntu';
     font-style: normal;
-    font-weight: 700;
+    font-weight: 300;
     font-size: 23px;
+    color: white;
 }
-.wrapper-weather-calendar{
-
+.wind-calendar-weather, .pressure-calendar-weather{
+    margin: 0;
+    display: flex;
+    gap: 5px;
 }
 .inform-weather-left{
-
+    display: flex;
+    font-family: 'Ubuntu';
+    flex-direction: column-reverse;
+    gap: 5px;
+    margin-right: 0;
+    color: white;
+    justify-content: space-between;
 }
 .inform-weather-right{
     margin: 0;
 }
 .ico-Calendar-Weather{
     width: 100px;
+}
+.description-calendar{
+    font-family: 'Ubuntu';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    color: white;
 }
