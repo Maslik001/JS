@@ -146,7 +146,6 @@ async function forecastCalendar(latWeatherC, lonWeatherC) {
     let descriptionC = city.current.weather[0].description;
     let windSpeedC = city.current.wind_speed;
     let pressureC = city.current.pressure;
-
     console.log(city);
     weatherCalendar(tempCal,icoCalendarWeather,cityNameC,descriptionC,windSpeedC,pressureC);
 }
@@ -172,8 +171,8 @@ function weatherCalendar(tempCal,icoCalendarWeather,cityNameC,descriptionC,windS
     const weather = document.querySelector('.weather-for-calendar');
     weather.innerHTML = `
 <div class="inform-weather-left">
-    <div class="wind-calendar-weather"><div class="wind" ><img src="img/weather/wind.png"><p id="wind"></p></div> ${windSpeedC} m/s</div> 
-    <div class="pressure-calendar-weather"><div class="prep" ><img src="img/weather/prep.png"><p id="prep"></p></div>   ${pressureC} hPa</div>
+    <div class="wind-calendar-weather"><div><img class="wind-calendar" src="img/weather/wind.png"><p id="wind-calendar"></p></div> ${windSpeedC} m/s</div> 
+    <div class="pressure-calendar-weather"><div ><img class="prep-calendar" src="img/weather/prep.png"><p id="prep-calendar"></p></div>   ${pressureC} hPa</div>
 </div>
 <div class="wrapper-weather-calendar">
         <div class="city-name-calendar">${cityNameC}</div>

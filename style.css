@@ -728,16 +728,16 @@
 .calendar-table{
     display: flex;
     align-items: flex-end;
-    z-index: 3;
+    z-index: 1;
     flex-direction: column;
     min-width: 360px;
     min-height: 451px;
     background: #0a1e54;
     border-radius: 15px;
-    /*box-shadow: 5px 5px 20px black;*/
-    /*background: linear-gradient(180deg, #89AEFF 0%, #4A84FF 100%);*/
     box-shadow: 1px 3px 11px #0a1e54, -8px -8px 60px rgba(137, 174, 255, .34);
-
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
 
 .day_weekend{
@@ -870,4 +870,10 @@
     font-weight: 300;
     font-size: 12px;
     color: white;
+}
+.prep-calendar, .wind-calendar{
+    height: 15px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
 }
