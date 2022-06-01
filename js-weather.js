@@ -69,6 +69,7 @@ async function addCity() {
         }
     })
 }
+
 /**
  * Функция получения данных о Прогнозе погоды по API
  */
@@ -78,20 +79,21 @@ async function forecast() {
         throw new Error(`${response.status}. Page is not found`);
     }
     let city = await response.json();
-    // console.log(city);
+    console.log(city);
     [temp1, temp2, tepm3] = [Math.round([city.daily[1].temp.day]), Math.round([city.daily[2].temp.day]), Math.round([city.daily[3].temp.day])]
     let sec1 = city.daily[1].dt * 1000;
     let sec2 = city.daily[2].dt * 1000;
     let sec3 = city.daily[3].dt * 1000;
-    forecNextDay1 = data(sec1)
-    forecNextDay2 = data(sec2)
-    forecNextDay3 = data(sec3)
-    // [ico1, ico2, ico3] = [city.daily[0].weather[0].icon, city.daily[1].weather[0].icon, city.daily[2].weather[0].icon]
+    forecNextDay1 = data(sec1);
+    forecNextDay2 = data(sec2);
+    forecNextDay3 = data(sec3);
+    // [{weather: [{icon: ico1}]}, {weather:[{icon: ico2}]} , {weather: [{icon: ico3}]}] = city.daily;
+    [ico1, ico2, ico3] = [city.daily[0].weather[0].icon, city.daily[1].weather[0].icon, city.daily[2].weather[0].icon];
     ico1 = city.daily[1].weather[0].icon;
     ico2 = city.daily[2].weather[0].icon;
     ico3 = city.daily[3].weather[0].icon;
-    [forecastWeatherStatus1,forecastWeatherStatus2,forecastWeatherStatus3] = [city.daily[1].weather[0].description,city.daily[2].weather[0].description,city.daily[3].weather[0].description]
-    // [nightTemp1, nightTemp2, nightTemp3] = [Math.round([city.daily[1].temp.night]), Math.round([city.daily[2].temp.night]), Math.round([city.daily[3].temp.night])]
+    [forecastWeatherStatus1, forecastWeatherStatus2, forecastWeatherStatus3] = [city.daily[1].weather[0].description, city.daily[2].weather[0].description, city.daily[3].weather[0].description];
+    // [nightTemp1, nightTemp2, nightTemp3] = [Math.round([city.daily[1].temp.night]), Math.round([city.daily[2].temp.night]), Math.round([city.daily[3].temp.night])];
     nightTemp1 = Math.round([city.daily[1].temp.night]);
     nightTemp2 = Math.round([city.daily[2].temp.night]);
     nightTemp3 = Math.round([city.daily[3].temp.night]);
@@ -159,6 +161,7 @@ function resultForecast() {
         forecastVue()
     }
 }
+
 /**
  * Функция для отображения данных о прогнощируемых погодных условиях
  */
@@ -209,7 +212,7 @@ weatherOn.addEventListener('click', () => {
             <div class="weather-info animate__jackInTheBox">
                 <div class="location">
                     <div class="city-location">
-                        <img src="/img/weather/local.png" alt="">
+                        <img src="img/weather/local.png" alt="">
                         <div class="city-name" id="city-name"></div>
                         <div class="country-id" id="country-id"></div>
                     </div>              
@@ -677,7 +680,7 @@ weatherOn.addEventListener('click', () => {
         })
         weatherBlock.classList.add('animate__fadeInRight');
         closeWeather.addEventListener('click', () => {
-            if (!forecastBlock){
+            if (!forecastBlock) {
                 forecastWrapper.classList.remove('animate__fadeInRight');
                 forecastWrapper.classList.add('animate__fadeOutRight');
                 forecastBlock = true;
