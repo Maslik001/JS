@@ -7,6 +7,7 @@ let year = now.getFullYear();
 let nowData = now.getDate()
 
 
+
 /**
  * функция получения кол-ва дней в месяце
  * @returns {*[]}
@@ -45,9 +46,9 @@ function getNowDay() {
     days.forEach((daysAdd, index) => {
         daysAdd.innerText = startDate.getDate();
         startDate.setDate(startDate.getDate() + 1);
-        if (index < day || index >= getMonthDays().length+day) {
+        if (index < day || index >= getMonthDays().length + day) {
             days[index].classList.add('others-month');
-        }else {
+        } else {
             days[index].classList.remove('others-month');
         }
     })
@@ -63,10 +64,12 @@ function currentDay(dayA) {
     let b = nowData + dayA - 1;
     if (month === nowMonth) {
         getMonthDays().forEach((day, index) => {
-            if (index === nowData-1) {
+            if (index === nowData - 1) {
                 days[b].classList.add('data-now');
+
             }
         })
+        dayTest()
     } else {
         days.forEach((classL, index) => {
             days[index].classList.remove('data-now');
@@ -74,8 +77,12 @@ function currentDay(dayA) {
     }
 
 }
-
-
+function dayTest(){
+let dayTest1=document.getElementsByClassName('data-now')
+dayTest1.addEventListener('click',()=>{
+    console.log('Hello')
+})
+}
 /**
  * Вывод месяц и года на экран
  */
@@ -130,12 +137,12 @@ arrow.addEventListener('click', (e) => {
 
 /**
  * Получение данных о погоде
- * @param latWeather - широта
- * @param lonWeather - долгота
+ * @param latWeatherCalendar - широта
+ * @param lonWeatherCalendar - долгота
  * @returns {Promise<void>}
  */
-async function forecastCalendar(latWeatherC, lonWeatherC) {
-    let responseC = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latWeatherC}&lon=${lonWeatherC}&exclude=alerts&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`)
+async function forecastCalendar(latWeatherCalendar, lonWeatherCalendar) {
+    let responseC = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latWeatherCalendar}&lon=${lonWeatherCalendar}&exclude=alerts&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`)
     if (!responseC.ok) {
         throw new Error(`${responseC.status}. Page is not found`);
     }
@@ -147,27 +154,28 @@ async function forecastCalendar(latWeatherC, lonWeatherC) {
     let windSpeedC = city.current.wind_speed;
     let pressureC = city.current.pressure;
     console.log(city);
-    weatherCalendar(tempCal,icoCalendarWeather,cityNameC,descriptionC,windSpeedC,pressureC);
+    weatherCalendar(tempCal, icoCalendarWeather, cityNameC, descriptionC, windSpeedC, pressureC);
 }
 
 /**
  * Определение геолокации пользователя
  */
-function getGeo(){
-navigator.geolocation.getCurrentPosition(
-    function(position) {
-        let lan = position.coords.latitude
-        let lot = position.coords.longitude
-        forecastCalendar(lan, lot);
-       // if (!forecastBlock) {forecast(lan, lot)};  /// привязка к geo погоде
+function getGeo() {
+    navigator.geolocation.getCurrentPosition(
+        function (position) {
+            let lan = position.coords.latitude
+            let lot = position.coords.longitude
+            forecastCalendar(lan, lot);
+            // if (!forecastBlock) {forecast(lan, lot)};  /// привязка к geo погоде
 
-    }
-);
+        }
+    );
 }
+
 getGeo()
 
 
-function weatherCalendar(tempCal,icoCalendarWeather,cityNameC,descriptionC,windSpeedC,pressureC){
+function weatherCalendar(tempCal, icoCalendarWeather, cityNameC, descriptionC, windSpeedC, pressureC) {
     const weather = document.querySelector('.weather-for-calendar');
     weather.innerHTML = `
 <div class="inform-weather-left">
@@ -189,6 +197,8 @@ function weatherCalendar(tempCal,icoCalendarWeather,cityNameC,descriptionC,windS
 
 
 }
+
+
 
 // function find_max(nums) {
 // let max_num = Number.NEGATIVE_INFINITY; // smaller than all other numbers
