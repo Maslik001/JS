@@ -71,12 +71,12 @@ function currentDay(dayA) {
             if (day === nowData) {
                 days[b].classList.add('data-now');
                 let arg = 1;
-                while (day <= nowData && arg <= 7) {
+                while (day <= nowDate && arg <= 7) {
                     let value = "forecastCalendar" + arg
                     days[day + arg].setAttribute('id', `${value}`);
                     arg++;
                     let forecastCalendarWeather = document.getElementById(`${value}`);
-                        forecastCalendar(forecastCalendarWeather)
+                    forecastCalendar(forecastCalendarWeather)
                 }
 
             }
@@ -92,17 +92,22 @@ function currentDay(dayA) {
 }
 
 function forecastCalendar(forecastCalendarWeather) {
-       if(check) {
-           forecastCalendarWeather.addEventListener('mouseover', (e)=>{
-                   let target = e.target;
-                   console.log(target)
-                   let afaf = document.querySelector('.forecastCalendarWeather')
-                   afaf.style.display = 'flex';
 
-           }, remAdd);
-       }
-    function remAdd(){
-        forecastCalendarWeather.removeEventListener('mouseover',remAdd);
+    forecastCalendarWeather.addEventListener('mouseover', (e) => {
+        let event = e.target;
+        console.log(event);
+
+        let afaf = document.querySelector('.forecastCalendarWeather');
+        afaf.style.display = 'flex';
+
+    });
+    forecastCalendarWeather.removeEventListener('mouseleave', remAdd);
+
+
+    function remAdd() {
+        let afaf = document.querySelector('.forecastCalendarWeather')
+        afaf.style.display = 'none';
+
     }
 
 }
