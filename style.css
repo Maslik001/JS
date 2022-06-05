@@ -836,6 +836,7 @@
     font-weight: 700;
     font-size: 30px;
     color: white;
+
 }
 .city-name-calendar{
     font-family: 'Ubuntu';
@@ -876,4 +877,14 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+}
+
+.forecastCalendarWeather{
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: none;
 }

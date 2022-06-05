@@ -51,26 +51,63 @@ function getNowDay() {
             days[index].classList.remove('others-month');
         }
     })
-    currentDay(day)
+    currentDay(day);
 }
 
+let check;
+
+// let forecastCalendarWeather;
 /**
- * Цвет текущей даты
+ * Добавление ID для прогноза / добавление цвета на текущий день
  */
 function currentDay(dayA) {
     let nowDate = new Date();
     let nowMonth = nowDate.getMonth();
-    let b = nowData + dayA - 1;
+    let b = nowData + dayA - 1; /// корректировка недели (начинается с понедельника)
+
     if (month === nowMonth) {
+        check = true;
         getMonthDays().forEach((day, index) => {
-            if (index === nowData - 1) {
+            if (day === nowData) {
                 days[b].classList.add('data-now');
+                let arg = 1;
+                while (day <= nowDate && arg <= 7) {
+                    let value = "forecastCalendar" + arg
+                    days[day + arg].setAttribute('id', `${value}`);
+                    arg++;
+                    let forecastCalendarWeather = document.getElementById(`${value}`);
+                    forecastCalendar(forecastCalendarWeather)
+                }
+
             }
         })
     } else {
-        days.forEach((classL, index) => {
+        check = false;
+        days.forEach((elem, index) => {
             days[index].classList.remove('data-now');
+            days[index].removeAttribute('id', 'forecastCalendar');
         })
+    }
+
+}
+
+function forecastCalendar(forecastCalendarWeather) {
+
+    forecastCalendarWeather.addEventListener('mouseover', (e) => {
+        let event = e.target;
+        console.log(event);
+
+        let afaf = document.querySelector('.forecastCalendarWeather');
+        afaf.style.display = 'flex';
+
+    });
+    forecastCalendarWeather.removeEventListener('mouseleave', remAdd);
+
+
+    function remAdd() {
+        let afaf = document.querySelector('.forecastCalendarWeather')
+        afaf.style.display = 'none';
+
     }
 
 }
@@ -132,12 +169,12 @@ arrow.addEventListener('click', (e) => {
 
 /**
  * Получение данных о погоде
- * @param latWeather - широта
- * @param lonWeather - долгота
+ * @param latWeatherCalendar - широта
+ * @param lonWeatherCalendar - долгота
  * @returns {Promise<void>}
  */
-async function forecastCalendar(latWeatherC, lonWeatherC) {
-    let responseC = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latWeatherC}&lon=${lonWeatherC}&exclude=alerts&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`)
+async function weatherApiCalendar(latWeatherCalendar, lonWeatherCalendar) {
+    let responseC = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latWeatherCalendar}&lon=${lonWeatherCalendar}&exclude=alerts&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`)
     if (!responseC.ok) {
         throw new Error(`${responseC.status}. Page is not found`);
     }
@@ -160,7 +197,7 @@ function getGeo() {
         function (position) {
             let lan = position.coords.latitude
             let lot = position.coords.longitude
-            forecastCalendar(lan, lot);
+            weatherApiCalendar(lan, lot);
             // if (!forecastBlock) {forecast(lan, lot)};  /// привязка к geo погоде
 
         }
@@ -193,17 +230,15 @@ function weatherCalendar(tempCal, icoCalendarWeather, cityNameC, descriptionC, w
 
 }
 
+
 // function find_max(nums) {
-//     let max_num = Number.NEGATIVE_INFINITY; // smaller than all other numbers
-//
-//     return Math.max(...nums);
-//
+// let max_num = Number.NEGATIVE_INFINITY; // smaller than all other numbers
 //     for (let num of nums) {
 //         if (num > max_num) {
-//             // max_num = num;
+//         max_num = num;
+//             }
 //         }
-//     }
-//     return max_num;
-// }
+//      return max_num;
+//      }
 //
-// console.log(find_max());
+// console.log(find_max([11,10,30,68,-15,29,4]));
