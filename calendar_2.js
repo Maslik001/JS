@@ -4,7 +4,8 @@ let days = document.querySelectorAll('.day-text');
 const now = new Date();
 let month = now.getMonth();
 let year = now.getFullYear();
-let nowData = now.getDate()
+let nowData = now.getDate();
+let forecastDataArray = [];
 
 
 /**
@@ -76,7 +77,8 @@ function currentDay(dayA) {
                     days[day + arg].setAttribute('id', `${value}`);
                     arg++;
                     let forecastCalendarWeather = document.getElementById(`${value}`);
-                    forecastCalendar(forecastCalendarWeather)
+                    forecastDataArray.push(forecastCalendarWeather);
+                    forecastCalendar(forecastCalendarWeather);
                 }
 
             }
@@ -87,29 +89,43 @@ function currentDay(dayA) {
             days[index].classList.remove('data-now');
             days[index].removeAttribute('id', 'forecastCalendar');
         })
+        if (forecastDataArray.length) {
+            forecastDataArray.forEach(fc => forecastCalendar(fc, true));
+            forecastDataArray = [];
+
+        }
     }
 
 }
 
-function forecastCalendar(forecastCalendarWeather) {
+function targetForecast(e) {
+    let event = e.target;
+    console.log(event);
 
-    forecastCalendarWeather.addEventListener('mouseover', (e) => {
-        let event = e.target;
-        console.log(event);
-
-        let afaf = document.querySelector('.forecastCalendarWeather');
-        afaf.style.display = 'flex';
-
-    });
-    forecastCalendarWeather.removeEventListener('mouseleave', remAdd);
+    let afaf = document.querySelector('.forecastCalendarWeather');
+    afaf.style.display = 'flex';
 
 
-    function remAdd() {
-        let afaf = document.querySelector('.forecastCalendarWeather')
-        afaf.style.display = 'none';
+}
 
+function remAdd() {
+    let afaf = document.querySelector('.forecastCalendarWeather')
+    afaf.style.display = 'none';
+
+}
+
+function forecastCalendar(fCalendarWeather, clearHundlers = false) {
+
+    if (!clearHundlers) {
+        fCalendarWeather.addEventListener('mouseover', targetForecast);
+        fCalendarWeather.addEventListener('mouseleave', remAdd);
     }
 
+
+    if (clearHundlers) {
+        fCalendarWeather.removeEventListener('mouseover', targetForecast);
+        fCalendarWeather.removeEventListener('mouseleave', remAdd);
+    }
 }
 
 
@@ -141,28 +157,28 @@ arrow.addEventListener('click', (e) => {
     if (target === left) {
         if (month === 0) {
             month = 11;
-            year--
+            year--;
         } else {
-            month--
+            month--;
         }
 
         days.forEach((days) => {
             days.innerText = ''
         })
-        getMonthDays()
-        getNowDay()
+        getMonthDays();
+        getNowDay();
     } else if (target === right) {
         if (month === 11) {
             month = 0;
-            year++
+            year++;
         } else {
-            month++
+            month++;
         }
         days.forEach((days) => {
             days.innerText = ''
         })
-        getMonthDays()
-        getNowDay()
+        getMonthDays();
+        getNowDay();
     }
 })
 
