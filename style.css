@@ -878,3 +878,13 @@
     align-items: center;
     flex-wrap: wrap;
 }
+
+.forecastCalendarWeather{
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: none;
+}

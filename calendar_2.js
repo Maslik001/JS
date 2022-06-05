@@ -7,7 +7,6 @@ let year = now.getFullYear();
 let nowData = now.getDate()
 
 
-
 /**
  * функция получения кол-ва дней в месяце
  * @returns {*[]}
@@ -52,37 +51,63 @@ function getNowDay() {
             days[index].classList.remove('others-month');
         }
     })
-    currentDay(day)
+    currentDay(day);
 }
 
+let check;
+
+// let forecastCalendarWeather;
 /**
- * Цвет текущей даты
+ * Добавление ID для прогноза / добавление цвета на текущий день
  */
 function currentDay(dayA) {
     let nowDate = new Date();
     let nowMonth = nowDate.getMonth();
-    let b = nowData + dayA - 1;
+    let b = nowData + dayA - 1; /// корректировка недели (начинается с понедельника)
+
     if (month === nowMonth) {
+        check = true;
         getMonthDays().forEach((day, index) => {
-            if (index === nowData - 1) {
+            if (day === nowData) {
                 days[b].classList.add('data-now');
+                let arg = 1;
+                while (day <= nowData && arg <= 7) {
+                    let value = "forecastCalendar" + arg
+                    days[day + arg].setAttribute('id', `${value}`);
+                    arg++;
+                    let forecastCalendarWeather = document.getElementById(`${value}`);
+                        forecastCalendar(forecastCalendarWeather)
+                }
 
             }
         })
-        dayTest()
     } else {
-        days.forEach((classL, index) => {
+        check = false;
+        days.forEach((elem, index) => {
             days[index].classList.remove('data-now');
+            days[index].removeAttribute('id', 'forecastCalendar');
         })
     }
 
 }
-function dayTest(){
-let dayTest1=document.getElementsByClassName('data-now')
-dayTest1.addEventListener('click',()=>{
-    console.log('Hello')
-})
+
+function forecastCalendar(forecastCalendarWeather) {
+       if(check) {
+           forecastCalendarWeather.addEventListener('mouseover', (e)=>{
+                   let target = e.target;
+                   console.log(target)
+                   let afaf = document.querySelector('.forecastCalendarWeather')
+                   afaf.style.display = 'flex';
+
+           }, remAdd);
+       }
+    function remAdd(){
+        forecastCalendarWeather.removeEventListener('mouseover',remAdd);
+    }
+
 }
+
+
 /**
  * Вывод месяц и года на экран
  */
@@ -141,7 +166,7 @@ arrow.addEventListener('click', (e) => {
  * @param lonWeatherCalendar - долгота
  * @returns {Promise<void>}
  */
-async function forecastCalendar(latWeatherCalendar, lonWeatherCalendar) {
+async function weatherApiCalendar(latWeatherCalendar, lonWeatherCalendar) {
     let responseC = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latWeatherCalendar}&lon=${lonWeatherCalendar}&exclude=alerts&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`)
     if (!responseC.ok) {
         throw new Error(`${responseC.status}. Page is not found`);
@@ -165,7 +190,7 @@ function getGeo() {
         function (position) {
             let lan = position.coords.latitude
             let lot = position.coords.longitude
-            forecastCalendar(lan, lot);
+            weatherApiCalendar(lan, lot);
             // if (!forecastBlock) {forecast(lan, lot)};  /// привязка к geo погоде
 
         }
@@ -197,7 +222,6 @@ function weatherCalendar(tempCal, icoCalendarWeather, cityNameC, descriptionC, w
 
 
 }
-
 
 
 // function find_max(nums) {
