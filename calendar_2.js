@@ -45,9 +45,9 @@ function getNowDay() {
     days.forEach((daysAdd, index) => {
         daysAdd.innerText = startDate.getDate();
         startDate.setDate(startDate.getDate() + 1);
-        if (index < day || index >= getMonthDays().length+day) {
+        if (index < day || index >= getMonthDays().length + day) {
             days[index].classList.add('others-month');
-        }else {
+        } else {
             days[index].classList.remove('others-month');
         }
     })
@@ -63,7 +63,7 @@ function currentDay(dayA) {
     let b = nowData + dayA - 1;
     if (month === nowMonth) {
         getMonthDays().forEach((day, index) => {
-            if (index === nowData-1) {
+            if (index === nowData - 1) {
                 days[b].classList.add('data-now');
             }
         })
@@ -88,6 +88,8 @@ function dayMonthInCalendar(date) {
 
 }
 
+// pressure = 10;
+// console.log(p)
 getNowDay()
 
 /**
@@ -147,27 +149,28 @@ async function forecastCalendar(latWeatherC, lonWeatherC) {
     let windSpeedC = city.current.wind_speed;
     let pressureC = city.current.pressure;
     console.log(city);
-    weatherCalendar(tempCal,icoCalendarWeather,cityNameC,descriptionC,windSpeedC,pressureC);
+    weatherCalendar(tempCal, icoCalendarWeather, cityNameC, descriptionC, windSpeedC, pressureC);
 }
 
 /**
  * Определение геолокации пользователя
  */
-function getGeo(){
-navigator.geolocation.getCurrentPosition(
-    function(position) {
-        let lan = position.coords.latitude
-        let lot = position.coords.longitude
-        forecastCalendar(lan, lot);
-       // if (!forecastBlock) {forecast(lan, lot)};  /// привязка к geo погоде
+function getGeo() {
+    navigator.geolocation.getCurrentPosition(
+        function (position) {
+            let lan = position.coords.latitude
+            let lot = position.coords.longitude
+            forecastCalendar(lan, lot);
+            // if (!forecastBlock) {forecast(lan, lot)};  /// привязка к geo погоде
 
-    }
-);
+        }
+    );
 }
+
 getGeo()
 
 
-function weatherCalendar(tempCal,icoCalendarWeather,cityNameC,descriptionC,windSpeedC,pressureC){
+function weatherCalendar(tempCal, icoCalendarWeather, cityNameC, descriptionC, windSpeedC, pressureC) {
     const weather = document.querySelector('.weather-for-calendar');
     weather.innerHTML = `
 <div class="inform-weather-left">
@@ -191,13 +194,16 @@ function weatherCalendar(tempCal,icoCalendarWeather,cityNameC,descriptionC,windS
 }
 
 // function find_max(nums) {
-// let max_num = Number.NEGATIVE_INFINITY; // smaller than all other numbers
+//     let max_num = Number.NEGATIVE_INFINITY; // smaller than all other numbers
+//
+//     return Math.max(...nums);
+//
 //     for (let num of nums) {
 //         if (num > max_num) {
-//         max_num = num;
-//             }
+//             // max_num = num;
 //         }
-//      return max_num;
-//      }
+//     }
+//     return max_num;
+// }
 //
-// console.log(find_max([11,10,30,68,-15,29,4]));
+// console.log(find_max());
