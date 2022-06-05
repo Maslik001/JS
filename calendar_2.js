@@ -63,10 +63,11 @@ let check;
  */
 function currentDay(dayA) {
     let nowDate = new Date();
+    let nowYear = nowDate.getFullYear();
     let nowMonth = nowDate.getMonth();
     let b = nowData + dayA - 1; /// корректировка недели (начинается с понедельника)
 
-    if (month === nowMonth) {
+    if (month === nowMonth && year === nowYear) {
         check = true;
         getMonthDays().forEach((day, index) => {
             if (day === nowData) {
