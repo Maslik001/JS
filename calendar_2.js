@@ -151,6 +151,7 @@ getNowDay()
  * @type {HTMLElement}
  */
 let arrow = document.getElementById('daysWrap');
+
 arrow.addEventListener('click', (e) => {
     let target = e.target;
     let left = document.querySelector('.arrow-left');
