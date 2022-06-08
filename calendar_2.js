@@ -220,7 +220,7 @@ function targetForecast(e) {
     weatherInfoCal.style.display = 'flex';
     weatherInfoCal.classList.add('animate__zoomIn');
     weatherInfoCal.style.left = x - 80 + 'px';
-    weatherInfoCal.style.top = y + 20 + 'px';
+    weatherInfoCal.style.top = y - 50 + 'px';
     weatherInfoCal.addEventListener('mouseleave', remAdd);
     getGeo();
 }
