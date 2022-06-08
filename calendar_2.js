@@ -1,7 +1,7 @@
 'use strict';
 
-let days = document.querySelectorAll('.day-text');
-let arrow = document.getElementById('daysWrap');
+let days;
+let arrow;
 let calendar;
 let calendarIco = document.getElementById('weatherCalendarImg');
 const now = new Date();
@@ -11,14 +11,20 @@ let nowData = now.getDate();
 let forecastDataArray = [];
 let check = false;
 let indexForecast;
+let calendarStatus = false;
+
 
 calendarIco.addEventListener('click',()=>{
+
+    if(!calendarStatus){
     calendar = document.querySelector('.calendar-wrapper');
     let addCalendar = `
+
 <div class="calendar-table">
-    <div class="weather-for-calendar">
-        </div>
+    <div class="close-calendar">&#10006;</div>
+    <div class="weather-for-calendar"></div>
         <div class="days-wrap" id="daysWrap">
+        
             <div class="arrow-left">&#129092;</div>
             <div class="data-info"></div>
             <div class="arrow-right">&#129094;</div>
@@ -92,9 +98,21 @@ calendarIco.addEventListener('click',()=>{
         </div>
     `
     calendar.insertAdjacentHTML('afterbegin',addCalendar);
+        calendar.classList.add('animate__fadeInUp');
     getNowDay();
     switchMounth();
     getGeo();
+    calendarStatus = true;
+    let closeCalendar = document.querySelector('.close-calendar');
+        closeCalendar.addEventListener('click',()=>{
+        calendar.removeChild(calendar.firstChild);
+        calendar.classList.remove('animate__fadeInUp');
+        calendar.classList.add('animate__fadeOutDown');
+            calendarStatus = false;
+    })
+
+
+    }
 
 })
 
@@ -131,6 +149,7 @@ function getDateAlter(myDate, day) {
  * добавление цвета на сл и предыдущие даты мес.
  */
 function getNowDay() {
+    days = document.querySelectorAll('.day-text');
     let date = new Date(year, month);
     let day = date.getUTCDay();
     let startDate = getDateAlter(date, day);
@@ -268,6 +287,7 @@ function dayMonthInCalendar(date) {
  * @type {HTMLElement}
  */
 function switchMounth(){
+    arrow = document.getElementById('daysWrap');
     arrow.addEventListener('click', (e) => {
         let target = e.target;
         let left = document.querySelector('.arrow-left');

@@ -669,61 +669,22 @@
     color: #FFFFFF;
     width: 50px;
 }
-/*
-.memory {
-
-}
-
 .calendar-wrapper{
-    width: 420px;
-    height: 400px;
-    background: #000;
-    z-index: 3;
-    !*display: none;*!
-}
-.numDay{
-    margin-top: 10px;
-    height: 95%;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    padding-bottom: 55px;
 
 }
-.b1, .n1{
-    width: 100%;
+.close-calendar{
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    font-family: 'Oswald';
-    font-style: normal;
-
-    align-content: center;
+    right: 3%;
+    position: absolute;
+    top: -7%;
+    width: 40px;
+    height: 47px;
+    background-color: rgb(160 45 53);
+    z-index: 0;
+    overflow: hidden;
+    border-radius: 5px;
+    cursor: pointer;
 }
-.days{
-    color: #FFFFFF;
-    width: 12%;
-    height: 4%;
-}
-.data-day{
-    color: wheat;
-}
-.days-wrap{
-    display: flex;
-    padding-bottom: 10px;
-}
-.data-short{
-    height: 30px;
-    margin-top: 10px;
-}
-.nextDay{
-    color: #898989;
-
-}
-.day-now{
-    border: solid 1px #ffffff;
-}*/
 
 .calendar-table{
     display: flex;
@@ -738,6 +699,7 @@
     position: absolute;
     right: 0;
     bottom: 0;
+    animation-duration: 2s;
 }
 
 .day_weekend{
