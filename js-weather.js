@@ -802,6 +802,7 @@ function listenSearch() {
         }
     }
 
+>>>>>>> origin/Calc
     searchIco = document.getElementById('search');
     searchIco.addEventListener('click', (e) => {
         search = document.getElementById('searchLocation').value;
