@@ -299,7 +299,6 @@ function switchMonth(){
             } else {
                 month--;
             }
-
             days.forEach((days) => {
                 days.innerText = ''
             })
