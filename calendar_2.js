@@ -1,11 +1,121 @@
 'use strict';
 
-let days = document.querySelectorAll('.day-text');
+let days;
+let arrow;
+let calendar;
+let calendarIco = document.getElementById('weatherCalendarImg');
 const now = new Date();
 let month = now.getMonth();
 let year = now.getFullYear();
 let nowData = now.getDate();
 let forecastDataArray = [];
+let check = false;
+let indexForecast;
+let calendarStatus = false;
+
+
+calendarIco.addEventListener('click',()=>{
+
+    if(!calendarStatus){
+    calendar = document.querySelector('.calendar-wrapper');
+    let addCalendar = `
+
+<div class="calendar-table">
+    <div class="close-calendar">&#10006;</div>
+    <div class="weather-for-calendar"></div>
+        <div class="days-wrap" id="daysWrap">
+        
+            <div class="arrow-left">&#129092;</div>
+            <div class="data-info"></div>
+            <div class="arrow-right">&#129094;</div>
+        </div>
+
+        <div class="month-days">
+            <div class="week-days-wrapper">
+                <div class="day-week">ПН</div>
+                <div class="day-week">ВТ</div>
+                <div class="day-week">СР</div>
+                <div class="day-week">ЧТ</div>
+                <div class="day-week">ПТ</div>
+                <div class="day-week day_weekend">СБ</div>
+                <div class="day-week day_weekend">ВС</div>
+            </div>
+            <div class="week-days-block">
+                <div class="day-text" id="day-test"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text day_weekend"></div>
+                <div class="day-text day_weekend"></div>
+            </div>
+            <div class="week-days-block">
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text day_weekend"></div>
+                <div class="day-text day_weekend"></div>
+            </div>
+            <div class="week-days-block">
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text day_weekend"></div>
+                <div class="day-text day_weekend"></div>
+            </div>
+            <div class="week-days-block">
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text day_weekend"></div>
+                <div class="day-text day_weekend"></div>
+            </div>
+            <div class="week-days-block">
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text day_weekend"></div>
+                <div class="day-text day_weekend"></div>
+            </div>
+            <div class="week-days-block">
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text"></div>
+                <div class="day-text day_weekend"></div>
+                <div class="day-text day_weekend"></div>
+            </div>
+        </div>
+        </div>
+    `
+    calendar.insertAdjacentHTML('afterbegin',addCalendar);
+        calendar.classList.add('animate__fadeInUp');
+    getNowDay();
+    switchMounth();
+    getGeo();
+    calendarStatus = true;
+    let closeCalendar = document.querySelector('.close-calendar');
+        closeCalendar.addEventListener('click',()=>{
+        calendar.removeChild(calendar.firstChild);
+        calendar.classList.remove('animate__fadeInUp');
+        calendar.classList.add('animate__fadeOutDown');
+            calendarStatus = false;
+    })
+
+
+    }
+
+})
+
 
 
 /**
@@ -39,6 +149,7 @@ function getDateAlter(myDate, day) {
  * добавление цвета на сл и предыдущие даты мес.
  */
 function getNowDay() {
+    days = document.querySelectorAll('.day-text');
     let date = new Date(year, month);
     let day = date.getUTCDay();
     let startDate = getDateAlter(date, day);
@@ -55,9 +166,7 @@ function getNowDay() {
     currentDay(day);
 }
 
-let check;
 
-// let forecastCalendarWeather;
 /**
  * Добавление ID для прогноза / добавление цвета на текущий день
  */
@@ -66,10 +175,9 @@ function currentDay(dayA) {
     let nowYear = nowDate.getFullYear();
     let nowMonth = nowDate.getMonth();
     let b = nowData + dayA - 1; /// корректировка недели (начинается с понедельника)
-
     if (month === nowMonth && year === nowYear) {
-        check = true;
-        getMonthDays().forEach((day, index) => {
+        // check = true;
+        getMonthDays().forEach((day) => {
             if (day === nowData) {
                 days[b].classList.add('data-now');
                 let arg = 1;
@@ -81,48 +189,80 @@ function currentDay(dayA) {
                     forecastDataArray.push(forecastCalendarWeather);
                     forecastCalendar(forecastCalendarWeather);
                 }
-
             }
         })
     } else {
-        check = false;
+        // check = false;
         days.forEach((elem, index) => {
             days[index].classList.remove('data-now');
             days[index].removeAttribute('id', 'forecastCalendar');
+
         })
         if (forecastDataArray.length) {
             forecastDataArray.forEach(fc => forecastCalendar(fc, true));
             forecastDataArray = [];
-
         }
     }
-
 }
 
+
+/**
+ * Получение позиции курсора  - и вовод блока прогноза относительно курсора
+ * @param e
+ */
 function targetForecast(e) {
+    check = true;
     let event = e.target;
-    console.log(event);
-
-    let afaf = document.querySelector('.forecastCalendarWeather');
-    afaf.style.display = 'flex';
-
-
+    indexForecast = event.id.slice(event.id.length - 1);
+    let x = event.getBoundingClientRect().x;
+    let y = event.getBoundingClientRect().y;
+    let weatherInfoCal = document.querySelector('.forecastCalendarWeather');
+    weatherInfoCal.style.display = 'flex';
+    weatherInfoCal.classList.add('animate__zoomIn');
+    weatherInfoCal.style.left = x - 80 + 'px';
+    weatherInfoCal.style.top = y - 50 + 'px';
+    weatherInfoCal.addEventListener('mouseleave', remAdd);
+    getGeo();
 }
 
+/**
+ * Отображение прогноза погоды на днях календаря
+ * @param icoCalendarWeatherForecast
+ * @param descriptionForecast
+ * @param tempForecast
+ * @param timeSecForecast
+ */
+function forecastWeatherCalendarRender(icoCalendarWeatherForecast, descriptionForecast, tempForecast,timeSecForecast) {
+    let weatherInfoCal = document.querySelector('.forecastCalendarWeather');
+    weatherInfoCal.innerHTML = `
+<div class="time-forecast">${timeSecForecast}</div>
+<div class="calendar-weather-forecast-wrapper">
+<img src="http://openweathermap.org/img/wn/${icoCalendarWeatherForecast}@2x.png"  class="ico-Calendar-Weather-Forecast" alt="icoCalendarWeather">
+<div class="temp-calendar-forecast">${tempForecast}&#176;C</div>
+</div>
+<div class="description-calendar-forecast">${descriptionForecast}</div>
+    `
+}
+
+/**
+ * Закрытие прогноза погоды на днях календаря
+ */
 function remAdd() {
-    let afaf = document.querySelector('.forecastCalendarWeather')
-    afaf.style.display = 'none';
-
+    check = false;
+    let weatherInfoCal = document.querySelector('.forecastCalendarWeather');
+    weatherInfoCal.style.display = 'none';
 }
 
+/**
+ * Обработчик наведение мыши на определенный день
+ * @param fCalendarWeather
+ * @param clearHundlers
+ */
 function forecastCalendar(fCalendarWeather, clearHundlers = false) {
-
     if (!clearHundlers) {
         fCalendarWeather.addEventListener('mouseover', targetForecast);
-        fCalendarWeather.addEventListener('mouseleave', remAdd);
+        // fCalendarWeather.addEventListener('mouseleave', remAdd);
     }
-
-
     if (clearHundlers) {
         fCalendarWeather.removeEventListener('mouseover', targetForecast);
         fCalendarWeather.removeEventListener('mouseleave', remAdd);
@@ -141,10 +281,6 @@ function dayMonthInCalendar(date) {
     dataInfo.innerText = `${monthName[currentData]} ${yearD}`
 
 }
-
-// pressure = 10;
-// console.log(p)
-getNowDay()
 
 /**
  * переключение месяца
@@ -203,8 +339,17 @@ async function weatherApiCalendar(latWeatherCalendar, lonWeatherCalendar) {
     let descriptionC = city.current.weather[0].description;
     let windSpeedC = city.current.wind_speed;
     let pressureC = city.current.pressure;
+    if (check) {
+        let icoCalendarWeatherForecast = city.daily[indexForecast].weather[0].icon;
+        let descriptionForecast = city.daily[indexForecast].weather[0].description;
+        let tempForecast = Math.round(city.daily[indexForecast].temp.day);
+        let timeSecForecast = data(city.daily[indexForecast-1].dt * 1000);
+        forecastWeatherCalendarRender(icoCalendarWeatherForecast, descriptionForecast, tempForecast,timeSecForecast)
+    }
     console.log(city);
     weatherCalendar(tempCal, icoCalendarWeather, cityNameC, descriptionC, windSpeedC, pressureC);
+
+
 }
 
 /**
@@ -217,20 +362,25 @@ function getGeo() {
             let lot = position.coords.longitude
             weatherApiCalendar(lan, lot);
             // if (!forecastBlock) {forecast(lan, lot)};  /// привязка к geo погоде
-
         }
     );
 }
 
-getGeo()
-
-
+/**
+ * Отображение текущей погоды на календаре
+ * @param tempCal
+ * @param icoCalendarWeather
+ * @param cityNameC
+ * @param descriptionC
+ * @param windSpeedC
+ * @param pressureC
+ */
 function weatherCalendar(tempCal, icoCalendarWeather, cityNameC, descriptionC, windSpeedC, pressureC) {
     const weather = document.querySelector('.weather-for-calendar');
     weather.innerHTML = `
 <div class="inform-weather-left">
-    <div class="wind-calendar-weather"><div><img class="wind-calendar" src="img/weather/wind.png"><p id="wind-calendar"></p></div> ${windSpeedC} m/s</div> 
-    <div class="pressure-calendar-weather"><div ><img class="prep-calendar" src="img/weather/prep.png"><p id="prep-calendar"></p></div>   ${pressureC} hPa</div>
+    <div class="wind-calendar-weather"><div><img class="wind-calendar" src="img/weather/wind.png" alt="wind"><p id="wind-calendar"></p></div> ${windSpeedC} m/s</div> 
+    <div class="pressure-calendar-weather"><div ><img class="prep-calendar" src="img/weather/prep.png" alt="prep"><p id="prep-calendar"></p></div>   ${pressureC} hPa</div>
 </div>
 <div class="wrapper-weather-calendar">
         <div class="city-name-calendar">${cityNameC}</div>
