@@ -100,7 +100,7 @@ calendarIco.addEventListener('click',()=>{
     calendar.insertAdjacentHTML('afterbegin',addCalendar);
         calendar.classList.add('animate__fadeInUp');
     getNowDay();
-    switchMounth();
+    switchMonth();
     getGeo();
     calendarStatus = true;
     let closeCalendar = document.querySelector('.close-calendar');
@@ -286,39 +286,40 @@ function dayMonthInCalendar(date) {
  * переключение месяца
  * @type {HTMLElement}
  */
-let arrow = document.getElementById('daysWrap');
+function switchMonth(){
+    arrow = document.getElementById('daysWrap');
+    arrow.addEventListener('click', (e) => {
+        let target = e.target;
+        let left = document.querySelector('.arrow-left');
+        let right = document.querySelector('.arrow-right');
+        if (target === left) {
+            if (month === 0) {
+                month = 11;
+                year--;
+            } else {
+                month--;
+            }
 
-arrow.addEventListener('click', (e) => {
-    let target = e.target;
-    let left = document.querySelector('.arrow-left');
-    let right = document.querySelector('.arrow-right');
-    if (target === left) {
-        if (month === 0) {
-            month = 11;
-            year--;
-        } else {
-            month--;
+            days.forEach((days) => {
+                days.innerText = ''
+            })
+            getMonthDays();
+            getNowDay();
+        } else if (target === right) {
+            if (month === 11) {
+                month = 0;
+                year++;
+            } else {
+                month++;
+            }
+            days.forEach((days) => {
+                days.innerText = ''
+            })
+            getMonthDays();
+            getNowDay();
         }
-
-        days.forEach((days) => {
-            days.innerText = ''
-        })
-        getMonthDays();
-        getNowDay();
-    } else if (target === right) {
-        if (month === 11) {
-            month = 0;
-            year++;
-        } else {
-            month++;
-        }
-        days.forEach((days) => {
-            days.innerText = ''
-        })
-        getMonthDays();
-        getNowDay();
-    }
-})
+    })
+}
 
 
 /**
