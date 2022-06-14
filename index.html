@@ -8,11 +8,16 @@
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="js-weather.js" defer></script>
     <script type="text/javascript" src="JavaScript.js" defer></script>
+    <script type="text/javascript" src="calendar_2.js" defer></script>
 </head>
 <body id="body">
+<div class="forecastCalendarWeather">
+
+</div>
 <div class="game-window animate__zoomIn" id="gameWindow"></div>
 <main class="main">
-
+    <div class="calendar-wrapper "></div>
+    <div class="weather-wrapper" id="weather-wrapper"></div>
     <img src="img/my-comp.png" class="myComp" id="myComp" alt="myComp">
     <img src="img/csGo.png" class="csgo" id="cs" alt="csgo">
     <img src="img/trashiconCleaner.webp" class="trashiconCleaner" id="trashiconCleaner" alt="trashiconCleaner">
@@ -27,9 +32,7 @@
         <span>Очистить корзину</span>
     </div>
     <div class="calc-wrapper" id="calc-wrapper"></div>
-    <div class="weather-wrapper" id="weather-wrapper">
 
-    </div>
 </main>
 <footer class="footer">
     <div class="footer-menu">
@@ -39,14 +42,15 @@
         <img src="img/market.png" alt="" class="footer-menu__img">
         <img src="img/Calculator.png" alt="" class="footer-menu__img" id="calc-img">
         <img src="img/weather/weather-icon.png" alt="" class="footer-menu__img" id="weather-img">
+        <img src="img/calendar/Windows_Calendar_Icon.png" alt="weather-calendar" class="weather-calendar__img" id="weatherCalendarImg">
     </div>
     <div class="footer-inform">
         <img src="img/arrow.png" alt="" class="footer-inform__img">
         <img src="img/wifi.png" alt="" class="footer-inform__img">
         <img src="img/sound.png" alt="" class="footer-inform__img">
         <img src="img/bi_battery-half.png" alt="" class="footer-inform__img">
-        <div class="currentDate" id = 'currentDate'></div>
-<!--        <img src="img/2022.png" alt="" class="footer-inform__img">-->
+        <div class="currentDate" id='currentDate'></div>
+        <!--        <img src="img/2022.png" alt="" class="footer-inform__img">-->
     </div>
 </footer>
 

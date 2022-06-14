@@ -1,6 +1,10 @@
 'use strict';
 
+/**
+ * Переменные
+ */
 const weatherOn = document.getElementById('weather-img');
+let weatherElementsIco;
 let search;
 let searchIco;
 let locCity = 'Minsk';
@@ -14,59 +18,210 @@ let temperature;
 let humidity;
 let weatherForecast;
 let windSpeed;
+let status;
+let closeWeather;
+let latWeather;
+let lonWeather;
+let ico1;
+let ico2;
+let ico3;
+let temp1;
+let temp2;
+let tepm3;
+let forecastBlock = true;
+let forecNextDay1;
+let forecNextDay2;
+let forecNextDay3;
+let forecastWeatherStatus1;
+let forecastWeatherStatus2;
+let forecastWeatherStatus3;
+let forecastWrapper;
+let nightTemp1;
+let nightTemp2;
+let nightTemp3;
 
-
-function addCity() {
+/**
+ * Функция получения данных о погоде по API
+ */
+async function addCity() {
     const requestCountry = new XMLHttpRequest();
-    requestCountry.open('GET', `https://api.openweathermap.org/data/2.5/weather?q=${locCity}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
+    await requestCountry?.open('GET', `https://api.openweathermap.org/data/2.5/weather?q=${locCity}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
     requestCountry.send();
     requestCountry.addEventListener('load', () => {
         let nameCity = JSON.parse(requestCountry?.responseText);
-        // console.log(nameCity)
-        locCity = nameCity?.name;
-        let [{country: id}] = Object.values([nameCity.sys]);
-        countryID = id;
-        [windSpeed] = Object.values(nameCity.wind);
-        [{description: weatherForecast}] = Object.values(nameCity.weather);
-        let [temper] = Object.values(nameCity.main);
-        temper = Math.round(temper);
-        temperature = temper;
-        [{humidity: humidity}] = Object.values([nameCity.main]);
-        [{pressure: pressure}] = Object.values([nameCity.main]);
-        dataWeather()
-
+        if (nameCity.cod !== 200) {
+            console.log('City not founded')
+        } else {
+            locCity = nameCity?.name;
+            countryID = nameCity?.sys.country;
+            windSpeed = nameCity?.wind.speed;
+            status = nameCity.weather[0].main;
+            weatherForecast = nameCity.weather[0].description;
+            temperature = Math.round(nameCity.main.temp);
+            humidity = nameCity.main.humidity;
+            pressure = nameCity.main.pressure;
+            latWeather = nameCity.coord.lat;
+            lonWeather = nameCity.coord.lon;
+            let timeCity = nameCity.dt * 1000;
+            data(timeCity);
+            dataWeather()
+            weatherIco(status);
+        }
     })
 }
 
-console.log(locCity);
+/**
+ * Функция получения данных о Прогнозе погоды по API
+ */
+async function forecast() {
+    let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latWeather}&lon=${lonWeather}&exclude=alerts&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`)
+    if (!response.ok) {
+        throw new Error(`${response.status}. Page is not found`);
+    }
+    let city = await response.json();
+    console.log(city);
+    [temp1, temp2, tepm3] = [Math.round([city.daily[1].temp.day]), Math.round([city.daily[2].temp.day]), Math.round([city.daily[3].temp.day])]
+    let sec1 = city.daily[1].dt * 1000;
+    let sec2 = city.daily[2].dt * 1000;
+    let sec3 = city.daily[3].dt * 1000;
+    forecNextDay1 = data(sec1);
+    forecNextDay2 = data(sec2);
+    forecNextDay3 = data(sec3);
+    // [{weather: [{icon: ico1}]}, {weather:[{icon: ico2}]} , {weather: [{icon: ico3}]}] = city.daily;
+    [ico1, ico2, ico3] = [city.daily[0].weather[0].icon, city.daily[1].weather[0].icon, city.daily[2].weather[0].icon];
+    ico1 = city.daily[1].weather[0].icon;
+    ico2 = city.daily[2].weather[0].icon;
+    ico3 = city.daily[3].weather[0].icon;
+    [forecastWeatherStatus1, forecastWeatherStatus2, forecastWeatherStatus3] = [city.daily[1].weather[0].description, city.daily[2].weather[0].description, city.daily[3].weather[0].description];
+    // [nightTemp1, nightTemp2, nightTemp3] = [Math.round([city.daily[1].temp.night]), Math.round([city.daily[2].temp.night]), Math.round([city.daily[3].temp.night])];
+    nightTemp1 = Math.round([city.daily[1].temp.night]);
+    nightTemp2 = Math.round([city.daily[2].temp.night]);
+    nightTemp3 = Math.round([city.daily[3].temp.night]);
+    resultForecast();
 
+}
+
+/***
+ * Функция добавления виджета "Прогноза" на страницу
+ */
+function resultForecast() {
+    if (forecastBlock) {
+        let progn = `
+   <div class="wr-prog">
+   <div class="close-forecast"><p>&#10097;</p></div>
+            <div class="d1">
+                <div class="wr">
+                    <div class="wrapper-temp-forec">
+                        <div class="pic-weather" id="ico1"></div>
+                        <div class="tem1 temp1"></div>
+                        <p id="textTem1"></p>
+                    </div>
+                    <div class="day netx1"></div>
+                </div>
+            </div>
+            <div class="d1">
+                <div class="wr">
+                    <div class="wrapper-temp-forec">
+                        <div class="pic-weather" id="ico2"></div>
+                        <div class="tem1 temp2"></div>
+                        <p id="textTem2"></p>
+                    </div>
+                    <div class="day netx2"></div>
+                </div>
+            </div>
+            <div class="d1">
+                <div class="wr">
+                    <div class="wrapper-temp-forec">
+                        <div class="pic-weather" id="ico3"></div>
+                        <div class="tem1 temp3"></div>
+                        <p id="textTem3"></p>
+                    </div>
+                    <div class="day netx3"></div>
+                </div>
+            </div>
+            <div class="flip"></div>
+`
+        weatherWrapper.insertAdjacentHTML('afterbegin', progn);
+        forecastBlock = false;
+        forecastWrapper = document.querySelector('.wr-prog');
+        forecastWrapper.classList.add('animate__fadeInRight');
+        let closeForecast = document.querySelector('.close-forecast');
+        closeForecast.addEventListener('click', () => {
+            weatherWrapper.removeChild(weatherWrapper.firstChild);
+            forecastWrapper.classList.remove('animate__fadeInRight');
+            forecastWrapper.classList.add('animate__fadeOutRight');
+            setTimeout(function () {
+                weatherWrapper.removeChild(weatherWrapper.firstChild);
+                forecastBlock = true;
+            }, 1000)
+        })
+
+        forecastVue()
+    } else {
+        forecastVue()
+    }
+}
+
+/**
+ * Функция для отображения данных о прогнощируемых погодных условиях
+ */
+function forecastVue() {
+    let forecastIco1 = document.getElementById('ico1');
+    let forecastIco2 = document.getElementById('ico2');
+    let forecastIco3 = document.getElementById('ico3');
+    let forecastTemp1 = document.querySelector('.temp1');
+    let forecastTemp2 = document.querySelector('.temp2');
+    let forecastTemp3 = document.querySelector('.temp3');
+    let netx1 = document.querySelector('.netx1');
+    let netx2 = document.querySelector('.netx2');
+    let netx3 = document.querySelector('.netx3');
+    let textTem1 = document.getElementById('textTem1');
+    let textTem2 = document.getElementById('textTem2');
+    let textTem3 = document.getElementById('textTem3');
+    forecastIco1.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico1}@2x.png" alt="">`;
+    forecastIco2.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico2}@2x.png" alt="">`;
+    forecastIco3.innerHTML = `<img src="http://openweathermap.org/img/wn/${ico3}@2x.png" alt="">`;
+    forecastTemp1.innerHTML = `<span class="forecast-temp">${temp1}&#176;</span> <span class="night-temp">/ ${nightTemp1}&#176;</span>`
+    forecastTemp2.innerHTML = `<span class="forecast-temp">${temp2}&#176;</span> <span class="night-temp">/ ${nightTemp2}&#176;</span>`
+    forecastTemp3.innerHTML = `<span class="forecast-temp">${tepm3}&#176;</span> <span class="night-temp">/ ${nightTemp3}&#176;</span>`
+    netx1.innerHTML = `${forecNextDay1}`
+    netx2.innerHTML = `${forecNextDay2}`
+    netx3.innerHTML = `${forecNextDay3}`
+    textTem1.innerHTML = `${forecastWeatherStatus1}`
+    textTem2.innerHTML = `${forecastWeatherStatus2}`
+    textTem3.innerHTML = `${forecastWeatherStatus3}`
+
+}
+
+/***
+ * Функция добавления виджета "погода" на страницу
+ */
 weatherOn.addEventListener('click', () => {
-    addCity();
     if (blockAddNewWeather) {
         blockAddNewWeather = false;
         weatherWrapper = document.getElementById('weather-wrapper');
         let weather = `
         
-        <div class="weather">
-        <div class="close-weather">X</div>
+        <div class="weather" id='weather'>
+        <div class="close-weather">&#10150;</div>
             <div class="inter-loc">
                 <img src="img/weather/search-ico.png" alt="search-ico" class="search" id="search">
                 <input type="text" class="search-location" id="searchLocation" placeholder="Введите город" ">
                 <img src="img/weather/geographic.png" alt="">
             </div>
-            <div class="weather-info">
+            <div class="weather-info animate__jackInTheBox">
                 <div class="location">
                     <div class="city-location">
-                        <img src="/img/weather/local.png" alt="">
+                        <img src="img/weather/local.png" alt="">
                         <div class="city-name" id="city-name"></div>
                         <div class="country-id" id="country-id"></div>
-                    </div>
+                    </div>              
 <!--Анимация погоды--------------------------------------------------------------------------->
                     <div class="container">
                         <div class="elements">
 
                             <!-- Cloudy -->
-                            <div class="element">
+                            <div class="element cloudy" id="cloudy">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60.7 40" style="enable-background:new 0 0 60.7 40;" xml:space="preserve">
             <g id="Cloud_1">
   \t          <g id="White_cloud_1">
@@ -101,7 +256,7 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Rainy -->
-                            <div class="element">
+                            <div class="element rainy" id="rainy">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55.1 60" style="enable-background:new 0 0 55.1 49.5;" xml:space="preserve">
             <g id="Cloud_2">
         \t    <g id="Rain_2">
@@ -137,7 +292,7 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Cloudy with sun -->
-                            <div class="element">
+                            <div class="element cloudyWithSun" id="cloudyWithSun">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 61.7 42.8" style="enable-background:new 0 0 61.7 42.8;" xml:space="preserve">
             <g id="Cloud_3">
       \t      <g id="White_cloud_3">
@@ -204,7 +359,7 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Cloudy with lightning -->
-                            <div class="element">
+                            <div class="element cloudyWithLightning" id="cloudyWithLightning">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60.7 48.7" style="enable-background:new 0 0 60.7 48.7;" xml:space="preserve">
             <g id="Cloud_4">
       \t      <g id="White_cloud_4">
@@ -254,7 +409,7 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Cloudy with moon -->
-                            <div class="element">
+                            <div class="element cloudyWithMoon" id="cloudyWithMoon">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60.7 44.4" style="enable-background:new 0 0 60.7 44.4;" xml:space="preserve">
             <g id="Cloud_5">
     \t        <g id="White_cloud_5">
@@ -290,7 +445,7 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Cloudy with rain and lightning -->
-                            <div class="element">
+                            <div class="element cloudyWithRainAndLightning" id="cloudyWithRainAndLightning ">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60.7 80" style="enable-background:new 0 0 60.7 55;" xml:space="preserve">
             <g id="Cloud_6">
     \t        <g id="White_cloud_6">
@@ -354,8 +509,8 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Sunny -->
-                            <div class="element">
-                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 44.9 44.9" style="enable-background:new 0 0 44.9 44.9;" xml:space="preserve" height="40px" width="40px">
+                            <div class="element sunny" id="sunny">
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 44.9 44.9" style="enable-background:new 0 0 44.9 44.9;" xml:space="preserve" height="100px" width="100px">
             <g id="Sun">
     \t        <circle id="XMLID_61_" class="yellow" cx="22.4" cy="22.6" r="11"/>
                 <g>
@@ -382,20 +537,20 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Clear night -->
-                            <div class="element">
+                            <div class="element clearNight" id="clearNight">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 30.8 42.5" style="enable-background:new 0 0 30.8 42.5;" xml:space="preserve" height="40px" width="40px">
             <path id="Moon" class="yellow" d="M15.3,21.4C15,12.1,21.1,4.2,29.7,1.7c-2.8-1.2-5.8-1.8-9.1-1.7C8.9,0.4-0.3,10.1,0,21.9 c0.3,11.7,10.1,20.9,21.9,20.6c3.2-0.1,6.3-0.9,8.9-2.3C22.2,38.3,15.6,30.7,15.3,21.4z"/>
           </svg>
                             </div>
 
                             <!-- Sunny with wind -->
-                            <div class="element">
-                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 45.1 47.6" style="enable-background:new 0 0 45.1 47.6;" xml:space="preserve" height="45px" width="45px">
+                            <div class="element sunnyWithWind" id="sunnyWithWind">
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 45.1 47.6" style="enable-background:new 0 0 45.1 47.6;" xml:space="preserve" height="100px" width="100px" margin-bottom="45px" margin-left ="50px">
             <style type="text/css">
     \t        .st1{fill:none;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
             </style>
-                                    <g id="Wind_Sun">
-    \t        <g id="Sun_1_">
+<!--                                    <g id="Wind_Sun">
+    \t      <g id="Sun_1_">
             \t\t<circle id="XMLID_25_" class="yellow" cx="27.1" cy="18.1" r="8.9"/>
                     <g>
             \t\t    <path id="XMLID_21_" class="yellow" d="M27.2,6.5L27.2,6.5c-0.4,0-0.6-0.3-0.6-0.6V0.6c0-0.3,0.3-0.6,0.6-0.6l0.1,0 c0.3,0,0.6,0.3,0.6,0.6v5.4C27.7,6.2,27.5,6.5,27.2,6.5z"/>
@@ -416,7 +571,7 @@ weatherOn.addEventListener('click', () => {
                                  calcMode="linear"/>
                         attributeType="XML"
                 </g>
-    \t        </g>
+    \t        </g>-->
                                         <g id="Wind">
             \t\t<path id="XMLID_27_" class="st1" d="M1.3,33.1h19.3c2.1,0,3.8-1.3,3.8-3v0v0c0-1.7-1.7-3-3.8-3h-2.1"/>
                                             <path id="XMLID_40_" class="st1" d="M2.4,42.4h18.2c2,0,3.6,0.9,3.6,2.1l0,0v0c0,1.2-1.6,2.1-3.6,2.1h-2"/>
@@ -446,7 +601,7 @@ weatherOn.addEventListener('click', () => {
                             </div>
 
                             <!-- Snowy -->
-                            <div class="element">
+                            <div class="element snowy" id="snowy">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55.1 52.5" style="enable-background:new 0 0 55.1 52.5;" xml:space="preserve">
             <g id="Cloud_7">
   \t          <g id="White_cloud_7">
@@ -501,17 +656,115 @@ weatherOn.addEventListener('click', () => {
                         <div class="prep" ><img src="img/weather/prep.png"><p id="prep"></p></div>
                         <div class="pressure" ><img src="img/weather/pressure.png"><p id="pressure"></p></div>
                     </div>
+                    <div class="weather-btn" id="btn">прогноз на 3 дня</div>
                 </div>
             </div>
         </div>`;
-        weatherWrapper.insertAdjacentHTML('afterbegin', weather);
-    }
 
+        weatherWrapper.insertAdjacentHTML('afterbegin', weather);
+        weatherElementsIco = document.querySelector('.elements');
+        closeWeather = document.querySelector('.close-weather');
+        let btnWeather = document.querySelector('.weather-btn');
+        btnWeather.addEventListener('click', () => {
+            forecast();
+            // getGeo()
+        })
+        listenSearch()
+        let weatherBlock = document.getElementById('weather');
+        weatherBlock.addEventListener('mouseover', () => {
+            closeWeather.style.display = 'flex';
+            closeWeather.classList.add('animate__flipInY')
+        })
+        weatherBlock.addEventListener('mouseout', () => {
+            closeWeather.style.display = 'none';
+        })
+        weatherBlock.classList.add('animate__fadeInRight');
+        closeWeather.addEventListener('click', () => {
+            if (!forecastBlock) {
+                forecastWrapper.classList.remove('animate__fadeInRight');
+                forecastWrapper.classList.add('animate__fadeOutRight');
+                forecastBlock = true;
+                setTimeout(function () {
+                    forecastWrapper.style = 'opacity: 0;'
+                    weatherBlock.classList.remove('animate__fadeInRight');
+                    weatherBlock.classList.add('animate__fadeOutRight');
+                    weatherBlock.style = 'animation-duration: 2s;'
+                }, 1000)
+                setTimeout(function () {
+                    while (weatherWrapper.firstChild) {
+                        weatherWrapper.removeChild(weatherWrapper.firstChild);
+                    }
+                }, 2000)
+            } else {
+                weatherBlock.classList.remove('animate__fadeInRight');
+                weatherBlock.classList.add('animate__fadeOutRight');
+                setTimeout(function () {
+                    while (weatherWrapper.firstChild) {
+                        weatherWrapper.removeChild(weatherWrapper.firstChild);
+                    }
+                }, 1000)
+            }
+            blockAddNewWeather = true;
+        })
+    }
     addCity();
 })
 
+/**
+ *  Функция для вывода анимированной картинки погодных условий
+ * @param weatherStatus - погодные условия
+ * @returns {string} смещение по Y для корректного отобращение анимации погоды
+ */
+function weatherIco(weatherStatus) {
+    switch (weatherStatus) {
+        case 'Clouds':
+            if (weatherForecast === 'few clouds') {
+                return weatherElementsIco.style = 'top: -195%;'
+            } else {
+                return weatherElementsIco.style = 'top: 0;'
+            }
+        case 'Clear':
+            return weatherElementsIco.style = 'top: -579%;'
+        case 'Atmosphere':
+            return weatherElementsIco.style = 'top: -95%;'
+        case 'Snow':
+            return weatherElementsIco.style = 'top: -95%;'
+        case 'Rain':
+            if (weatherForecast === "freezing rain") {
+                return weatherElementsIco.style = 'top: -861%;'
+            } else {
+                return weatherElementsIco.style = 'top: -95%;'
+            }
+        case 'Drizzle':
+            return weatherElementsIco.style = 'top: -95%;'
+        case 'Thunderstorm':
+            if (weatherForecast === 'ragged thunderstorm' || weatherForecast === 'heavy thunderstorm' || weatherForecast === 'thunderstorm' || weatherForecast === 'light thunderstorm') {
+                return weatherElementsIco.style = 'top: -285%;'
+            }
+            return weatherElementsIco.style = 'top: -480%;'
+    }
+}
+
+/**
+ * Функия отпределения даты
+ */
+function data(timeCity) {
+    let monthName = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
+    let days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
+    let ms = new Date(timeCity);
+    let day = ms.getUTCDate();
+    currentDate = (ms.getUTCDate() + " " + monthName[ms.getMonth()]);
+    currenDay = days[ms.getDay()]
+    return [(day + " " + monthName[ms.getMonth()]) + " " + ms.getUTCFullYear()];
+}
+
+/**
+ * Функция для отображения данных о погодных условиях
+ */
 function dataWeather() {
-    data()
+    if (!forecastBlock) {
+        forecast()
+    }
     let cityNameDiv = document.getElementById('city-name');
     let countryIdDiv = document.getElementById('country-id')
     let temperatureDiv = document.getElementById('temperature')
@@ -520,34 +773,45 @@ function dataWeather() {
     let windDiv = document.getElementById('wind');
     let prepDiv = document.getElementById('prep');
     let pressureDiv = document.getElementById('pressure');
+
     windDiv.innerText = `ветер: ${windSpeed} m/s`;
     prepDiv.innerHTML = `влажность: ${humidity}&#37;`;
     pressureDiv.innerText = `давление: ${pressure} hPa`;
     forecastTextDiv.textContent = `${weatherForecast}`
-    dataTimeDiv.innerHTML = `${currenDay}: ${currentDate} число`;
+    dataTimeDiv.innerHTML = `${currenDay}: ${currentDate}`;
     temperatureDiv.innerHTML = `${temperature}&#176;`;
     countryIdDiv.textContent = `${countryID}`
     cityNameDiv.textContent = `${locCity}`;
-    listenSearch()
+
+
 }
 
+/**
+ * Функия ввода города ( работает от нажания кнопки Enter , так и по клику картинки "поиска"
+ */
 function listenSearch() {
+    document.addEventListener('keydown', keyCodeIn, false);
+
+    function keyCodeIn(e) {
+        let keyCode = e.key;
+        if (keyCode === 'Enter' && document.getElementById('searchLocation').value !== '') {
+            search = document.getElementById('searchLocation').value;
+            locCity = search;
+            addCity(locCity)
+            document.getElementById('searchLocation').value = '';
+        }
+    }
+
+>>>>>>> origin/Calc
     searchIco = document.getElementById('search');
-    searchIco.addEventListener('click', () => {
+    searchIco.addEventListener('click', (e) => {
         search = document.getElementById('searchLocation').value;
         locCity = search;
         addCity(locCity)
         document.getElementById('searchLocation').value = '';
+
     })
 }
 
-function data() {
-    let days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
-    let ms = new Date();
-    let month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Пятница", "Суббота"];
-    currentDate = (month[ms.getMonth()] + " " + ms.getUTCDate());
-    currenDay = days[ms.getDay()]
 
-
-}
 
