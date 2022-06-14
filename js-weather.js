@@ -1,7 +1,6 @@
 'use strict';
 
 const weatherOn = document.getElementById('weather-img');
-let cityName;
 let search;
 let searchIco;
 let locCity = 'Minsk';
@@ -17,15 +16,16 @@ let weatherForecast;
 let windSpeed;
 
 
-function addCity(cityName) {
+function addCity() {
     const requestCountry = new XMLHttpRequest();
-    requestCountry.open('GET', `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
+    requestCountry.open('GET', `https://api.openweathermap.org/data/2.5/weather?q=${locCity}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
     requestCountry.send();
     requestCountry.addEventListener('load', () => {
         let nameCity = JSON.parse(requestCountry?.responseText);
-        console.log(nameCity)
+        // console.log(nameCity)
         locCity = nameCity?.name;
-        [{country: countryID}] = Object.values([nameCity.sys]);
+        let [{country: id}] = Object.values([nameCity.sys]);
+        countryID = id;
         [windSpeed] = Object.values(nameCity.wind);
         [{description: weatherForecast}] = Object.values(nameCity.weather);
         let [temper] = Object.values(nameCity.main);
@@ -33,23 +33,19 @@ function addCity(cityName) {
         temperature = temper;
         [{humidity: humidity}] = Object.values([nameCity.main]);
         [{pressure: pressure}] = Object.values([nameCity.main]);
-        renderHtml()
+        dataWeather()
 
     })
 }
+
 console.log(locCity);
-addCity(locCity);
 
-
-function renderHtml() {
-
-    data()
-    weatherOn.addEventListener('click', () => {
-
-        if (blockAddNewWeather) {
-            blockAddNewWeather = false;
-            weatherWrapper = document.getElementById('weather-wrapper');
-            let weather = `
+weatherOn.addEventListener('click', () => {
+    addCity();
+    if (blockAddNewWeather) {
+        blockAddNewWeather = false;
+        weatherWrapper = document.getElementById('weather-wrapper');
+        let weather = `
         
         <div class="weather">
         <div class="close-weather">X</div>
@@ -63,7 +59,7 @@ function renderHtml() {
                     <div class="city-location">
                         <img src="/img/weather/local.png" alt="">
                         <div class="city-name" id="city-name"></div>
-                        <div class="country-id" id="country-id">${countryID}</div>
+                        <div class="country-id" id="country-id"></div>
                     </div>
 <!--Анимация погоды--------------------------------------------------------------------------->
                     <div class="container">
@@ -497,31 +493,45 @@ function renderHtml() {
                         </div>
                     </div>
 <!--Анимация погоды--------------------------------------------------------------------------->
-                    <div class="data-time" id="data-time">${currenDay}, 
-                        ${currentDate}</div>
-                    <div class="temperature" id="temperature">${temperature}&#176;</div>
-                    <div class="forecast-text" id="forecast-text">${weatherForecast}</div>
+                    <div class="data-time" id="data-time"></div>
+                    <div class="temperature" id="temperature"></div>
+                    <div class="forecast-text" id="forecast-text"></div>
                     <div class="win-temp-info">
-                        <div class="wind"><img src="img/weather/wind.png">wind: ${windSpeed} m/s</div>
-                        <div class="prep"><img src="img/weather/prep.png">wet: ${humidity}&#37;</div>
-                        <div class="pressure"><img src="img/weather/pressure.png">pressure: ${pressure} hPa</div>
+                        <div class="wind" ><img src="img/weather/wind.png"><p id="wind"></p></div>
+                        <div class="prep" ><img src="img/weather/prep.png"><p id="prep"></p></div>
+                        <div class="pressure" ><img src="img/weather/pressure.png"><p id="pressure"></p></div>
                     </div>
                 </div>
             </div>
         </div>`;
-            console.log(countryID)
-            cityName = document.getElementById('city-name');
+        weatherWrapper.insertAdjacentHTML('afterbegin', weather);
+    }
 
-            weatherWrapper.insertAdjacentHTML('afterbegin', weather);
-            listenSearch()
-        }
-        cityName.textContent = `${locCity}`;
+    addCity();
+})
 
-    })
-
-
+function dataWeather() {
+    data()
+    let cityNameDiv = document.getElementById('city-name');
+    let countryIdDiv = document.getElementById('country-id')
+    let temperatureDiv = document.getElementById('temperature')
+    let dataTimeDiv = document.getElementById('data-time');
+    let forecastTextDiv = document.getElementById('forecast-text');
+    let windDiv = document.getElementById('wind');
+    let prepDiv = document.getElementById('prep');
+    let pressureDiv = document.getElementById('pressure');
+    windDiv.innerText = `ветер: ${windSpeed} m/s`;
+    prepDiv.innerHTML = `влажность: ${humidity}&#37;`;
+    pressureDiv.innerText = `давление: ${pressure} hPa`;
+    forecastTextDiv.textContent = `${weatherForecast}`
+    dataTimeDiv.innerHTML = `${currenDay}: ${currentDate} число`;
+    temperatureDiv.innerHTML = `${temperature}&#176;`;
+    countryIdDiv.textContent = `${countryID}`
+    cityNameDiv.textContent = `${locCity}`;
+    listenSearch()
 }
-function listenSearch(){
+
+function listenSearch() {
     searchIco = document.getElementById('search');
     searchIco.addEventListener('click', () => {
         search = document.getElementById('searchLocation').value;
@@ -537,7 +547,7 @@ function data() {
     let month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Пятница", "Суббота"];
     currentDate = (month[ms.getMonth()] + " " + ms.getUTCDate());
     currenDay = days[ms.getDay()]
-    console.log(currentDate, currenDay)
+
 
 }
 
