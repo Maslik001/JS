@@ -16,6 +16,7 @@ let latCalendar;
 let indexForecast;
 let searchLocationCalendar;
 
+
 calendarIco.addEventListener('click', () => {
 
     if (!calendarStatus) {
@@ -122,7 +123,7 @@ calendarIco.addEventListener('click', () => {
         })
     }
 });
-
+// localStorage.clear();
 function listenSearchCalendar() {
     document.addEventListener('keydown', keyCodeIn, false);
     function keyCodeIn(e) {
@@ -130,9 +131,9 @@ function listenSearchCalendar() {
         if (keyCode === 'Enter' && document.getElementById('searchLocationCalendar').value !== '') {
             search = document.getElementById('searchLocationCalendar').value;
             searchLocationCalendar = search;
+            localStorage.setItem('city', searchLocationCalendar);
             addCityInCalendar();
             document.getElementById('searchLocationCalendar').value = '';
-            console.log(searchLocationCalendar)
         }
     }
 }
@@ -151,6 +152,8 @@ async function addCityInCalendar() {
             console.log(nameCity)
             latCalendar = nameCity.coord.lat;
             lonCalendar = nameCity.coord.lon;
+            localStorage.setItem('lat', lonCalendar);
+            localStorage.setItem('lon' , latCalendar);
             weatherApiCalendar(latCalendar, lonCalendar);
         }
     })
@@ -377,9 +380,9 @@ async function weatherApiCalendar(latWeatherCalendar, lonWeatherCalendar) {
         let timeSecForecast = data(city.daily[indexForecast - 1].dt * 1000);
         forecastWeatherCalendarRender(icoCalendarWeatherForecast, descriptionForecast, tempForecast, timeSecForecast)
     }
-    console.log(city);
-    weatherCalendar(tempCal, icoCalendarWeather, cityNameC, descriptionC, windSpeedC, pressureC);
-
+    if (calendarStatus){
+        weatherCalendar(tempCal, icoCalendarWeather, cityNameC, descriptionC, windSpeedC, pressureC);
+    }
 
 }
 
@@ -387,13 +390,20 @@ async function weatherApiCalendar(latWeatherCalendar, lonWeatherCalendar) {
  * Определение геолокации пользователя
  */
 function getGeo() {
-    navigator.geolocation.getCurrentPosition(
-        function (position) {
-            latCalendar = position.coords.latitude
-            lonCalendar = position.coords.longitude
-            weatherApiCalendar(latCalendar, lonCalendar);
-        }
-    );
+    if (localStorage.lat > 0 && localStorage.lon>0){
+        latCalendar = localStorage.getItem('lat');
+        lonCalendar = localStorage.getItem('lon');
+        weatherApiCalendar(latCalendar, lonCalendar);
+    } else {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                latCalendar = position.coords.latitude;
+                lonCalendar = position.coords.longitude;
+                weatherApiCalendar(latCalendar, lonCalendar);
+            }
+        );
+    }
+
 }
 
 /**
