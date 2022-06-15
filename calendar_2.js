@@ -1,20 +1,20 @@
 'use strict';
 
-let days;
-let arrow;
-let calendar;
 let calendarIco = document.getElementById('weatherCalendarImg');
 const now = new Date();
 let month = now.getMonth();
-let year = now.getFullYear();
 let nowData = now.getDate();
+let year = now.getFullYear();
 let forecastDataArray = [];
 let check = false;
-let indexForecast;
 let calendarStatus = false;
-let searchLocationCalendar;
+let days;
+let arrow;
+let calendar;
 let lonCalendar;
 let latCalendar;
+let indexForecast;
+let searchLocationCalendar;
 
 calendarIco.addEventListener('click', () => {
 
@@ -253,7 +253,6 @@ function getNowDay() {
     currentDay(day);
 }
 
-
 /**
  * Добавление ID для прогноза / добавление цвета на текущий день
  */
@@ -289,7 +288,6 @@ function currentDay(dayA) {
         }
     }
 }
-
 
 /**
  * Получение позиции курсора  - и вывод блока прогноза относительно курсора
@@ -353,10 +351,6 @@ function forecastCalendar(fCalendarWeather, clearHundlers = false) {
         fCalendarWeather.removeEventListener('mouseleave', remAdd);
     }
 }
-
-
-
-
 
 /**
  * Получение данных о погоде
