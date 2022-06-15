@@ -12,7 +12,9 @@ let forecastDataArray = [];
 let check = false;
 let indexForecast;
 let calendarStatus = false;
-
+let searchLocationCalendar;
+let lonCalendar;
+let latCalendar;
 
 calendarIco.addEventListener('click', () => {
 
@@ -22,6 +24,7 @@ calendarIco.addEventListener('click', () => {
 
 <div class="calendar-table">
     <div class="close-calendar">&#10006;</div>
+    <input type="text" class="search-location-calendar" id="searchLocationCalendar" placeholder="Введите город" ">
     <div class="weather-for-calendar"></div>
         <div class="days-wrap" id="daysWrap">
         
@@ -100,7 +103,7 @@ calendarIco.addEventListener('click', () => {
         calendar.insertAdjacentHTML('afterbegin', addCalendar);
         let calendarTable = document.querySelector('.calendar-table');
         calendarTable.classList.add('animate__fadeInUpBig');
-
+        listenSearchCalendar();
         getNowDay();
         switchMonth();
         getGeo();
@@ -120,6 +123,38 @@ calendarIco.addEventListener('click', () => {
     }
 });
 
+function listenSearchCalendar() {
+    document.addEventListener('keydown', keyCodeIn, false);
+    function keyCodeIn(e) {
+        let keyCode = e.key;
+        if (keyCode === 'Enter' && document.getElementById('searchLocationCalendar').value !== '') {
+            search = document.getElementById('searchLocationCalendar').value;
+            searchLocationCalendar = search;
+            addCityInCalendar();
+            document.getElementById('searchLocationCalendar').value = '';
+            console.log(searchLocationCalendar)
+        }
+    }
+}
+/**
+ * Функция получения данных о погоде по API
+ */
+async function addCityInCalendar() {
+    const requestCountry = new XMLHttpRequest();
+    await requestCountry?.open('GET', `https://api.openweathermap.org/data/2.5/weather?q=${searchLocationCalendar}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
+    requestCountry.send();
+    requestCountry.addEventListener('load', () => {
+        let nameCity = JSON.parse(requestCountry?.responseText);
+        if (nameCity.cod !== 200) {
+            console.log('City not founded')
+        } else {
+            console.log(nameCity)
+            latCalendar = nameCity.coord.lat;
+            lonCalendar = nameCity.coord.lon;
+            weatherApiCalendar(latCalendar, lonCalendar);
+        }
+    })
+}
 
 /**
  * функция получения кол-ва дней в месяце
@@ -145,133 +180,6 @@ function getDateAlter(myDate, day) {
     myDate.setDate(myDate.getDate() - day);
     return myDate;
 }
-
-
-/**
- * Добаление дней на страницу
- * добавление цвета на сл и предыдущие даты мес.
- */
-function getNowDay() {
-    days = document.querySelectorAll('.day-text');
-    let date = new Date(year, month);
-    let day = date.getUTCDay();
-    let startDate = getDateAlter(date, day);
-    dayMonthInCalendar(date)
-    days.forEach((daysAdd, index) => {
-        daysAdd.innerText = startDate.getDate();
-        startDate.setDate(startDate.getDate() + 1);
-        if (index < day || index >= getMonthDays().length + day) {
-            days[index].classList.add('others-month');
-        } else {
-            days[index].classList.remove('others-month');
-        }
-    })
-    currentDay(day);
-}
-
-
-/**
- * Добавление ID для прогноза / добавление цвета на текущий день
- */
-function currentDay(dayA) {
-    let nowDate = new Date();
-    let nowYear = nowDate.getFullYear();
-    let nowMonth = nowDate.getMonth();
-    let b = nowData + dayA - 1; /// корректировка недели (начинается с понедельника)
-    if (month === nowMonth && year === nowYear) {
-        // check = true;
-        getMonthDays().forEach((day) => {
-            if (day === nowData) {
-                days[b].classList.add('data-now');
-                let arg = 1;
-                while (day <= nowDate && arg <= 7) {
-                    let value = "forecastCalendar" + arg
-                    days[day + arg].setAttribute('id', `${value}`);
-                    arg++;
-                    let forecastCalendarWeather = document.getElementById(`${value}`);
-                    forecastDataArray.push(forecastCalendarWeather);
-                    forecastCalendar(forecastCalendarWeather);
-                }
-            }
-        })
-    } else {
-        // check = false;
-        days.forEach((elem, index) => {
-            days[index].classList.remove('data-now');
-            days[index].removeAttribute('id', 'forecastCalendar');
-
-        })
-        if (forecastDataArray.length) {
-            forecastDataArray.forEach(fc => forecastCalendar(fc, true));
-            forecastDataArray = [];
-        }
-    }
-}
-
-
-/**
- * Получение позиции курсора  - и вовод блока прогноза относительно курсора
- * @param e
- */
-function targetForecast(e) {
-    check = true;
-    let event = e.target;
-    indexForecast = event.id.slice(event.id.length - 1);
-    let x = event.getBoundingClientRect().x;
-    let y = event.getBoundingClientRect().y;
-    let weatherInfoCal = document.querySelector('.forecastCalendarWeather');
-    weatherInfoCal.style.display = 'flex';
-    weatherInfoCal.classList.add('animate__zoomIn');
-    weatherInfoCal.style.left = x - 80 + 'px';
-    weatherInfoCal.style.top = y - 50 + 'px';
-    weatherInfoCal.addEventListener('mouseleave', remAdd);
-    getGeo();
-}
-
-/**
- * Отображение прогноза погоды на днях календаря
- * @param icoCalendarWeatherForecast
- * @param descriptionForecast
- * @param tempForecast
- * @param timeSecForecast
- */
-function forecastWeatherCalendarRender(icoCalendarWeatherForecast, descriptionForecast, tempForecast, timeSecForecast) {
-    let weatherInfoCal = document.querySelector('.forecastCalendarWeather');
-    weatherInfoCal.innerHTML = `
-<div class="time-forecast">${timeSecForecast}</div>
-<div class="calendar-weather-forecast-wrapper">
-<img src="http://openweathermap.org/img/wn/${icoCalendarWeatherForecast}@2x.png"  class="ico-Calendar-Weather-Forecast" alt="icoCalendarWeather">
-<div class="temp-calendar-forecast">${tempForecast}&#176;C</div>
-</div>
-<div class="description-calendar-forecast">${descriptionForecast}</div>
-    `
-}
-
-/**
- * Закрытие прогноза погоды на днях календаря
- */
-function remAdd() {
-    check = false;
-    let weatherInfoCal = document.querySelector('.forecastCalendarWeather');
-    weatherInfoCal.style.display = 'none';
-}
-
-/**
- * Обработчик наведение мыши на определенный день
- * @param fCalendarWeather
- * @param clearHundlers
- */
-function forecastCalendar(fCalendarWeather, clearHundlers = false) {
-    if (!clearHundlers) {
-        fCalendarWeather.addEventListener('mouseover', targetForecast);
-        // fCalendarWeather.addEventListener('mouseleave', remAdd);
-    }
-    if (clearHundlers) {
-        fCalendarWeather.removeEventListener('mouseover', targetForecast);
-        fCalendarWeather.removeEventListener('mouseleave', remAdd);
-    }
-}
-
 
 /**
  * Вывод месяц и года на экран
@@ -323,6 +231,132 @@ function switchMonth() {
     })
 }
 
+/**
+ * Добаление дней на страницу
+ * добавление цвета на сл и предыдущие даты мес.
+ */
+function getNowDay() {
+    days = document.querySelectorAll('.day-text');
+    let date = new Date(year, month);
+    let day = date.getUTCDay();
+    let startDate = getDateAlter(date, day);
+    dayMonthInCalendar(date)
+    days.forEach((daysAdd, index) => {
+        daysAdd.innerText = startDate.getDate();
+        startDate.setDate(startDate.getDate() + 1);
+        if (index < day || index >= getMonthDays().length + day) {
+            days[index].classList.add('others-month');
+        } else {
+            days[index].classList.remove('others-month');
+        }
+    })
+    currentDay(day);
+}
+
+
+/**
+ * Добавление ID для прогноза / добавление цвета на текущий день
+ */
+function currentDay(dayA) {
+    let nowDate = new Date();
+    let nowYear = nowDate.getFullYear();
+    let nowMonth = nowDate.getMonth();
+    let b = nowData + dayA - 1; /// корректировка недели (начинается с понедельника)
+    if (month === nowMonth && year === nowYear) {
+        getMonthDays().forEach((day) => {
+            if (day === nowData) {
+                days[b].classList.add('data-now');
+                let arg = 1;
+                while (day <= nowDate && arg <= 7) {
+                    let value = "forecastCalendar" + arg
+                    days[day + arg].setAttribute('id', `${value}`);
+                    arg++;
+                    let forecastCalendarWeather = document.getElementById(`${value}`);
+                    forecastDataArray.push(forecastCalendarWeather);
+                    forecastCalendar(forecastCalendarWeather);
+                }
+            }
+        })
+    } else {
+        days.forEach((elem, index) => {
+            days[index].classList.remove('data-now');
+            days[index].removeAttribute('id', 'forecastCalendar');
+
+        })
+        if (forecastDataArray.length) {
+            forecastDataArray.forEach(fc => forecastCalendar(fc, true));
+            forecastDataArray = [];
+        }
+    }
+}
+
+
+/**
+ * Получение позиции курсора  - и вывод блока прогноза относительно курсора
+ * @param e
+ */
+function targetForecast(e) {
+    check = true;
+    let event = e.target;
+    indexForecast = event.id.slice(event.id.length - 1);
+    let x = event.getBoundingClientRect().x;
+    let y = event.getBoundingClientRect().y;
+    let weatherInfoCal = document.querySelector('.forecastCalendarWeather');
+    weatherInfoCal.style.display = 'flex';
+    weatherInfoCal.classList.add('animate__zoomIn');
+    weatherInfoCal.style.left = x - 80 + 'px';
+    weatherInfoCal.style.top = y - 50 + 'px';
+    weatherInfoCal.addEventListener('mouseleave', remAdd);
+    weatherApiCalendar(latCalendar, lonCalendar);
+}
+
+/**
+ * Отображение прогноза погоды на днях календаря
+ * @param icoCalendarWeatherForecast
+ * @param descriptionForecast
+ * @param tempForecast
+ * @param timeSecForecast
+ */
+function forecastWeatherCalendarRender(icoCalendarWeatherForecast, descriptionForecast, tempForecast, timeSecForecast) {
+    let weatherInfoCal = document.querySelector('.forecastCalendarWeather');
+    weatherInfoCal.innerHTML = `
+<div class="time-forecast">${timeSecForecast}</div>
+<div class="calendar-weather-forecast-wrapper">
+<img src="http://openweathermap.org/img/wn/${icoCalendarWeatherForecast}@2x.png"  class="ico-Calendar-Weather-Forecast" alt="icoCalendarWeather">
+<div class="temp-calendar-forecast">${tempForecast}&#176;C</div>
+</div>
+<div class="description-calendar-forecast">${descriptionForecast}</div>
+    `
+}
+
+/**
+ * Закрытие прогноза погоды на днях календаря
+ */
+function remAdd() {
+    check = false;
+    let weatherInfoCal = document.querySelector('.forecastCalendarWeather');
+    weatherInfoCal.style.display = 'none';
+}
+
+/**
+ * Обработчик наведение мыши на определенный день
+ * @param fCalendarWeather
+ * @param clearHundlers
+ */
+function forecastCalendar(fCalendarWeather, clearHundlers = false) {
+    if (!clearHundlers) {
+        fCalendarWeather.addEventListener('mouseover', targetForecast);
+        // fCalendarWeather.addEventListener('mouseleave', remAdd);
+    }
+    if (clearHundlers) {
+        fCalendarWeather.removeEventListener('mouseover', targetForecast);
+        fCalendarWeather.removeEventListener('mouseleave', remAdd);
+    }
+}
+
+
+
+
 
 /**
  * Получение данных о погоде
@@ -361,10 +395,9 @@ async function weatherApiCalendar(latWeatherCalendar, lonWeatherCalendar) {
 function getGeo() {
     navigator.geolocation.getCurrentPosition(
         function (position) {
-            let lan = position.coords.latitude
-            let lot = position.coords.longitude
-            weatherApiCalendar(lan, lot);
-            // if (!forecastBlock) {forecast(lan, lot)};  /// привязка к geo погоде
+            latCalendar = position.coords.latitude
+            lonCalendar = position.coords.longitude
+            weatherApiCalendar(latCalendar, lonCalendar);
         }
     );
 }
@@ -400,16 +433,3 @@ function weatherCalendar(tempCal, icoCalendarWeather, cityNameC, descriptionC, w
 
 
 }
-
-
-// function find_max(nums) {
-// let max_num = Number.NEGATIVE_INFINITY; // smaller than all other numbers
-//     for (let num of nums) {
-//         if (num > max_num) {
-//         max_num = num;
-//             }
-//         }
-//      return max_num;
-//      }
-//
-// console.log(find_max([11,10,30,68,-15,29,4]));
