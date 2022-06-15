@@ -670,7 +670,7 @@
     width: 50px;
 }
 .calendar-wrapper{
-
+    animation-duration: 2s;
 }
 .close-calendar{
     color: white;
@@ -684,6 +684,7 @@
     overflow: hidden;
     border-radius: 5px;
     cursor: pointer;
+    animation-duration: 2s;
 }
 
 .calendar-table{

@@ -14,11 +14,11 @@ let indexForecast;
 let calendarStatus = false;
 
 
-calendarIco.addEventListener('click',()=>{
+calendarIco.addEventListener('click', () => {
 
-    if(!calendarStatus){
-    calendar = document.querySelector('.calendar-wrapper');
-    let addCalendar = `
+    if (!calendarStatus) {
+        calendar = document.querySelector('.calendar-wrapper');
+        let addCalendar = `
 
 <div class="calendar-table">
     <div class="close-calendar">&#10006;</div>
@@ -97,25 +97,28 @@ calendarIco.addEventListener('click',()=>{
         </div>
         </div>
     `
-    calendar.insertAdjacentHTML('afterbegin',addCalendar);
-        calendar.classList.add('animate__fadeInUp');
-    getNowDay();
-    switchMonth();
-    getGeo();
-    calendarStatus = true;
-    let closeCalendar = document.querySelector('.close-calendar');
-        closeCalendar.addEventListener('click',()=>{
-        calendar.removeChild(calendar.firstChild);
-        calendar.classList.remove('animate__fadeInUp');
-        calendar.classList.add('animate__fadeOutDown');
+        calendar.insertAdjacentHTML('afterbegin', addCalendar);
+        let calendarTable = document.querySelector('.calendar-table');
+        calendarTable.classList.add('animate__fadeInUpBig');
+
+        getNowDay();
+        switchMonth();
+        getGeo();
+        calendarStatus = true;
+        let closeCalendar = document.querySelector('.close-calendar');
+        closeCalendar.addEventListener('click', () => {
+            calendarTable.classList.remove('animate__fadeInUpBig');
+            calendarTable.classList.add('animate__fadeOutDownBig');
             calendarStatus = false;
-    })
+            setTimeout(function (){
+                while (calendar.firstChild) {
+                    calendar.removeChild(calendar.firstChild);
+                }
+            },2000)
 
-
+        })
     }
-
-})
-
+});
 
 
 /**
@@ -232,7 +235,7 @@ function targetForecast(e) {
  * @param tempForecast
  * @param timeSecForecast
  */
-function forecastWeatherCalendarRender(icoCalendarWeatherForecast, descriptionForecast, tempForecast,timeSecForecast) {
+function forecastWeatherCalendarRender(icoCalendarWeatherForecast, descriptionForecast, tempForecast, timeSecForecast) {
     let weatherInfoCal = document.querySelector('.forecastCalendarWeather');
     weatherInfoCal.innerHTML = `
 <div class="time-forecast">${timeSecForecast}</div>
@@ -286,7 +289,7 @@ function dayMonthInCalendar(date) {
  * переключение месяца
  * @type {HTMLElement}
  */
-function switchMonth(){
+function switchMonth() {
     arrow = document.getElementById('daysWrap');
     arrow.addEventListener('click', (e) => {
         let target = e.target;
@@ -343,8 +346,8 @@ async function weatherApiCalendar(latWeatherCalendar, lonWeatherCalendar) {
         let icoCalendarWeatherForecast = city.daily[indexForecast].weather[0].icon;
         let descriptionForecast = city.daily[indexForecast].weather[0].description;
         let tempForecast = Math.round(city.daily[indexForecast].temp.day);
-        let timeSecForecast = data(city.daily[indexForecast-1].dt * 1000);
-        forecastWeatherCalendarRender(icoCalendarWeatherForecast, descriptionForecast, tempForecast,timeSecForecast)
+        let timeSecForecast = data(city.daily[indexForecast - 1].dt * 1000);
+        forecastWeatherCalendarRender(icoCalendarWeatherForecast, descriptionForecast, tempForecast, timeSecForecast)
     }
     console.log(city);
     weatherCalendar(tempCal, icoCalendarWeather, cityNameC, descriptionC, windSpeedC, pressureC);
