@@ -15,6 +15,13 @@ let lonCalendar;
 let latCalendar;
 let indexForecast;
 let searchLocationCalendar;
+let coord = null;
+
+window.addEventListener('load', () => {
+    if (localStorage.getItem('coord')) {
+        coord = JSON.parse(localStorage.getItem('coord'));
+    }
+})
 
 
 calendarIco.addEventListener('click', () => {
@@ -114,49 +121,53 @@ calendarIco.addEventListener('click', () => {
             calendarTable.classList.remove('animate__fadeInUpBig');
             calendarTable.classList.add('animate__fadeOutDownBig');
             calendarStatus = false;
-            setTimeout(function (){
+            setTimeout(function () {
                 while (calendar.firstChild) {
                     calendar.removeChild(calendar.firstChild);
                 }
-            },2000)
+            }, 2000)
 
         })
     }
 });
+
 // localStorage.clear();
 function listenSearchCalendar() {
     document.addEventListener('keydown', keyCodeIn, false);
+
     function keyCodeIn(e) {
         let keyCode = e.key;
         if (keyCode === 'Enter' && document.getElementById('searchLocationCalendar').value !== '') {
             search = document.getElementById('searchLocationCalendar').value;
             searchLocationCalendar = search;
             localStorage.setItem('city', searchLocationCalendar);
-            addCityInCalendar();
+            (async () => addCityInCalendar())();  //IIFE
             document.getElementById('searchLocationCalendar').value = '';
         }
     }
 }
+
 /**
  * Функция получения данных о погоде по API
  */
 async function addCityInCalendar() {
-    const requestCountry = new XMLHttpRequest();
-    await requestCountry?.open('GET', `https://api.openweathermap.org/data/2.5/weather?q=${searchLocationCalendar}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
-    requestCountry.send();
-    requestCountry.addEventListener('load', () => {
-        let nameCity = JSON.parse(requestCountry?.responseText);
-        if (nameCity.cod !== 200) {
-            console.log('City not founded')
-        } else {
-            console.log(nameCity)
-            latCalendar = nameCity.coord.lat;
-            lonCalendar = nameCity.coord.lon;
-            localStorage.setItem('lat', lonCalendar);
-            localStorage.setItem('lon' , latCalendar);
-            weatherApiCalendar(latCalendar, lonCalendar);
-        }
-    })
+    let resp = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${searchLocationCalendar}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
+    if (resp.ok) {
+        let nameCity = await resp.json();
+        console.log(nameCity);
+        coord = {
+            lat: nameCity?.coord?.lat,
+            lon: nameCity?.coord?.lon
+        };
+
+        localStorage.setItem('coord', JSON.stringify(coord));
+
+        console.log(lonCalendar);
+        await weatherApiCalendar(coord.lat, coord.lon);
+    } else {
+        console.log('City not founded');
+    }
+
 }
 
 /**
@@ -308,7 +319,7 @@ function targetForecast(e) {
     weatherInfoCal.style.left = x - 80 + 'px';
     weatherInfoCal.style.top = y - 50 + 'px';
     weatherInfoCal.addEventListener('mouseleave', remAdd);
-    weatherApiCalendar(latCalendar, lonCalendar);
+    (async () => weatherApiCalendar(coord.lat, coord.lon))();
 }
 
 /**
@@ -379,27 +390,29 @@ async function weatherApiCalendar(latWeatherCalendar, lonWeatherCalendar) {
         let tempForecast = Math.round(city.daily[indexForecast].temp.day);
         let timeSecForecast = data(city.daily[indexForecast - 1].dt * 1000);
         forecastWeatherCalendarRender(icoCalendarWeatherForecast, descriptionForecast, tempForecast, timeSecForecast)
-    }
-    if (calendarStatus){
+    } else {
         weatherCalendar(tempCal, icoCalendarWeather, cityNameC, descriptionC, windSpeedC, pressureC);
     }
-
 }
 
 /**
  * Определение геолокации пользователя
  */
 function getGeo() {
-    if (localStorage.lat > 0 && localStorage.lon>0){
-        latCalendar = localStorage.getItem('lat');
-        lonCalendar = localStorage.getItem('lon');
-        weatherApiCalendar(latCalendar, lonCalendar);
+    /* if (localStorage.lat.length > 0 && localStorage.lon.length > 0){
+         latCalendar = localStorage.getItem('lat');
+         lonCalendar = localStorage.getItem('lon');
+         console.log(latCalendar)
+         weatherApiCalendar(latCalendar, lonCalendar);
+     }*/
+    if (coord) {
+        (async () => weatherApiCalendar(coord.lat, coord.lon))();
     } else {
         navigator.geolocation.getCurrentPosition(
             function (position) {
                 latCalendar = position.coords.latitude;
                 lonCalendar = position.coords.longitude;
-                weatherApiCalendar(latCalendar, lonCalendar);
+                (async () => weatherApiCalendar(latCalendar, lonCalendar))();
             }
         );
     }
