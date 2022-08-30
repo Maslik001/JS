@@ -25,7 +25,7 @@ window.addEventListener('load', () => {
 
 
 calendarIco.addEventListener('click', () => {
-
+    console.log('actual =======')
     if (!calendarStatus) {
         calendar = document.querySelector('.calendar-wrapper');
         let addCalendar = `
@@ -160,7 +160,7 @@ async function addCityInCalendar() {
         };
 
         localStorage.setItem('coord', JSON.stringify(coord));
-        console.log('actual =======')
+
         await weatherApiCalendar(coord?.lat, coord?.lon);
     } else {
         console.log('City not founded');
