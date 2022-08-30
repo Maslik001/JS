@@ -154,16 +154,14 @@ async function addCityInCalendar() {
     let resp = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${searchLocationCalendar}&appid=1fe8ce000106a64976dd6ee0b0c1299a&units=metric&units=imperial&lang=ru`);
     if (resp.ok) {
         let nameCity = await resp.json();
-        console.log(nameCity);
         coord = {
             lat: nameCity?.coord?.lat,
             lon: nameCity?.coord?.lon
         };
 
         localStorage.setItem('coord', JSON.stringify(coord));
-
-        console.log(lonCalendar);
-        await weatherApiCalendar(coord.lat, coord.lon);
+        console.log('actual =======')
+        await weatherApiCalendar(coord?.lat, coord?.lon);
     } else {
         console.log('City not founded');
     }
@@ -308,6 +306,7 @@ function currentDay(dayA) {
  * @param e
  */
 function targetForecast(e) {
+    console.log(e)
     check = true;
     let event = e.target;
     indexForecast = event.id.slice(event.id.length - 1);
