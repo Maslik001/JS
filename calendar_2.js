@@ -25,6 +25,7 @@ window.addEventListener('load', () => {
 
 
 calendarIco.addEventListener('click', () => {
+    console.log('Calc')
     if (!calendarStatus) {
         calendar = document.querySelector('.calendar-wrapper');
         let addCalendar = `
