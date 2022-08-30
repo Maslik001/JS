@@ -306,7 +306,6 @@ function currentDay(dayA) {
  * @param e
  */
 function targetForecast(e) {
-    console.log(e)
     check = true;
     let event = e.target;
     indexForecast = event.id.slice(event.id.length - 1);
@@ -315,7 +314,7 @@ function targetForecast(e) {
     let weatherInfoCal = document.querySelector('.forecastCalendarWeather');
     weatherInfoCal.style.display = 'flex';
     weatherInfoCal.classList.add('animate__zoomIn');
-    weatherInfoCal.style.left = x - 80 + 'px';
+    weatherInfoCal.style.left = x - 30 + 'px';
     weatherInfoCal.style.top = y - 50 + 'px';
     weatherInfoCal.addEventListener('mouseleave', remAdd);
     (async () => weatherApiCalendar(coord.lat, coord.lon))();
