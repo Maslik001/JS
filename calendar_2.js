@@ -272,14 +272,16 @@ function currentDay(dayA) {
     let nowDate = new Date();
     let nowYear = nowDate.getFullYear();
     let nowMonth = nowDate.getMonth();
+    let currentDay = nowDate.getDate();
     let b = nowData + dayA - 1; /// корректировка недели (начинается с понедельника)
+
     if (month === nowMonth && year === nowYear) {
         getMonthDays().forEach((day) => {
             if (day === nowData) {
                 days[b].classList.add('data-now');
                 let arg = 1;
-                while (day <= nowDate && arg <= 7) {
-                    let value = "forecastCalendar" + arg
+                while (day <= currentDay && arg <= 7) {
+                    let value = "forecastCalendar" + arg;
                     days[day + arg].setAttribute('id', `${value}`);
                     arg++;
                     let forecastCalendarWeather = document.getElementById(`${value}`);
@@ -306,6 +308,7 @@ function currentDay(dayA) {
  * @param e
  */
 function targetForecast(e) {
+    console.log(e)
     check = true;
     let event = e.target;
     indexForecast = event.id.slice(event.id.length - 1);
@@ -314,7 +317,7 @@ function targetForecast(e) {
     let weatherInfoCal = document.querySelector('.forecastCalendarWeather');
     weatherInfoCal.style.display = 'flex';
     weatherInfoCal.classList.add('animate__zoomIn');
-    weatherInfoCal.style.left = x - 30 + 'px';
+    weatherInfoCal.style.left = x - 80 + 'px';
     weatherInfoCal.style.top = y - 50 + 'px';
     weatherInfoCal.addEventListener('mouseleave', remAdd);
     (async () => weatherApiCalendar(coord.lat, coord.lon))();

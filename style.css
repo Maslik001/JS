@@ -858,6 +858,7 @@
     align-content: space-between;
     border-radius: 10px;
     flex-direction: column;
+    overflow: hidden;
 }
 .description-calendar-forecast{
     color: white;
